@@ -1,0 +1,63 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = "A collectible showcase of our favorite Lego builds.", image } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | LegoCard</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Mobile Previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} | LegoCard`} />
+    <meta property="og:description" content={description} />
+    {image && <meta property="og:image" content={image} />}
+    <meta name="theme-color" content="#0f172a" />
+  </head>
+  <body class="bg-slate-950 text-slate-100 flex flex-col min-h-screen">
+    <!-- Mobile-optimized sticky navigation -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-950/80 border-b border-slate-800/80 px-4 py-3">
+      <div class="max-w-4xl mx-auto flex items-center justify-between">
+        <a href={`${baseUrl}/`} class="flex items-center gap-2 group">
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500 text-slate-950 font-black text-lg shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform">
+            🧱
+          </span>
+          <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+            LegoCard
+          </span>
+        </a>
+
+        <div class="flex items-center gap-2">
+          <a
+            href={`${baseUrl}/print-tags`}
+            class="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-slate-700 hover:border-slate-500 bg-slate-900/60 text-slate-300 hover:text-white transition-colors"
+          >
+            🖨️ Print Tags
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 pb-16">
+      <slot />
+    </main>
+
+    <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500">
+      <p>LegoCard • Personal Collection Showcase • Designed for NFC & QR Scans</p>
+    </footer>
+  </body>
+</html>

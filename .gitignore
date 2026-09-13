@@ -1,0 +1,23 @@
+# Environment variables
+.env
+.env.local
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build artifacts
+dist/
+.astro/
+build/
+out/
+
+# Rendered media & large downloads (optionally committed or hosted externally)
+data/videos/*.mp4
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
