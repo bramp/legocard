@@ -4,9 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "fetch:sheet": "tsx scripts/fetch-sheet.ts",
     "enrich": "tsx scripts/enrich-data.ts",
     "qr": "tsx scripts/generate-qr.ts",
     "tts": "tsx scripts/generate-tts.ts",
+    "sync": "npm run fetch:sheet && npm run enrich && npm run qr",
     "video:preview": "npm --prefix video run dev",
     "video:render": "tsx scripts/render-videos.ts",
     "dev:site": "npm --prefix site run dev",

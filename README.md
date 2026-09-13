@@ -34,6 +34,8 @@ cp .env.example .env
 
 | Command | Description |
 | :--- | :--- |
+| `npm run fetch:sheet` | Downloads the latest data directly from your Google Sheet into `data/sets.csv`. |
+| `npm run sync` | One-shot command: fetches Google Sheet, runs Rebrickable enrichment, and regenerates QR codes. |
 | `npm run enrich` | Reads `data/sets.csv`, queries Rebrickable API, downloads stock images, and updates `data/sets.json`. |
 | `npm run qr` | Generates high-res SVG & PNG QR codes for each set in `data/qr/` for NFC/stand printing. |
 | `npm run dev:site` | Starts the Astro development server (open `http://localhost:4321` on desktop or phone via local WiFi). |
@@ -47,6 +49,17 @@ cp .env.example .env
 
 ## 📝 Updating Your Lego Data
 
+### Option A: Direct Google Sheets Sync (Recommended)
+1. Ensure your Google Sheet is shared as **"Anyone with the link can view"**:
+   - [Open your spreadsheet](https://docs.google.com/spreadsheets/d/1QHvBO3RwVNfAeEzTP_bImbn7n19SoSi6coJYMTFhjQk/edit?gid=0#gid=0)
+   - Click **Share** (top right) $\to$ change General access to **Anyone with the link** (Viewer).
+2. Run the sync command:
+   ```bash
+   npm run sync
+   ```
+   This will automatically pull the sheet into `data/sets.csv`, download any missing official stock photos from Rebrickable, update `data/sets.json`, and regenerate your QR codes.
+
+### Option B: Local CSV
 1. Open `data/sets.csv` (or export from your Google Sheet).
 2. Add your new Lego set with its set number and your personal build notes:
    ```csv
@@ -55,10 +68,8 @@ cp .env.example .env
    ```
 3. Run the enrichment script:
    ```bash
-   npm run enrich
+   npm run enrich && npm run qr
    ```
-   This will automatically download the official stock photo to `data/images/<set_number>.jpg` and populate `data/sets.json`.
-4. Run `npm run dev:site` to preview the updated site.
 
 ---
 
