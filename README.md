@@ -79,7 +79,7 @@ cp .env.example .env
 1. Buy standard **NTAG213** or **NTAG215** adhesive tags (very cheap in packs of 25–50).
 2. Using an app like **NFC Tools** (iOS/Android), write a URL record to the tag:
    ```
-   https://<your-username>.github.io/legocard/sets/<set_number>
+   https://legocard.bramp.net/sets/<set_number>
    ```
 3. Stick the tag under or beside the Lego display stand. Tapping any iPhone or Android phone will open the set card instantly without opening an app first.
 
@@ -100,10 +100,13 @@ legocard/
 │   └── qr/              # Generated QR code SVGs & PNGs
 ├── scripts/
 │   ├── enrich-data.ts   # Ingestion & Rebrickable fetcher
+│   ├── fetch-sheet.ts   # Google Sheets downloader
 │   ├── generate-qr.ts   # QR code generator for NFC/print
 │   ├── generate-tts.ts  # Neural TTS voiceover generator
 │   └── render-videos.ts # Remotion batch MP4 renderer
 ├── site/                # Astro 5 static mobile-first web app
+│   ├── public/
+│   │   └── CNAME        # Custom domain (legocard.bramp.net)
 │   └── src/pages/
 │       ├── index.astro         # Catalog & filterable gallery
 │       ├── sets/[id].astro     # Mobile-optimized collectible card
@@ -117,9 +120,19 @@ legocard/
 
 ---
 
-## 🚢 Deployment
+## 🚢 Deployment & Custom Domain
 
-The site is configured for automatic deployment to **GitHub Pages** via GitHub Actions:
-1. Push to the `main` branch.
-2. The workflow builds the static site and deploys it to your GitHub Pages URL:
-   `https://<your-username>.github.io/legocard/`
+The site is configured for automatic deployment to **GitHub Pages** at **`legocard.bramp.net`**:
+
+### DNS Setup (in your DNS provider for bramp.net)
+Add a CNAME DNS record:
+- **Type**: `CNAME`
+- **Name/Host**: `legocard`
+- **Target/Value**: `bramp.github.io.`
+
+### GitHub Pages Settings
+1. Go to your repo settings on GitHub: **Settings** $\to$ **Pages**.
+2. Under **Build and deployment**, ensure **Source** is set to **GitHub Actions**.
+3. Under **Custom domain**, ensure `legocard.bramp.net` is entered and check **Enforce HTTPS** (GitHub will provision a free Let's Encrypt TLS certificate once the DNS record propagates).
+
+Every push to `main` builds the site and publishes to `https://legocard.bramp.net/`.

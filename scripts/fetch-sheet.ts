@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -29,34 +30,73 @@ function getExportUrl(sheetUrl: string): { exportUrl: string; sheetId: string; g
   return { exportUrl, sheetId, gid };
 }
 
+function getGoogleAccessToken(): string | null {
+  if (process.env.GOOGLE_ACCESS_TOKEN) {
+    return process.env.GOOGLE_ACCESS_TOKEN.trim();
+  }
+
+  // Try gcloud CLI with Drive scope if available
+  try {
+    const token = execSync(
+      'gcloud auth print-access-token --scopes="https://www.googleapis.com/auth/drive" 2>/dev/null',
+      { encoding: 'utf-8' }
+    ).trim();
+    if (token && token.startsWith('ya29.')) {
+      console.log('   🔑 Using OAuth token from gcloud CLI');
+      return token;
+    }
+  } catch {
+    // gcloud not installed or drive scope not enabled
+  }
+
+  return null;
+}
+
 async function main() {
   const { exportUrl, sheetId, gid } = getExportUrl(SHEET_URL);
   console.log(`📥 Fetching data from Google Sheets...`);
   console.log(`   Spreadsheet ID: ${sheetId}`);
   console.log(`   Sheet Tab (gid): ${gid}`);
 
+  const token = getGoogleAccessToken();
   const headers: Record<string, string> = {};
-  if (process.env.GOOGLE_ACCESS_TOKEN) {
-    headers['Authorization'] = `Bearer ${process.env.GOOGLE_ACCESS_TOKEN}`;
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const res = await fetch(exportUrl, {
+  // 1. Try standard Sheets export endpoint
+  let res = await fetch(exportUrl, {
     headers,
     redirect: 'follow',
   });
 
-  const contentType = res.headers.get('content-type') || '';
-  const text = await res.text();
+  let contentType = res.headers.get('content-type') || '';
+  let text = await res.text();
 
-  // If Google redirects to a login page (HTML)
+  // 2. If token present and direct export returned HTML or 403, try Google Drive API export endpoint
+  if (token && (!res.ok || text.trim().startsWith('<!DOCTYPE html>') || contentType.includes('text/html'))) {
+    const driveExportUrl = `https://www.googleapis.com/drive/v3/files/${sheetId}/export?mimeType=text/csv`;
+    res = await fetch(driveExportUrl, {
+      headers: { Authorization: `Bearer ${token}` },
+      redirect: 'follow',
+    });
+    contentType = res.headers.get('content-type') || '';
+    text = await res.text();
+  }
+
+  // If Google redirects to a login page (HTML) or returns auth error
   if (text.trim().startsWith('<!DOCTYPE html>') || text.includes('accounts.google.com') || contentType.includes('text/html')) {
-    console.error(`\n❌ Error: The Google Sheet requires access authorization.`);
-    console.error(`\nTo allow direct sync without complicated OAuth tokens:`);
-    console.error(`1. Open the sheet: ${SHEET_URL}`);
-    console.error(`2. Click the 'Share' button in the top right.`);
-    console.error(`3. Under 'General access', change from 'Restricted' to 'Anyone with the link' -> 'Viewer'.`);
-    console.error(`4. Re-run: npm run fetch:sheet`);
-    console.error(`\n(Alternatively, set GOOGLE_ACCESS_TOKEN in .env with a valid Bearer token).`);
+    console.error(`\n❌ Error: The Google Sheet requires authentication.`);
+    console.error(`\nChoose one of the following methods to authenticate:`);
+    console.error(`\nMethod 1: Using your existing gcloud CLI (Fastest if you already use gcloud)`);
+    console.error(`   Run this once in your terminal:`);
+    console.error(`     gcloud auth login --enable-gdrive-access`);
+    console.error(`   Then re-run: npm run fetch:sheet`);
+    console.error(`\nMethod 2: Share the sheet as Viewer`);
+    console.error(`   1. Open: ${SHEET_URL}`);
+    console.error(`   2. Click 'Share' (top right).`);
+    console.error(`   3. Under General access, set to 'Anyone with the link' (Viewer).`);
+    console.error(`\nMethod 3: Set GOOGLE_ACCESS_TOKEN in .env`);
     process.exit(1);
   }
 

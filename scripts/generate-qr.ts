@@ -10,8 +10,8 @@ const DATA_DIR = path.resolve(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
 const QR_DIR = path.join(DATA_DIR, 'qr');
 
-// Base URL for the published site, e.g. "https://bramp.github.io/legocard"
-const BASE_URL = process.env.SITE_URL || 'https://bramp.github.io/legocard';
+// Base URL for the published site
+const BASE_URL = process.env.SITE_URL || 'https://legocard.bramp.net';
 
 async function main() {
   if (!fs.existsSync(JSON_FILE)) {

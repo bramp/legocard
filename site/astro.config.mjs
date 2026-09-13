@@ -4,8 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://bramp.github.io',
-  base: '/legocard',
+  site: 'https://legocard.bramp.net',
+  base: '/',
   vite: {
     plugins: [tailwindcss()],
   },
