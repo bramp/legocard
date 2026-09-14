@@ -6,9 +6,9 @@
   "scripts": {
     "fetch:sheet": "tsx scripts/fetch-sheet.ts",
     "enrich": "tsx scripts/enrich-data.ts",
-    "qr": "tsx scripts/generate-qr.ts",
+    "facts": "tsx scripts/generate-fun-facts.ts",
     "tts": "tsx scripts/generate-tts.ts",
-    "sync": "npm run fetch:sheet && npm run enrich && npm run qr",
+    "sync": "npm run fetch:sheet && npm run enrich",
     "video:preview": "npm --prefix video run dev",
     "video:render": "tsx scripts/render-videos.ts",
     "dev:site": "npm --prefix site run dev",

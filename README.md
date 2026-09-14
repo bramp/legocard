@@ -35,9 +35,9 @@ cp .env.example .env
 | Command | Description |
 | :--- | :--- |
 | `npm run fetch:sheet` | Downloads the latest data directly from your Google Sheet into `data/sets.csv`. |
-| `npm run sync` | One-shot command: fetches Google Sheet, runs Rebrickable enrichment, and regenerates QR codes. |
+| `npm run sync` | One-shot command: fetches Google Sheet and runs Rebrickable enrichment. |
 | `npm run enrich` | Reads `data/sets.csv`, queries Rebrickable API, downloads stock images, and updates `data/sets.json`. |
-| `npm run qr` | Generates high-res SVG & PNG QR codes for each set in `data/qr/` for NFC/stand printing. |
+| `npm run facts` | Queries Gemini API to discover fun facts and trivia for each set. |
 | `npm run dev:site` | Starts the Astro development server (open `http://localhost:4321` on desktop or phone via local WiFi). |
 | `npm run build:site` | Builds the static website into `site/dist/` for GitHub Pages. |
 | `npm run preview:site`| Serves the production static build locally to test performance and routes. |
@@ -49,26 +49,27 @@ cp .env.example .env
 
 ## 📝 Updating Your Lego Data
 
-### Option A: Direct Google Sheets Sync (Recommended)
-1. Ensure your Google Sheet is shared as **"Anyone with the link can view"**:
-   - [Open your spreadsheet](https://docs.google.com/spreadsheets/d/1QHvBO3RwVNfAeEzTP_bImbn7n19SoSi6coJYMTFhjQk/edit?gid=0#gid=0)
-   - Click **Share** (top right) $\to$ change General access to **Anyone with the link** (Viewer).
+### Option A: Google Sheets Sync (Recommended)
+1. Add your Google Sheet URL to `.env`:
+   ```bash
+   GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/<spreadsheet-id>/edit?gid=0#gid=0
+   ```
 2. Run the sync command:
    ```bash
    npm run sync
    ```
-   This will automatically pull the sheet into `data/sets.csv`, download any missing official stock photos from Rebrickable, update `data/sets.json`, and regenerate your QR codes.
+   - If authentication is needed to read your sheet, the script will guide you to authorize access via `gcloud` or provide an access token:
+     ```bash
+     gcloud auth login --enable-gdrive-access
+     ```
+   - It will automatically download the sheet into `data/sets.csv`, download any missing official stock photos from Rebrickable, and update `data/sets.json`.
 
 ### Option B: Local CSV
-1. Open `data/sets.csv` (or export from your Google Sheet).
-2. Add your new Lego set with its set number and your personal build notes:
-   ```csv
-   set_number,name,build_date,build_time_hours,built_by,rating,fun_facts,notes
-   10497,Galaxy Explorer,2023-08-15,4.5,Bram & Family,5,Recreation of the 1979 classic 497.,Displayed in study.
-   ```
+1. Open `data/sets.csv` (or export directly from your spreadsheet application).
+2. Ensure column headers match your layout (e.g. `Set Number`, `Name`, `Category`, `Number of Pieces`, `Time to Build`, `Date Finished`, `Notes`).
 3. Run the enrichment script:
    ```bash
-   npm run enrich && npm run qr
+   npm run enrich
    ```
 
 ---
@@ -96,12 +97,10 @@ legocard/
 │   ├── sets.csv         # Source of truth: your build history
 │   ├── sets.json        # Normalized enriched metadata
 │   ├── images/          # Downloaded official stock photos
-│   ├── audio/           # Generated TTS audio tracks & subtitles
-│   └── qr/              # Generated QR code SVGs & PNGs
+│   └── audio/           # Generated TTS audio tracks & subtitles
 ├── scripts/
 │   ├── enrich-data.ts   # Ingestion & Rebrickable fetcher
 │   ├── fetch-sheet.ts   # Google Sheets downloader
-│   ├── generate-qr.ts   # QR code generator for NFC/print
 │   ├── generate-tts.ts  # Neural TTS voiceover generator
 │   └── render-videos.ts # Remotion batch MP4 renderer
 ├── site/                # Astro 5 static mobile-first web app
