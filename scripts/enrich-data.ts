@@ -87,13 +87,50 @@ async function main() {
   }
 
   const csvRaw = fs.readFileSync(CSV_FILE, 'utf-8');
-  const records = parse(csvRaw, {
+  const lines = csvRaw.split(/\r?\n/);
+
+  // Locate the header row containing 'Set Number' or 'set_number'
+  let headerIdx = lines.findIndex((l) => l.toLowerCase().includes('set number') || l.toLowerCase().includes('set_number'));
+  if (headerIdx === -1) {
+    headerIdx = 0;
+  }
+
+  const validCsv = lines.slice(headerIdx).join('\n');
+  const rawRecords = parse(validCsv, {
     columns: true,
     skip_empty_lines: true,
     trim: true,
-  }) as CsvLegoRecord[];
+    relax_column_count: true,
+  }) as Record<string, string>[];
 
-  console.log(`Found ${records.length} sets in CSV.`);
+  // Filter records to only those that represent built sets (ignore future / unbuilt sets)
+  const records = rawRecords.filter((r) => {
+    const rawNum = r['Set Number'] || r['set_number'] || r['SetNumber'] || '';
+    const trimmed = rawNum.trim();
+    if (!trimmed || !/^\d+(-\d+)?$/.test(trimmed)) return false;
+
+    const datePurchased = (r['Date Purchased'] || '').trim().toLowerCase();
+    const yearPurchased = (r['Year Purchased'] || '').trim().toLowerCase();
+    const dateFinished = (r['Date Finished'] || '').trim();
+    const yearFinished = (r['Year Finished'] || '').trim();
+    const timeToBuild = (r['Time to Build'] || r['time_to_build'] || '').trim();
+
+    // Exclude planned / future sets explicitly marked "Future"
+    if (datePurchased.includes('future') || yearPurchased.includes('future') || dateFinished.toLowerCase().includes('future')) {
+      return false;
+    }
+
+    // Must have evidence of being built (Time to Build, Date Finished, or Year Finished)
+    const hasBuildEvidence =
+      (timeToBuild && !timeToBuild.includes('#REF!')) ||
+      (dateFinished && !dateFinished.includes('#REF!')) ||
+      (yearFinished && !yearFinished.includes('#REF!'));
+
+    return hasBuildEvidence;
+  });
+
+  console.log(`Found ${records.length} built Lego sets in spreadsheet (filtered out unbuilt/future rows).`);
+
   if (!REBRICKABLE_API_KEY) {
     console.log(`ℹ️  No REBRICKABLE_API_KEY detected in .env. Using CDN images and fallback metadata.`);
     console.log(`   Get a free API key at https://rebrickable.com/api/ to enable full live metadata enrichment.`);
@@ -115,13 +152,14 @@ async function main() {
   const enrichedSets: EnrichedLegoSet[] = [];
 
   for (const record of records) {
-    const cleanId = record.set_number.trim().replace(/-1$/, '');
+    const rawSetNum = (record['Set Number'] || record['set_number'] || record['SetNumber'] || '').trim();
+    const cleanId = rawSetNum.replace(/-1$/, '');
     const setNum = cleanId.includes('-') ? cleanId : `${cleanId}-1`;
     console.log(`Processing set #${cleanId}...`);
 
-    let name = record.name || '';
-    let year = 2022;
-    let theme = 'Lego';
+    let name = record['Name'] || record['name'] || '';
+    let year = 2024;
+    let theme = record['Category'] || record['category'] || 'Lego';
     let pieces = 0;
     let imageUrl = `https://cdn.rebrickable.com/media/sets/${setNum}.jpg`;
 
@@ -163,6 +201,29 @@ async function main() {
 
     const previous = existingSets[cleanId] || {};
 
+    const rawBuildTime = record['Time to Build'] || record['time_to_build'] || record['build_time_hours'];
+    let buildTimeHours = previous.buildTimeHours;
+    let timeToBuildFormatted = previous.timeToBuildFormatted;
+    if (rawBuildTime && !String(rawBuildTime).includes('#REF!')) {
+      const trimmedTime = String(rawBuildTime).trim();
+      const hmMatch = trimmedTime.match(/^(?:(\d+)\s*h)?\s*(?:(\d+)\s*m)?$/i);
+      if (hmMatch && (hmMatch[1] || hmMatch[2])) {
+        const h = parseInt(hmMatch[1] || '0', 10);
+        const m = parseInt(hmMatch[2] || '0', 10);
+        buildTimeHours = Math.round((h + m / 60) * 100) / 100;
+        timeToBuildFormatted = trimmedTime;
+      } else {
+        const parsed = parseFloat(trimmedTime);
+        if (!isNaN(parsed)) {
+          buildTimeHours = parsed;
+          timeToBuildFormatted = `${parsed}h`;
+        }
+      }
+    }
+
+    const dateFinished = record['Date Finished'] && !record['Date Finished'].includes('#REF!') ? record['Date Finished'] : undefined;
+    const datePurchased = record['Date Purchased'] || undefined;
+
     const enriched: EnrichedLegoSet = {
       id: cleanId,
       setNum,
@@ -176,19 +237,39 @@ async function main() {
       subtitles: previous.subtitles,
       narrationText: previous.narrationText,
       videoPath: previous.videoPath,
-      buildDate: record.build_date || previous.buildDate,
-      buildTimeHours: record.build_time_hours ? parseFloat(String(record.build_time_hours)) : previous.buildTimeHours,
-      builtBy: record.built_by || previous.builtBy,
-      rating: record.rating ? parseFloat(String(record.rating)) : previous.rating,
-      funFacts: record.fun_facts || previous.funFacts || '',
-      notes: record.notes || previous.notes,
+      buildDate: dateFinished || datePurchased || record['build_date'] || previous.buildDate,
+      buildTimeHours,
+      timeToBuildFormatted,
+      builtBy: record['built_by'] || record['Built By'] || previous.builtBy || undefined,
+      rating: record['rating'] ? parseFloat(String(record['rating'])) : (previous.rating || undefined),
+      funFacts: record['fun_facts'] || previous.funFacts || '',
+      notes: record['Notes'] || record['notes'] || previous.notes,
     };
 
     enrichedSets.push(enriched);
   }
 
-  fs.writeFileSync(JSON_FILE, JSON.stringify(enrichedSets, null, 2), 'utf-8');
-  console.log(`\n🎉 Enriched data successfully written to ${JSON_FILE} (${enrichedSets.length} sets).`);
+  // De-duplicate if the same set was logged multiple times (keep the most recent / complete entry)
+  const uniqueMap = new Map<string, EnrichedLegoSet>();
+  for (const set of enrichedSets) {
+    if (!uniqueMap.has(set.id)) {
+      uniqueMap.set(set.id, set);
+    } else {
+      // Merge: prefer whichever has build info or later date
+      const existing = uniqueMap.get(set.id)!;
+      if (!existing.timeToBuildFormatted && set.timeToBuildFormatted) {
+        uniqueMap.set(set.id, set);
+      }
+    }
+  }
+
+  const finalSets = Array.from(uniqueMap.values());
+
+  // Sort sets numerically by set number
+  finalSets.sort((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10));
+
+  fs.writeFileSync(JSON_FILE, JSON.stringify(finalSets, null, 2), 'utf-8');
+  console.log(`\n🎉 Enriched data successfully written to ${JSON_FILE} (${finalSets.length} sets).`);
 }
 
 main().catch((err) => {

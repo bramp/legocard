@@ -5,10 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const DEFAULT_SHEET_URL =
-  'https://docs.google.com/spreadsheets/d/1QHvBO3RwVNfAeEzTP_bImbn7n19SoSi6coJYMTFhjQk/edit?gid=0#gid=0';
-
-const SHEET_URL = process.env.GOOGLE_SHEETS_URL || DEFAULT_SHEET_URL;
+const SHEET_URL = process.env.GOOGLE_SHEETS_URL;
 const OUTPUT_FILE = path.resolve(process.cwd(), 'data/sets.csv');
 
 // Regex patterns to extract sheet ID and gid
@@ -53,6 +50,12 @@ function getGoogleAccessToken(): string | null {
 }
 
 async function main() {
+  if (!SHEET_URL) {
+    console.error('❌ Error: GOOGLE_SHEETS_URL is not defined in .env.');
+    console.error('   Please add GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/.../edit to your .env file.');
+    process.exit(1);
+  }
+
   const { exportUrl, sheetId, gid } = getExportUrl(SHEET_URL);
   console.log(`📥 Fetching data from Google Sheets...`);
   console.log(`   Spreadsheet ID: ${sheetId}`);
@@ -116,7 +119,7 @@ async function main() {
   const lineCount = text.trim().split('\n').length;
   console.log(`\n🎉 Successfully fetched sheet!`);
   console.log(`   Saved ${lineCount - 1} rows to ${OUTPUT_FILE}`);
-  console.log(`\nNext step: Run 'npm run enrich' and 'npm run qr' to update your site!`);
+  console.log(`\nNext step: Run 'npm run enrich' to update your site!`);
 }
 
 main().catch((err) => {
