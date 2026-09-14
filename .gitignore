@@ -12,8 +12,9 @@ dist/
 build/
 out/
 
-# Rendered media & large downloads (optionally committed or hosted externally)
-data/videos/*.mp4
+# Generated QR codes (built in CI/locally on demand)
+data/qr/
+site/public/qr/
 
 # OS and Editor files
 .DS_Store

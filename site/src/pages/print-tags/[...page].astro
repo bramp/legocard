@@ -1,0 +1,183 @@
+---
+import type { GetStaticPathsOptions } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import { getLegoSets } from '../../lib/sets';
+import type { EnrichedLegoSet } from '../../../shared/types';
+import fs from 'node:fs';
+import path from 'node:path';
+
+export function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  function parseDateScore(dateStr?: string): number {
+    if (!dateStr) return 0;
+    const timestamp = Date.parse(dateStr);
+    if (!isNaN(timestamp)) return timestamp;
+    const yearMatch = dateStr.match(/\b(19\d\d|20\d\d)\b/);
+    if (yearMatch) return new Date(`${yearMatch[1]}-01-01`).getTime();
+    return 0;
+  }
+
+  const sets = getLegoSets();
+  // Sort by build date (most recent first)
+  const sorted = [...sets].sort((a, b) => {
+    const scoreA = parseDateScore(a.buildDate);
+    const scoreB = parseDateScore(b.buildDate);
+    if (scoreB !== scoreA) {
+      return scoreB - scoreA;
+    }
+    return Number(b.id) - Number(a.id);
+  });
+
+  return paginate(sorted, { pageSize: 10 });
+}
+
+interface PageProps {
+  data: EnrichedLegoSet[];
+  start: number;
+  end: number;
+  total: number;
+  currentPage: number;
+  size: number;
+  lastPage: number;
+  url: {
+    current: string;
+    prev: string | undefined;
+    next: string | undefined;
+  };
+}
+
+const { page } = Astro.props as { page: PageProps };
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Helper to resolve PNG path for each set
+function getQrPngSrc(setId: string): string {
+  const publicPng = path.resolve(process.cwd(), `public/qr/${setId}.png`);
+  if (fs.existsSync(publicPng)) {
+    return `${baseUrl}/qr/${setId}.png`;
+  }
+  const dataPng = path.resolve(process.cwd(), `../data/qr/${setId}.png`);
+  const altDataPng = path.resolve(process.cwd(), `data/qr/${setId}.png`);
+  const resolvedData = fs.existsSync(dataPng) ? dataPng : altDataPng;
+  if (fs.existsSync(resolvedData)) {
+    return `data:image/png;base64,${fs.readFileSync(resolvedData).toString('base64')}`;
+  }
+  return `${baseUrl}/qr/${setId}.png`;
+}
+---
+
+<Layout title={`Printable Display Stand Tags (Page ${page.currentPage} of ${page.lastPage})`}>
+  <div class="space-y-6">
+    <!-- Action / Print Header -->
+    <div class="print:hidden bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <h1 class="text-lg font-bold text-white">Physical Display Stand Tags</h1>
+        <p class="text-xs text-slate-400 mt-0.5">
+          Sorted by build date (most recent first). Showing {page.start + 1}–{page.end + 1} of {page.total} sets.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button
+          onclick="window.print()"
+          type="button"
+          class="cursor-pointer bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-amber-500/20 transition-colors"
+        >
+          <span>🖨️</span> Print Current 10 Cards
+        </button>
+      </div>
+    </div>
+
+    <!-- Printable Sheet Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 print:grid print:grid-cols-3 print:gap-4 print:text-black">
+      {page.data.map((set) => {
+        const qrSrc = getQrPngSrc(set.id);
+        return (
+          <div class="bg-white text-slate-950 rounded-2xl p-4 border border-slate-300 shadow-sm flex flex-col justify-between aspect-[2.5/3.5] break-inside-avoid print:shadow-none print:border-slate-400">
+            <!-- Tag Header -->
+            <div class="flex items-start justify-between border-b border-slate-200 pb-2">
+              <div>
+                <span class="text-[9px] font-black uppercase tracking-wider text-amber-600 block">
+                  {set.theme || 'Lego'}
+                </span>
+                <h3 class="font-extrabold text-xs text-slate-900 leading-tight line-clamp-2">
+                  {set.name}
+                </h3>
+              </div>
+              <span class="font-mono font-bold text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded border border-slate-300 shrink-0 ml-2">
+                #{set.id}
+              </span>
+            </div>
+
+            <!-- Tag Middle: Set Thumbnail & QR code -->
+            <div class="my-2 flex items-center justify-between gap-2">
+              <div class="w-1/2 aspect-square flex items-center justify-center p-1 bg-slate-50 rounded-lg border border-slate-100">
+                <img
+                  src={set.imageUrl}
+                  alt={set.name}
+                  class="object-contain max-h-20 w-full"
+                  loading="lazy"
+                />
+              </div>
+              <div class="w-1/2 aspect-square flex items-center justify-center p-1 bg-slate-50 rounded-lg border border-slate-100">
+                <img
+                  src={qrSrc}
+                  alt={`QR Code for set #${set.id}`}
+                  class="w-full h-full object-contain rounded"
+                  width="120"
+                  height="120"
+                />
+              </div>
+            </div>
+
+            <!-- Tag Footer: Specs & NFC prompt -->
+            <div class="border-t border-slate-200 pt-2 flex items-center justify-between text-[10px] text-slate-600">
+              <div>
+                <span class="font-bold text-slate-900">{set.pieces ? set.pieces.toLocaleString() : '—'}</span> pcs
+                {set.buildTimeHours && <span> • <span class="font-bold text-slate-900">{set.buildTimeHours}h</span></span>}
+              </div>
+              <div class="text-right">
+                {set.buildDate && <span class="text-[9px] text-slate-400 block">{set.buildDate}</span>}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Pagination Controls -->
+    <nav aria-label="Pagination" class="print:hidden bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+      <div>
+        {page.url.prev ? (
+          <a
+            href={page.url.prev}
+            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-colors border border-slate-700"
+          >
+            ‹ Previous
+          </a>
+        ) : (
+          <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 text-slate-600 text-xs font-semibold border border-slate-800 cursor-not-allowed">
+            ‹ Previous
+          </span>
+        )}
+      </div>
+
+      <div class="text-xs text-slate-400 font-medium">
+        Page <span class="font-bold text-white">{page.currentPage}</span> of <span class="font-bold text-white">{page.lastPage}</span>
+      </div>
+
+      <div>
+        {page.url.next ? (
+          <a
+            href={page.url.next}
+            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition-colors shadow-md shadow-amber-500/20"
+          >
+            Next ›
+          </a>
+        ) : (
+          <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 text-slate-600 text-xs font-semibold border border-slate-800 cursor-not-allowed">
+            Next ›
+          </span>
+        )}
+      </div>
+    </nav>
+  </div>
+</Layout>
