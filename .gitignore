@@ -12,9 +12,8 @@ dist/
 build/
 out/
 
-# Generated QR codes (built in CI/locally on demand)
-data/qr/
-site/public/qr/
+# Downloaded stock photos (cached locally, site uses CDN URLs)
+data/images/
 
 # OS and Editor files
 .DS_Store
