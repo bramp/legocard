@@ -1,10 +1,9 @@
 ---
 import type { GetStaticPathsOptions } from 'astro';
 import Layout from '../../layouts/Layout.astro';
+import LegoQr from '../../components/LegoQr.astro';
 import { getLegoSets } from '../../lib/sets';
-import type { EnrichedLegoSet } from '../../../shared/types';
-import fs from 'node:fs';
-import path from 'node:path';
+import type { EnrichedLegoSet } from '../../../../shared/types';
 
 export function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   function parseDateScore(dateStr?: string): number {
@@ -47,21 +46,6 @@ interface PageProps {
 
 const { page } = Astro.props as { page: PageProps };
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-// Helper to resolve PNG path for each set
-function getQrPngSrc(setId: string): string {
-  const publicPng = path.resolve(process.cwd(), `public/qr/${setId}.png`);
-  if (fs.existsSync(publicPng)) {
-    return `${baseUrl}/qr/${setId}.png`;
-  }
-  const dataPng = path.resolve(process.cwd(), `../data/qr/${setId}.png`);
-  const altDataPng = path.resolve(process.cwd(), `data/qr/${setId}.png`);
-  const resolvedData = fs.existsSync(dataPng) ? dataPng : altDataPng;
-  if (fs.existsSync(resolvedData)) {
-    return `data:image/png;base64,${fs.readFileSync(resolvedData).toString('base64')}`;
-  }
-  return `${baseUrl}/qr/${setId}.png`;
-}
 ---
 
 <Layout title={`Printable Display Stand Tags (Page ${page.currentPage} of ${page.lastPage})`}>
@@ -89,7 +73,6 @@ function getQrPngSrc(setId: string): string {
     <!-- Printable Sheet Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 print:grid print:grid-cols-3 print:gap-4 print:text-black">
       {page.data.map((set) => {
-        const qrSrc = getQrPngSrc(set.id);
         return (
           <div class="bg-white text-slate-950 rounded-2xl p-4 border border-slate-300 shadow-sm flex flex-col justify-between aspect-[2.5/3.5] break-inside-avoid print:shadow-none print:border-slate-400">
             <!-- Tag Header -->
@@ -118,12 +101,12 @@ function getQrPngSrc(setId: string): string {
                 />
               </div>
               <div class="w-1/2 aspect-square flex items-center justify-center p-1 bg-slate-50 rounded-lg border border-slate-100">
-                <img
-                  src={qrSrc}
+                <LegoQr
+                  setId={set.id}
+                  format="svg"
+                  size={120}
                   alt={`QR Code for set #${set.id}`}
                   class="w-full h-full object-contain rounded"
-                  width="120"
-                  height="120"
                 />
               </div>
             </div>

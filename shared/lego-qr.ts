@@ -19,7 +19,7 @@ export interface LegoQrOptions {
    * (default: 'merged')
    */
   brickStyle?: 'merged' | 'individual' | 'baseplate';
-  /** QR Error Correction Level (default: 'H') */
+  /** QR Error Correction Level (default: 'L') */
   errorCorrectionLevel?: 'L' | 'M' | 'Q' | 'H';
   /** Whether to emboss the LEGO logo on top of each stud (default: 'none') */
   studLogo?: 'none' | 'lego';
