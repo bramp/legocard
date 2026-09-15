@@ -13,7 +13,7 @@ const JSON_FILE = path.join(DATA_DIR, 'sets.json');
 const IMAGES_DIR = path.join(DATA_DIR, 'images');
 const CACHE_DIR = path.join(DATA_DIR, 'cache', 'rebrickable');
 const LEGO_CACHE_DIR = path.join(DATA_DIR, 'cache', 'lego');
-const LEGO_INSTRUCTIONS_DIR = process.env.LEGO_INSTRUCTIONS_DIR || path.join(os.homedir(), 'personal/lego-instructions/data');
+const LEGO_INSTRUCTIONS_DIR = process.env.LEGO_INSTRUCTIONS_DIR;
 
 const REBRICKABLE_API_KEY = process.env.REBRICKABLE_API_KEY;
 
@@ -52,16 +52,18 @@ function getLegoMetadata(cleanId: string): LegoMetadata | null {
     }
   }
 
-  // Fallback: copy from ~/personal/lego-instructions/data/{cleanId}/metadata.json
-  const sourceFile = path.join(LEGO_INSTRUCTIONS_DIR, cleanId, 'metadata.json');
-  if (fs.existsSync(sourceFile)) {
-    try {
-      const content = fs.readFileSync(sourceFile, 'utf-8');
-      const parsed = JSON.parse(content) as LegoMetadata;
-      fs.writeFileSync(cacheFile, JSON.stringify(parsed, null, 2), 'utf-8');
-      return parsed;
-    } catch {
-      // ignore
+  // Fallback: copy from LEGO_INSTRUCTIONS_DIR/{cleanId}/metadata.json if configured
+  if (LEGO_INSTRUCTIONS_DIR) {
+    const sourceFile = path.join(LEGO_INSTRUCTIONS_DIR, cleanId, 'metadata.json');
+    if (fs.existsSync(sourceFile)) {
+      try {
+        const content = fs.readFileSync(sourceFile, 'utf-8');
+        const parsed = JSON.parse(content) as LegoMetadata;
+        fs.writeFileSync(cacheFile, JSON.stringify(parsed, null, 2), 'utf-8');
+        return parsed;
+      } catch {
+        // ignore
+      }
     }
   }
 
