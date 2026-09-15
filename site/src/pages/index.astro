@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getLegoSets } from '../lib/sets';
+import { getSetImageUrl } from '../lib/assets';
 
 const sets = getLegoSets();
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -53,7 +54,7 @@ const totalHours = sets.reduce((sum, s) => sum + (s.buildTimeHours || 0), 0);
         <!-- Card Image Header -->
         <div class="relative aspect-video sm:aspect-square bg-slate-950 flex items-center justify-center overflow-hidden p-4">
           <img
-            src={set.imageUrl}
+            src={getSetImageUrl(set)}
             alt={set.name}
             loading="lazy"
             class="object-contain w-full h-full max-h-48 sm:max-h-56 group-hover:scale-105 transition-transform duration-300"

@@ -15,6 +15,9 @@ out/
 # Raw CSV spreadsheets and backups (local data source; public metadata lives in sets.json)
 data/*.csv
 
+# Local API caches (Rebrickable, Bricklink, etc.)
+data/cache/
+
 # Downloaded stock photos (cached locally, site uses CDN URLs)
 data/images/
 

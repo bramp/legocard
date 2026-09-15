@@ -10,11 +10,46 @@ const DATA_DIR = path.resolve(process.cwd(), 'data');
 const CSV_FILE = path.join(DATA_DIR, 'sets.csv');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
 const IMAGES_DIR = path.join(DATA_DIR, 'images');
+const CACHE_DIR = path.join(DATA_DIR, 'cache', 'rebrickable');
 
 const REBRICKABLE_API_KEY = process.env.REBRICKABLE_API_KEY;
 
+// Ensure cache directories exist
+fs.mkdirSync(CACHE_DIR, { recursive: true });
+fs.mkdirSync(IMAGES_DIR, { recursive: true });
+
+function getCachedJson<T>(filename: string): T | null {
+  const filePath = path.join(CACHE_DIR, filename);
+  if (fs.existsSync(filePath)) {
+    try {
+      return JSON.parse(fs.readFileSync(filePath, 'utf-8')) as T;
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
+function setCachedJson(filename: string, data: unknown): void {
+  const filePath = path.join(CACHE_DIR, filename);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+}
+
 // Cache theme ID -> Theme Name to avoid duplicate network requests
 const themeCache = new Map<number, string>();
+
+function parseYear(val: string | undefined): number | undefined {
+  if (!val) return undefined;
+  const match = String(val).match(/\b(19\d\d|20\d\d)\b/);
+  return match ? parseInt(match[1], 10) : undefined;
+}
+
+function parsePieces(val: string | number | undefined): number | undefined {
+  if (val === undefined || val === null) return undefined;
+  const clean = String(val).replace(/,/g, '').trim();
+  const num = parseInt(clean, 10);
+  return isNaN(num) || num <= 0 ? undefined : num;
+}
 
 // Fallback metadata for starter/sample sets when no API key is provided
 const FALLBACK_METADATA: Record<string, { name: string; year: number; theme: string; pieces: number }> = {
@@ -25,41 +60,82 @@ const FALLBACK_METADATA: Record<string, { name: string; year: number; theme: str
   '21309': { name: 'NASA Apollo Saturn V', year: 2017, theme: 'NASA / Ideas', pieces: 1969 },
 };
 
-async function fetchRebrickableTheme(themeId: number, apiKey: string): Promise<string> {
+async function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchRebrickableTheme(themeId: number, apiKey: string): Promise<string | undefined> {
   if (themeCache.has(themeId)) {
     return themeCache.get(themeId)!;
   }
+  const cacheKey = `theme_${themeId}.json`;
+  const cached = getCachedJson<{ name: string }>(cacheKey);
+  if (cached && cached.name) {
+    themeCache.set(themeId, cached.name);
+    return cached.name;
+  }
+
   try {
     const res = await fetch(`https://rebrickable.com/api/v3/lego/themes/${themeId}/`, {
       headers: { Authorization: `key ${apiKey}` }
     });
     if (res.ok) {
       const data = await res.json() as { name: string };
+      setCachedJson(cacheKey, data);
       themeCache.set(themeId, data.name);
       return data.name;
     }
   } catch (err) {
     console.warn(`[Warning] Could not fetch theme ${themeId}:`, err);
   }
-  return 'Lego';
+  return undefined;
 }
 
-async function fetchRebrickableSet(setNum: string, apiKey: string): Promise<{ data?: RebrickableSetResponse; theme?: string }> {
-  try {
-    const res = await fetch(`https://rebrickable.com/api/v3/lego/sets/${setNum}/`, {
-      headers: { Authorization: `key ${apiKey}` }
-    });
-    if (!res.ok) {
-      console.warn(`[Warning] Rebrickable API returned ${res.status} for set ${setNum}`);
-      return {};
+async function fetchRebrickableSet(
+  setNum: string,
+  apiKey: string
+): Promise<{ data?: RebrickableSetResponse; theme?: string }> {
+  const cacheKey = `set_${setNum}.json`;
+  const cached = getCachedJson<RebrickableSetResponse>(cacheKey);
+  if (cached && cached.name) {
+    let theme: string | undefined;
+    if (cached.theme_id) {
+      theme = await fetchRebrickableTheme(cached.theme_id, apiKey);
     }
-    const data = await res.json() as RebrickableSetResponse;
-    const theme = await fetchRebrickableTheme(data.theme_id, apiKey);
-    return { data, theme };
-  } catch (err) {
-    console.warn(`[Error] Rebrickable API error for set ${setNum}:`, err);
-    return {};
+    return { data: cached, theme };
   }
+
+  // Network fetch with retry on 429 rate limit
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await fetch(`https://rebrickable.com/api/v3/lego/sets/${setNum}/`, {
+        headers: { Authorization: `key ${apiKey}` }
+      });
+
+      if (res.status === 429) {
+        console.warn(`[Rate Limit] Rebrickable 429 for set ${setNum}, backing off ${attempt * 1500}ms...`);
+        await sleep(attempt * 1500);
+        continue;
+      }
+
+      if (!res.ok) {
+        console.warn(`[Warning] Rebrickable API returned ${res.status} for set ${setNum}`);
+        return {};
+      }
+
+      const data = await res.json() as RebrickableSetResponse;
+      setCachedJson(cacheKey, data);
+      let theme: string | undefined;
+      if (data.theme_id) {
+        theme = await fetchRebrickableTheme(data.theme_id, apiKey);
+      }
+      return { data, theme };
+    } catch (err) {
+      console.warn(`[Error] Rebrickable API error for set ${setNum} (attempt ${attempt}):`, err);
+      if (attempt < 3) await sleep(1000);
+    }
+  }
+  return {};
 }
 
 async function downloadImage(url: string, destPath: string): Promise<boolean> {
@@ -157,37 +233,51 @@ async function main() {
     const setNum = cleanId.includes('-') ? cleanId : `${cleanId}-1`;
     console.log(`Processing set #${cleanId}...`);
 
-    let name = record['Name'] || record['name'] || '';
-    let year = 2024;
-    let theme = record['Category'] || record['category'] || 'Lego';
-    let pieces = 0;
-    let imageUrl = `https://cdn.rebrickable.com/media/sets/${setNum}.jpg`;
+    const previous = existingSets[cleanId] || {};
 
-    // 1. Try Rebrickable API if key exists
+    let name = record['Name'] || record['name'] || previous.name;
+    let theme = record['Category'] || record['category'] || previous.theme;
+    let pieces = parsePieces(record['Number of Pieces'] || record['pieces']) || previous.pieces;
+    let imageUrl = previous.imageUrl || `https://cdn.rebrickable.com/media/sets/${setNum}.jpg`;
+
+    // Year released / retired from spreadsheet
+    const csvDateReleased = record['Date Set Released'] || record['date_released'] || previous.dateReleased;
+    const csvDateRetired = record['Date Set Retired'] || record['date_retired'] || previous.dateRetired;
+    let yearReleased = parseYear(csvDateReleased) || previous.yearReleased;
+    let yearRetired = parseYear(csvDateRetired) || previous.yearRetired;
+
+    // 1. Try Rebrickable API (uses local cache in data/cache/rebrickable first)
     if (REBRICKABLE_API_KEY) {
       const apiResult = await fetchRebrickableSet(setNum, REBRICKABLE_API_KEY);
       if (apiResult.data) {
-        name = apiResult.data.name;
-        year = apiResult.data.year;
-        pieces = apiResult.data.num_parts;
+        if (!name) name = apiResult.data.name;
+        if (!yearReleased && apiResult.data.year) {
+          yearReleased = apiResult.data.year;
+        }
+        if (!pieces && apiResult.data.num_parts) {
+          pieces = apiResult.data.num_parts;
+        }
         if (apiResult.data.set_img_url) {
           imageUrl = apiResult.data.set_img_url;
         }
       }
-      if (apiResult.theme) {
+      if (apiResult.theme && !theme) {
         theme = apiResult.theme;
       }
     } else if (FALLBACK_METADATA[cleanId]) {
       const fb = FALLBACK_METADATA[cleanId];
       if (!name) name = fb.name;
-      year = fb.year;
-      theme = fb.theme;
-      pieces = fb.pieces;
+      if (!yearReleased) yearReleased = fb.year;
+      if (!theme) theme = fb.theme;
+      if (!pieces) pieces = fb.pieces;
     }
 
     if (!name) {
       name = `Lego Set #${cleanId}`;
     }
+
+    // Primary display year: release year, or fallback to previous display year
+    const displayYear = yearReleased || previous.year;
 
     // 2. Download high-res stock photo
     const imageFilename = `${cleanId}.jpg`;
@@ -198,8 +288,6 @@ async function main() {
     } else {
       console.log(`  ⚠ Could not download image for #${cleanId}`);
     }
-
-    const previous = existingSets[cleanId] || {};
 
     const rawBuildTime = record['Time to Build'] || record['time_to_build'] || record['build_time_hours'];
     let buildTimeHours = previous.buildTimeHours;
@@ -228,10 +316,20 @@ async function main() {
       id: cleanId,
       setNum,
       name,
-      year,
+      year: displayYear,
+      yearReleased,
+      yearRetired,
+      dateReleased: csvDateReleased || undefined,
+      dateRetired: csvDateRetired || undefined,
       theme,
       pieces,
       imageUrl,
+      media: {
+        image: `images/${imageFilename}`,
+        audio: previous.media?.audio || (previous.audioPath ? `audio/${cleanId}.mp3` : undefined),
+        subtitles: previous.media?.subtitles || (previous.subtitles ? `audio/${cleanId}.json` : undefined),
+        video: previous.media?.video || (previous.videoPath ? `videos/${cleanId}.mp4` : undefined),
+      },
       localImagePath: downloaded ? `data/images/${imageFilename}` : undefined,
       audioPath: previous.audioPath,
       subtitles: previous.subtitles,
@@ -241,7 +339,6 @@ async function main() {
       buildTimeHours,
       timeToBuildFormatted,
       builtBy: record['built_by'] || record['Built By'] || previous.builtBy || undefined,
-      rating: record['rating'] ? parseFloat(String(record['rating'])) : (previous.rating || undefined),
       funFacts: record['fun_facts'] || previous.funFacts || '',
       notes: record['Notes'] || record['notes'] || previous.notes,
     };

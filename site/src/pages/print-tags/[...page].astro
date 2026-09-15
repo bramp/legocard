@@ -3,6 +3,7 @@ import type { GetStaticPathsOptions } from 'astro';
 import Layout from '../../layouts/Layout.astro';
 import LegoQr from '../../components/LegoQr.astro';
 import { getLegoSets } from '../../lib/sets';
+import { getSetImageUrl } from '../../lib/assets';
 import type { EnrichedLegoSet } from '../../../../shared/types';
 
 export function getStaticPaths({ paginate }: GetStaticPathsOptions) {
@@ -94,7 +95,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
             <div class="my-2 flex items-center justify-between gap-2">
               <div class="w-1/2 aspect-square flex items-center justify-center p-1 bg-slate-50 rounded-lg border border-slate-100">
                 <img
-                  src={set.imageUrl}
+                  src={getSetImageUrl(set)}
                   alt={set.name}
                   class="object-contain max-h-20 w-full"
                   loading="lazy"

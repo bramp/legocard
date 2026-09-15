@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import LegoQr from '../../components/LegoQr.astro';
 import { getLegoSets } from '../../lib/sets';
+import { getSetMediaUrls } from '../../lib/assets';
 
 export function getStaticPaths() {
   const sets = getLegoSets();
@@ -13,12 +14,13 @@ export function getStaticPaths() {
 
 const { set } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const media = getSetMediaUrls(set);
 ---
 
 <Layout
   title={`${set.name} (#${set.id})`}
   description={`Lego Set #${set.id}: ${set.name}. ${set.pieces || 0} pieces. Built in ${set.buildTimeHours || 'several'} hours.`}
-  image={set.imageUrl}
+  image={media.image}
 >
   <div class="space-y-6">
     <!-- Top Bar Navigation & Actions -->
@@ -45,7 +47,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Hero Image Container with Touch Zoom Feel -->
       <div class="relative bg-gradient-to-b from-slate-950 to-slate-900 p-6 flex items-center justify-center min-h-[300px] sm:min-h-[400px]">
         <img
-          src={set.imageUrl}
+          src={media.image}
           alt={set.name}
           class="object-contain max-h-[320px] sm:max-h-[420px] w-full drop-shadow-[0_20px_35px_rgba(0,0,0,0.8)]"
         />
@@ -54,18 +56,12 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="bg-amber-500/20 text-amber-400 border border-amber-500/40 font-mono font-bold text-xs px-2.5 py-1 rounded-full">
             #{set.id}
           </span>
-          {set.year && (
+          {(set.yearReleased || set.year) && (
             <span class="bg-slate-950/80 text-slate-300 border border-slate-800 text-xs font-medium px-2.5 py-1 rounded-full">
-              {set.year}
+              {set.yearReleased || set.year}
             </span>
           )}
         </div>
-
-        {set.rating && (
-          <div class="absolute top-4 right-4 bg-slate-950/80 border border-slate-800 text-amber-400 font-bold text-xs px-2.5 py-1 rounded-full flex items-center gap-1">
-            <span>★</span> {set.rating}/5
-          </div>
-        )}
       </div>
 
       <!-- Card Body Content -->
@@ -117,6 +113,22 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
           )}
         </div>
 
+        <!-- Release / Retirement Timeline Badges if available -->
+        {(set.dateReleased || set.dateRetired || set.yearRetired) && (
+          <div class="flex flex-wrap gap-2 text-xs">
+            {set.dateReleased && (
+              <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
+                <strong class="text-slate-300">Released:</strong> {set.dateReleased}
+              </span>
+            )}
+            {(set.dateRetired || set.yearRetired) && (
+              <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
+                <strong class="text-slate-300">Retired:</strong> {set.dateRetired || set.yearRetired}
+              </span>
+            )}
+          </div>
+        )}
+
         <!-- Fun Facts & Trivia -->
         {set.funFacts && (
           <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4 sm:p-5">
@@ -141,14 +153,32 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
           </div>
         )}
 
-        <!-- Video Highlight Placeholder (Phase 2 integration) -->
-        <div class="border border-dashed border-slate-800 rounded-2xl p-5 text-center bg-slate-950/30">
-          <span class="text-2xl mb-1 block">🎬</span>
-          <h4 class="text-sm font-bold text-slate-200">Video Showcase Coming Soon</h4>
-          <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-            A vertical 9:16 highlight reel with animated stats and voiceover is being generated for this set.
-          </p>
-        </div>
+        <!-- Video Highlight Showcase -->
+        {media.video ? (
+          <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4 sm:p-5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
+              <span>🎬</span> Video Showcase
+            </h3>
+            <div class="aspect-[9/16] max-w-xs mx-auto rounded-xl overflow-hidden bg-black shadow-lg">
+              <video
+                src={media.video}
+                controls
+                playsinline
+                preload="metadata"
+                poster={media.image}
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        ) : (
+          <div class="border border-dashed border-slate-800 rounded-2xl p-5 text-center bg-slate-950/30">
+            <span class="text-2xl mb-1 block">🎬</span>
+            <h4 class="text-sm font-bold text-slate-200">Video Showcase Coming Soon</h4>
+            <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+              A vertical 9:16 highlight reel with animated stats and voiceover is being generated for this set.
+            </p>
+          </div>
+        )}
       </div>
     </article>
   </div>

@@ -54,14 +54,26 @@ export interface LegoDimensions {
   depth?: number;  // cm
 }
 
+export interface LegoMedia {
+  image?: string;     // Relative path on CDN, e.g. "images/10497.jpg"
+  audio?: string;     // Relative path on CDN, e.g. "audio/10497.mp3"
+  subtitles?: string; // Relative path on CDN, e.g. "audio/10497.json"
+  video?: string;     // Relative path on CDN, e.g. "videos/10497.mp4"
+}
+
 export interface EnrichedLegoSet {
   id: string; // Clean set number (e.g. "10497")
   setNum: string; // Rebrickable format (e.g. "10497-1")
   name: string;
-  year: number;
-  theme: string;
-  pieces: number;
-  imageUrl: string;
+  year?: number; // Primary display year (yearReleased or year from metadata)
+  yearReleased?: number;
+  yearRetired?: number;
+  dateReleased?: string;
+  dateRetired?: string;
+  theme?: string;
+  pieces?: number;
+  imageUrl?: string;
+  media?: LegoMedia;
   localImagePath?: string;
   audioPath?: string;
   subtitles?: WordTimestamp[];
@@ -71,14 +83,8 @@ export interface EnrichedLegoSet {
   buildTimeHours?: number;
   timeToBuildFormatted?: string;
   builtBy?: string;
-  rating?: number;
-  funFacts: string;
+  funFacts?: string;
   notes?: string;
   dimensions?: LegoDimensions;
-  rrp?: string;
-  pricePaid?: string;
-  supplier?: string;
-  dateReleased?: string;
-  dateRetired?: string;
   datePurchased?: string;
 }
