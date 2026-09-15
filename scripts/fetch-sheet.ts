@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 import dotenv from 'dotenv';
+import { parse } from 'csv-parse/sync';
+import { stringify } from 'csv-stringify/sync';
 
 dotenv.config();
 
@@ -115,10 +117,61 @@ async function main() {
     console.log(`   Backed up existing CSV to data/sets.backup.csv`);
   }
 
-  fs.writeFileSync(OUTPUT_FILE, text, 'utf-8');
-  const lineCount = text.trim().split('\n').length;
-  console.log(`\n🎉 Successfully fetched sheet!`);
-  console.log(`   Saved ${lineCount - 1} rows to ${OUTPUT_FILE}`);
+  // Clean and sanitize CSV:
+  // 1. Locate the true header row (skip leading summary/formula rows like sums or formulas)
+  const lines = text.split(/\r?\n/);
+  const headerIdx = lines.findIndex((l) => {
+    const lower = l.toLowerCase();
+    return lower.includes('set number') || lower.includes('set_number');
+  });
+
+  if (headerIdx === -1) {
+    console.warn(`⚠️ Warning: Could not locate a header row containing 'Set Number'. Saving raw CSV.`);
+    fs.writeFileSync(OUTPUT_FILE, text, 'utf-8');
+  } else {
+    const validCsv = lines.slice(headerIdx).join('\n');
+    const records = parse(validCsv, {
+      columns: true,
+      skip_empty_lines: true,
+      trim: true,
+      relax_column_count: true,
+    }) as Record<string, string>[];
+
+    // Filter out columns with pricing or financial details
+    const SENSITIVE_COLUMN_PATTERNS = [
+      /price/i,
+      /rrp/i,
+      /cost/i,
+      /paid/i,
+      /supplier/i,
+      /premium/i,
+      /brickeconomy/i,
+      /estimate/i,
+    ];
+
+    const sanitizedRecords = records.map((record) => {
+      const cleanRecord: Record<string, string> = {};
+      for (const [key, value] of Object.entries(record)) {
+        const trimmedKey = key.trim();
+        // Skip unnamed/empty headers or sensitive financial columns
+        if (!trimmedKey) continue;
+        if (SENSITIVE_COLUMN_PATTERNS.some((pat) => pat.test(trimmedKey))) continue;
+        cleanRecord[trimmedKey] = value;
+      }
+      return cleanRecord;
+    });
+
+    const sanitizedCsv = stringify(sanitizedRecords, {
+      header: true,
+    });
+
+    fs.writeFileSync(OUTPUT_FILE, sanitizedCsv, 'utf-8');
+    console.log(`   Sanitized columns: stripped pricing, estimates, and suppliers.`);
+  }
+
+  const lineCount = fs.readFileSync(OUTPUT_FILE, 'utf-8').trim().split('\n').length;
+  console.log(`\n🎉 Successfully fetched and sanitized sheet!`);
+  console.log(`   Saved ${lineCount - 1} records to ${OUTPUT_FILE}`);
   console.log(`\nNext step: Run 'npm run enrich' to update your site!`);
 }
 

@@ -12,6 +12,9 @@ dist/
 build/
 out/
 
+# Raw CSV spreadsheets and backups (local data source; public metadata lives in sets.json)
+data/*.csv
+
 # Downloaded stock photos (cached locally, site uses CDN URLs)
 data/images/
 
