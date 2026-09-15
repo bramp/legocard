@@ -1,82 +1,2007 @@
 [
   {
-    "id": "10497",
-    "setNum": "10497-1",
-    "name": "Galaxy Explorer",
+    "id": "10234",
+    "setNum": "10234-1",
+    "name": "Sydney Opera House",
+    "year": 2013,
+    "yearReleased": 2013,
+    "theme": "Icons (Creator Expert & Advanced Models) / Landmark",
+    "age": "16+",
+    "pieces": 2989,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6050855.pdf",
+        "filename": "6050855.pdf",
+        "filesize": 97501046,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6050855.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 4
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6050859.pdf",
+        "filename": "6050859.pdf",
+        "filesize": 175790850,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6050859.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 4
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6075199.pdf",
+        "filename": "6075199.pdf",
+        "filesize": 74073348,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6075199.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 3,
+        "sequenceTotal": 4
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6075201.pdf",
+        "filename": "6075201.pdf",
+        "filesize": 84331647,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6075201.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 4,
+        "sequenceTotal": 4
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/10234-1/15850.jpg",
+    "media": {
+      "image": "images/10234.jpg"
+    },
+    "localImagePath": "data/images/10234.jpg",
+    "buildDate": "2026-08-22",
+    "buildTimeHours": 7.37,
+    "timeToBuildFormatted": "7h 22m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "10237",
+    "setNum": "10237-1",
+    "name": "The Tower of Orthanc",
+    "year": 2013,
+    "yearReleased": 2013,
+    "yearRetired": 2015,
+    "dateRetired": "October 2015",
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings",
+    "age": "14+",
+    "pieces": 2361,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6055739.pdf",
+        "filename": "6055739.pdf",
+        "filesize": 13191501,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6055739.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 3
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6055740.pdf",
+        "filename": "6055740.pdf",
+        "filesize": 13044914,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6055740.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 3
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6055741.pdf",
+        "filename": "6055741.pdf",
+        "filesize": 12799726,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6055741.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 3,
+        "sequenceTotal": 3
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/10237-1/6587.jpg",
+    "media": {
+      "image": "images/10237.jpg"
+    },
+    "localImagePath": "data/images/10237.jpg",
+    "buildDate": "2025-08-31",
+    "buildTimeHours": 5.68,
+    "timeToBuildFormatted": "5h 41m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "10256",
+    "setNum": "10256-1",
+    "name": "Taj Mahal {Reissue}",
+    "year": 2017,
+    "yearReleased": 2017,
+    "theme": "Icons (Creator Expert & Advanced Models) / Landmark",
+    "age": "16+",
+    "pieces": 5923,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6226649.pdf",
+        "filename": "6226649.pdf",
+        "filesize": 33309073,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6226649.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/10256-1/10681.jpg",
+    "media": {
+      "image": "images/10256.jpg"
+    },
+    "localImagePath": "data/images/10256.jpg",
+    "buildDate": "2026-06-30",
+    "buildTimeHours": 1.87,
+    "timeToBuildFormatted": "1h 52m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "10333",
+    "setNum": "10333-1",
+    "name": "Barad-dûr",
+    "year": 2024,
+    "yearReleased": 2024,
+    "dateReleased": "June 4, 2024",
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (Creator Expert & Advanced Models)",
+    "age": "18+",
+    "pieces": 5478,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6521154.pdf",
+        "filename": "6521154.pdf",
+        "filesize": 40859886,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6521154.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 3
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6521156.pdf",
+        "filename": "6521156.pdf",
+        "filesize": 79371196,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6521156.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 3,
+        "sequenceTotal": 3
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6576299.pdf",
+        "filename": "6576299.pdf",
+        "filesize": 137305655,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6576299.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 3
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/10333-1/140959.jpg",
+    "media": {
+      "image": "images/10333.jpg"
+    },
+    "localImagePath": "data/images/10333.jpg",
+    "buildDate": "2025",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "10349",
+    "setNum": "10349-1",
+    "name": "Happy Plants",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "Botanicals (Botanical Collection)",
+    "age": "9+",
+    "pieces": 217,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6582595.pdf",
+        "filename": "6582595.pdf",
+        "filesize": 8946373,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6582595.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 2
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6582596.pdf",
+        "filename": "6582596.pdf",
+        "filesize": 8209120,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6582596.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 2
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.additional.info.pdf/10349_CZ_BI_BK1_Info_Booklet.pdf",
+        "filename": "10349_CZ_BI_BK1_Info_Booklet.pdf",
+        "filesize": 2073609,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.additional.info.img/10349_CZ_BI_BK1_Info_Booklet.png",
+        "isAdditionalInfoBooklet": true,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.additional.info.pdf/10349_CZ_BI_BK2_Info_Booklet.pdf",
+        "filename": "10349_CZ_BI_BK2_Info_Booklet.pdf",
+        "filesize": 2148614,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.additional.info.img/10349_CZ_BI_BK2_Info_Booklet.png",
+        "isAdditionalInfoBooklet": true,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/10349-1/154678.jpg",
+    "media": {
+      "image": "images/10349.jpg"
+    },
+    "localImagePath": "data/images/10349.jpg",
+    "buildDate": "2026-01-09",
+    "buildTimeHours": 0.78,
+    "timeToBuildFormatted": "0h 47m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "10354",
+    "setNum": "10354-1",
+    "name": "The Shire",
+    "year": 2025,
+    "yearReleased": 2025,
+    "dateReleased": "April 5, 2025",
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (Creator Expert & Advanced Models)",
+    "age": "18+",
+    "pieces": 2017,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6574801.pdf",
+        "filename": "6574801.pdf",
+        "filesize": 55938440,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6574801.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 3
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6574802.pdf",
+        "filename": "6574802.pdf",
+        "filesize": 50829012,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6574802.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 3
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6574803.pdf",
+        "filename": "6574803.pdf",
+        "filesize": 16280071,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6574803.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 3,
+        "sequenceTotal": 3
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/10354-1/153628.jpg",
+    "media": {
+      "image": "images/10354.jpg"
+    },
+    "localImagePath": "data/images/10354.jpg",
+    "buildDate": "2025-08-09",
+    "buildTimeHours": 4.8,
+    "timeToBuildFormatted": "4h 48m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "10367",
+    "setNum": "10367-1",
+    "name": "Balrog Book Nook",
+    "year": 2025,
+    "yearReleased": 2025,
+    "dateReleased": "June 1, 2025",
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (Creator Expert & Advanced Models)",
+    "age": "18+",
+    "pieces": 1202,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6597293.pdf",
+        "filename": "6597293.pdf",
+        "filesize": 33127477,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6597293.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/10367-1/156999.jpg",
+    "media": {
+      "image": "images/10367.jpg"
+    },
+    "localImagePath": "data/images/10367.jpg",
+    "buildDate": "2026-01-10",
+    "buildTimeHours": 2.38,
+    "timeToBuildFormatted": "2h 23m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "11373",
+    "setNum": "11373-1",
+    "name": "Sauron's Helmet",
+    "year": 2026,
+    "yearReleased": 2026,
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (Creator Expert & Advanced Models)",
+    "pieces": 538,
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/11373-1/167509.jpg",
+    "media": {
+      "image": "images/11373.jpg"
+    },
+    "localImagePath": "data/images/11373.jpg",
+    "buildDate": "2026-06-19",
+    "buildTimeHours": 1.82,
+    "timeToBuildFormatted": "1h 49m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "11377",
+    "setNum": "11377-1",
+    "name": "Minas Tirith",
+    "year": 2026,
+    "yearReleased": 2026,
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (Creator Expert & Advanced Models)",
+    "pieces": 8278,
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/11377-1/173837.jpg",
+    "media": {
+      "image": "images/11377.jpg"
+    },
+    "localImagePath": "data/images/11377.jpg",
+    "buildDate": "2026-06-01",
+    "buildTimeHours": 16.22,
+    "timeToBuildFormatted": "16h 13m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "21042",
+    "setNum": "21042-1",
+    "name": "Statue of Liberty",
+    "year": 2018,
+    "yearReleased": 2018,
+    "yearRetired": 2026,
+    "dateRetired": "July 2026",
+    "theme": "Architecture",
+    "age": "16+",
+    "pieces": 1685,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6532391.pdf",
+        "filename": "6532391.pdf",
+        "filesize": 37620183,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6532391.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/21042-1/13289.jpg",
+    "media": {
+      "image": "images/21042.jpg"
+    },
+    "localImagePath": "data/images/21042.jpg",
+    "buildDate": "2026-06-06",
+    "buildTimeHours": 2.57,
+    "timeToBuildFormatted": "2h 34m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "21058",
+    "setNum": "21058-1",
+    "name": "The Great Pyramid of Giza",
     "year": 2022,
-    "theme": "Classic Space / Icons",
-    "pieces": 1254,
-    "imageUrl": "https://cdn.rebrickable.com/media/sets/10497-1.jpg",
-    "localImagePath": "data/images/10497.jpg",
-    "buildDate": "2023-08-15",
-    "buildTimeHours": 4.5,
-    "builtBy": "Bram & Family",
-    "rating": 5,
-    "funFacts": "Recreation of the 1979 classic 497. Features retractable landing gear and sliding airlock doors.",
-    "notes": "Displayed in the study."
+    "yearReleased": 2022,
+    "theme": "Architecture",
+    "age": "18+",
+    "pieces": 1476,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6590114.pdf",
+        "filename": "6590114.pdf",
+        "filesize": 86892267,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6590114.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/21058-1/102703.jpg",
+    "media": {
+      "image": "images/21058.jpg"
+    },
+    "localImagePath": "data/images/21058.jpg",
+    "buildDate": "2026-06-12",
+    "buildTimeHours": 2.4,
+    "timeToBuildFormatted": "2h 24m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "21336",
+    "setNum": "21336-1",
+    "name": "The Office",
+    "year": 2022,
+    "yearReleased": 2022,
+    "theme": "LEGO Ideas (CUUSOO)",
+    "age": "18+",
+    "pieces": 1165,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6437123.pdf",
+        "filename": "6437123.pdf",
+        "filesize": 88318905,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6437123.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/21336-1/105200.jpg",
+    "media": {
+      "image": "images/21336.jpg"
+    },
+    "localImagePath": "data/images/21336.jpg",
+    "buildDate": "2025-08-14",
+    "buildTimeHours": 3.67,
+    "timeToBuildFormatted": "3h 40m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "30685",
+    "setNum": "30685-1",
+    "name": "TIE Interceptor - Mini polybag",
+    "year": 2024,
+    "yearReleased": 2024,
+    "theme": "Star Wars / Mini",
+    "age": "6+",
+    "pieces": 48,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6512556.pdf",
+        "filename": "6512556.pdf",
+        "filesize": 721622,
+        "previewUrl": null
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/30685-1/146330.jpg",
+    "media": {
+      "image": "images/30685.jpg"
+    },
+    "localImagePath": "data/images/30685.jpg",
+    "buildDate": "2026",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "30708",
+    "setNum": "30708-1",
+    "name": "Millennium Falcon - Mini paper bag / polybag",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "Star Wars / Mini",
+    "age": "6+",
+    "pieces": 74,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6555212.pdf",
+        "filename": "6555212.pdf",
+        "filesize": 1657773,
+        "previewUrl": null
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/30708-1/154639.jpg",
+    "media": {
+      "image": "images/30708.jpg"
+    },
+    "localImagePath": "data/images/30708.jpg",
+    "buildDate": "2025-06-08",
+    "buildTimeHours": 0.15,
+    "timeToBuildFormatted": "0h 9m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "31157",
+    "setNum": "31157-1",
+    "name": "Exotic Peacock",
+    "year": 2024,
+    "yearReleased": 2024,
+    "theme": "Creator / Creator 3in1 / Creature",
+    "age": "7+",
+    "pieces": 355,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6499863.pdf",
+        "filename": "6499863.pdf",
+        "filesize": 35631432,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6499863.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 3
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6499864.pdf",
+        "filename": "6499864.pdf",
+        "filesize": 14122954,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6499864.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 3
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6499865.pdf",
+        "filename": "6499865.pdf",
+        "filesize": 14314913,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6499865.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 3,
+        "sequenceTotal": 3
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/31157-1/133399.jpg",
+    "media": {
+      "image": "images/31157.jpg"
+    },
+    "localImagePath": "data/images/31157.jpg",
+    "buildDate": "2026-04-30",
+    "buildTimeHours": 0.87,
+    "timeToBuildFormatted": "0h 52m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "31208",
+    "setNum": "31208-1",
+    "name": "Hokusai - The Great Wave",
+    "year": 2023,
+    "yearReleased": 2023,
+    "theme": "Art",
+    "age": "18+",
+    "pieces": 1810,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6480160.pdf",
+        "filename": "6480160.pdf",
+        "filesize": 118403981,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6480160.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/31208-1/131769.jpg",
+    "media": {
+      "image": "images/31208.jpg"
+    },
+    "localImagePath": "data/images/31208.jpg",
+    "buildDate": "2026-06-19",
+    "buildTimeHours": 2.27,
+    "timeToBuildFormatted": "2h 16m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "31216",
+    "setNum": "31216-1",
+    "name": "Keith Haring - Dancing Figures",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "Art",
+    "age": "18+",
+    "pieces": 1773,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6580368.pdf",
+        "filename": "6580368.pdf",
+        "filesize": 26237004,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6580368.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 5
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6580369.pdf",
+        "filename": "6580369.pdf",
+        "filesize": 11637350,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6580369.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 5
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6580370.pdf",
+        "filename": "6580370.pdf",
+        "filesize": 19529776,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6580370.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 3,
+        "sequenceTotal": 5
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6580371.pdf",
+        "filename": "6580371.pdf",
+        "filesize": 12784953,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6580371.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 4,
+        "sequenceTotal": 5
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6580372.pdf",
+        "filename": "6580372.pdf",
+        "filesize": 15638997,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6580372.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 5,
+        "sequenceTotal": 5
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/31216-1/154763.jpg",
+    "media": {
+      "image": "images/31216.jpg"
+    },
+    "localImagePath": "data/images/31216.jpg",
+    "buildDate": "2025-08-12",
+    "buildTimeHours": 4.07,
+    "timeToBuildFormatted": "4h 4m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40516",
+    "setNum": "40516-1",
+    "name": "Everyone is Awesome",
+    "year": 2021,
+    "yearReleased": 2021,
+    "theme": "Icons (Creator Expert & Advanced Models) / Miscellaneous",
+    "age": "18+",
+    "pieces": 346,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6380031.pdf",
+        "filename": "6380031.pdf",
+        "filesize": 12919385,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6380031.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40516-1/88460.jpg",
+    "media": {
+      "image": "images/40516.jpg"
+    },
+    "localImagePath": "data/images/40516.jpg",
+    "buildDate": "2025-11-28",
+    "buildTimeHours": 0.53,
+    "timeToBuildFormatted": "0h 32m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40573",
+    "setNum": "40573-1",
+    "name": "Christmas Tree",
+    "year": 2022,
+    "yearReleased": 2022,
+    "yearRetired": 2026,
+    "dateRetired": "Early to mid 2026",
+    "theme": "Holiday & Event / Christmas",
+    "age": "12+",
+    "pieces": 784,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6433200.pdf",
+        "filename": "6433200.pdf",
+        "filesize": 28968558,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6433200.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 2
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6433203.pdf",
+        "filename": "6433203.pdf",
+        "filesize": 25687478,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6433203.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 2
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40573-1/106765.jpg",
+    "media": {
+      "image": "images/40573.jpg"
+    },
+    "localImagePath": "data/images/40573.jpg",
+    "buildDate": "2025-11-11",
+    "buildTimeHours": 0.93,
+    "timeToBuildFormatted": "0h 56m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40649",
+    "setNum": "40649-1",
+    "name": "Up-Scaled LEGO Minifigure",
+    "year": 2023,
+    "yearReleased": 2023,
+    "theme": "Icons (Creator Expert & Advanced Models) / Miscellaneous",
+    "age": "10+",
+    "pieces": 654,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6466602.pdf",
+        "filename": "6466602.pdf",
+        "filesize": 35617113,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6466602.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40649-1/121814.jpg",
+    "media": {
+      "image": "images/40649.jpg"
+    },
+    "localImagePath": "data/images/40649.jpg",
+    "buildDate": "2025-11-21",
+    "buildTimeHours": 1.58,
+    "timeToBuildFormatted": "1h 35m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40693",
+    "setNum": "40693-1",
+    "name": "Fell Beast",
+    "year": 2024,
+    "yearReleased": 2024,
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (Creator Expert & Advanced Models)",
+    "age": "18+",
+    "pieces": 270,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6517000.pdf",
+        "filename": "6517000.pdf",
+        "filesize": 7491295,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6517000.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40693-1/140961.jpg",
+    "media": {
+      "image": "images/40693.jpg"
+    },
+    "localImagePath": "data/images/40693.jpg",
+    "buildDate": "2025-07-27",
+    "buildTimeHours": 1.05,
+    "timeToBuildFormatted": "1h 3m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40761",
+    "setNum": "40761-1",
+    "name": "Sméagol & Déagol",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (Creator Expert & Advanced Models)",
+    "age": "18+",
+    "pieces": 181,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6572619.pdf",
+        "filename": "6572619.pdf",
+        "filesize": 8378811,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6572619.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40761-1/153616.jpg",
+    "media": {
+      "image": "images/40761.jpg"
+    },
+    "localImagePath": "data/images/40761.jpg",
+    "buildDate": "2025-09-18",
+    "buildTimeHours": 0.6,
+    "timeToBuildFormatted": "0h 36m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40771",
+    "setNum": "40771-1",
+    "name": "TIE Fighter with Imperial Hangar Rack",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "Star Wars",
+    "age": "10+",
+    "pieces": 236,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6602289.pdf",
+        "filename": "6602289.pdf",
+        "filesize": 13799975,
+        "previewUrl": null
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40771-1/160966.jpg",
+    "media": {
+      "image": "images/40771.jpg"
+    },
+    "localImagePath": "data/images/40771.jpg",
+    "buildDate": "2025-09-30",
+    "buildTimeHours": 0.47,
+    "timeToBuildFormatted": "0h 28m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40788",
+    "setNum": "40788-1",
+    "name": "Friendly Snails",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "LEGO Ideas (CUUSOO)",
+    "age": "18+",
+    "pieces": 264,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6587320.pdf",
+        "filename": "6587320.pdf",
+        "filesize": 5501575,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6587320.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 2
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6593421.pdf",
+        "filename": "6593421.pdf",
+        "filesize": 8474681,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6593421.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 2
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40788-1/158121.jpg",
+    "media": {
+      "image": "images/40788.jpg"
+    },
+    "localImagePath": "data/images/40788.jpg",
+    "buildDate": "2025-07-06",
+    "buildTimeHours": 1.03,
+    "timeToBuildFormatted": "1h 2m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40819",
+    "setNum": "40819-1",
+    "name": "Up-Scaled Racing Driver Minifigure",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "Icons (Creator Expert & Advanced Models) / Miscellaneous / Race",
+    "age": "10+",
+    "pieces": 694,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6566721.pdf",
+        "filename": "6566721.pdf",
+        "filesize": 39936381,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6566721.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40819-1/151938.jpg",
+    "media": {
+      "image": "images/40819.jpg"
+    },
+    "localImagePath": "data/images/40819.jpg",
+    "buildDate": "2025-11-21",
+    "buildTimeHours": 1.48,
+    "timeToBuildFormatted": "1h 29m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40820",
+    "setNum": "40820-1",
+    "name": "Up-Scaled Santa Minifigure",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "Holiday & Event / Christmas",
+    "pieces": 761,
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40820-1/160760.jpg",
+    "media": {
+      "image": "images/40820.jpg"
+    },
+    "localImagePath": "data/images/40820.jpg",
+    "buildDate": "2025-11-21",
+    "buildTimeHours": 1.38,
+    "timeToBuildFormatted": "1h 23m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40825",
+    "setNum": "40825-1",
+    "name": "Halloween Wreath",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "Holiday & Event / Halloween",
+    "age": "12+",
+    "pieces": 617,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6592668.pdf",
+        "filename": "6592668.pdf",
+        "filesize": 41683147,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6592668.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40825-1/158588.jpg",
+    "media": {
+      "image": "images/40825.jpg"
+    },
+    "localImagePath": "data/images/40825.jpg",
+    "buildDate": "2025-09-30",
+    "buildTimeHours": 1.18,
+    "timeToBuildFormatted": "1h 11m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "40893",
+    "setNum": "40893-1",
+    "name": "Grond",
+    "year": 2026,
+    "yearReleased": 2026,
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (Creator Expert & Advanced Models)",
+    "pieces": 307,
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/40893-1/173830.jpg",
+    "media": {
+      "image": "images/40893.jpg"
+    },
+    "localImagePath": "data/images/40893.jpg",
+    "buildDate": "2026-06-01",
+    "buildTimeHours": 1.37,
+    "timeToBuildFormatted": "1h 22m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "42221",
+    "setNum": "42221-1",
+    "name": "NASA Artemis Space Launch System Rocket",
+    "year": 2026,
+    "yearReleased": 2026,
+    "theme": "Technic / Model / Space Exploration",
+    "pieces": 632,
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/42221-1/164578.jpg",
+    "media": {
+      "image": "images/42221.jpg"
+    },
+    "localImagePath": "data/images/42221.jpg",
+    "buildDate": "2026-06-14",
+    "buildTimeHours": 1.8,
+    "timeToBuildFormatted": "1h 48m",
+    "builtBy": "Bram",
+    "funFacts": ""
   },
   {
     "id": "75192",
     "setNum": "75192-1",
-    "name": "Millennium Falcon",
+    "name": "Millennium Falcon - UCS {2nd edition}",
     "year": 2017,
-    "theme": "Star Wars / UCS",
+    "yearReleased": 2017,
+    "yearRetired": 2026,
+    "dateReleased": "October 1, 2017",
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Ultimate Collector Series",
+    "age": "16+",
     "pieces": 7541,
-    "imageUrl": "https://cdn.rebrickable.com/media/sets/75192-1.jpg",
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6564023.pdf",
+        "filename": "6564023.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6564023.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75192-1/30881.jpg",
+    "media": {
+      "image": "images/75192.jpg"
+    },
     "localImagePath": "data/images/75192.jpg",
-    "buildDate": "2022-12-28",
-    "buildTimeHours": 26,
+    "buildDate": "2025-07-07",
+    "buildTimeHours": 18.53,
+    "timeToBuildFormatted": "18h 32m",
     "builtBy": "Bram",
-    "rating": 5,
     "funFacts": "Over 7500 pieces! The heaviest Lego set in our collection. Took an entire holiday week to assemble.",
     "notes": "Needs its own coffee table."
   },
   {
-    "id": "92176",
-    "setNum": "92176-1",
-    "name": "NASA Apollo Saturn V",
+    "id": "75274",
+    "setNum": "75274-1",
+    "name": "TIE Fighter Pilot Helmet",
     "year": 2020,
-    "theme": "NASA / Ideas",
-    "pieces": 1969,
-    "imageUrl": "https://cdn.rebrickable.com/media/sets/92176-1.jpg",
-    "localImagePath": "data/images/92176.jpg",
-    "buildDate": "2021-07-20",
-    "buildTimeHours": 6,
+    "yearReleased": 2020,
+    "yearRetired": 2021,
+    "dateRetired": "December 2021",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 724,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6323012.pdf",
+        "filename": "6323012.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6323012.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75274-1/56255.jpg",
+    "media": {
+      "image": "images/75274.jpg"
+    },
+    "localImagePath": "data/images/75274.jpg",
+    "buildDate": "2025-08-01",
+    "buildTimeHours": 1.75,
+    "timeToBuildFormatted": "1h 45m",
     "builtBy": "Bram",
-    "rating": 5,
-    "funFacts": "Exactly 1969 pieces to commemorate the Apollo 11 moon landing year. Stands 1 meter tall!",
-    "notes": "Vertical display in living room."
+    "funFacts": ""
   },
   {
-    "id": "10316",
-    "setNum": "10316-1",
-    "name": "The Lord of the Rings: Rivendell",
+    "id": "75277",
+    "setNum": "75277-1",
+    "name": "Boba Fett Helmet",
+    "year": 2020,
+    "yearReleased": 2020,
+    "dateRetired": "Retired",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 625,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6323017.pdf",
+        "filename": "6323017.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6323017.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75277-1/56403.jpg",
+    "media": {
+      "image": "images/75277.jpg"
+    },
+    "localImagePath": "data/images/75277.jpg",
+    "buildDate": "2025-08-02",
+    "buildTimeHours": 1.75,
+    "timeToBuildFormatted": "1h 45m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75304",
+    "setNum": "75304-1",
+    "name": "Darth Vader Helmet",
+    "year": 2021,
+    "yearReleased": 2021,
+    "yearRetired": 2025,
+    "dateRetired": "December 2025",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 834,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6366001.pdf",
+        "filename": "6366001.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6366001.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75304-1/85224.jpg",
+    "media": {
+      "image": "images/75304.jpg"
+    },
+    "localImagePath": "data/images/75304.jpg",
+    "buildDate": "2025-06-12",
+    "buildTimeHours": 2.18,
+    "timeToBuildFormatted": "2h 11m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75305",
+    "setNum": "75305-1",
+    "name": "Scout Trooper Helmet",
+    "year": 2021,
+    "yearReleased": 2021,
+    "yearRetired": 2022,
+    "dateRetired": "December 2022",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 471,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6366005.pdf",
+        "filename": "6366005.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6366005.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75305-1/85242.jpg",
+    "media": {
+      "image": "images/75305.jpg"
+    },
+    "localImagePath": "data/images/75305.jpg",
+    "buildDate": "2025-08-04",
+    "buildTimeHours": 1.08,
+    "timeToBuildFormatted": "1h 5m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75313",
+    "setNum": "75313-1",
+    "name": "AT-AT - UCS",
+    "year": 2021,
+    "yearReleased": 2021,
+    "theme": "Star Wars / Ultimate Collector Series",
+    "age": "18+",
+    "pieces": 6785,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6393612.pdf",
+        "filename": "6393612.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6393612.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 4
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6393614.pdf",
+        "filename": "6393614.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6393614.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 3,
+        "sequenceTotal": 4
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6393616.pdf",
+        "filename": "6393616.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6393616.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 4,
+        "sequenceTotal": 4
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6394571.pdf",
+        "filename": "6394571.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6394571.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 4
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75313-1/94568.jpg",
+    "media": {
+      "image": "images/75313.jpg"
+    },
+    "localImagePath": "data/images/75313.jpg",
+    "buildDate": "2025-07-06",
+    "buildTimeHours": 15.97,
+    "timeToBuildFormatted": "15h 58m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75327",
+    "setNum": "75327-1",
+    "name": "Luke Skywalker (Red Five) Helmet",
+    "year": 2022,
+    "yearReleased": 2022,
+    "yearRetired": 2023,
+    "dateRetired": "December 2023",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 675,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6411456.pdf",
+        "filename": "6411456.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6411456.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75327-1/98390.jpg",
+    "media": {
+      "image": "images/75327.jpg"
+    },
+    "localImagePath": "data/images/75327.jpg",
+    "buildDate": "2025-06-09",
+    "buildTimeHours": 2,
+    "timeToBuildFormatted": "2h 0m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75328",
+    "setNum": "75328-1",
+    "name": "The Mandalorian Helmet",
+    "year": 2022,
+    "yearReleased": 2022,
+    "yearRetired": 2026,
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 584,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6564353.pdf",
+        "filename": "6564353.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6564353.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75328-1/98383.jpg",
+    "media": {
+      "image": "images/75328.jpg"
+    },
+    "localImagePath": "data/images/75328.jpg",
+    "buildDate": "2025-06-12",
+    "buildTimeHours": 1.5,
+    "timeToBuildFormatted": "1h 30m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75343",
+    "setNum": "75343-1",
+    "name": "Dark Trooper Helmet",
+    "year": 2022,
+    "yearReleased": 2022,
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 693,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6411510.pdf",
+        "filename": "6411510.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6411510.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75343-1/98376.jpg",
+    "media": {
+      "image": "images/75343.jpg"
+    },
+    "localImagePath": "data/images/75343.jpg",
+    "buildDate": "2025-08-02",
+    "buildTimeHours": 1.75,
+    "timeToBuildFormatted": "1h 45m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75349",
+    "setNum": "75349-1",
+    "name": "Captain Rex Helmet",
     "year": 2023,
-    "theme": "Icons / LOTR",
-    "pieces": 6167,
-    "imageUrl": "https://cdn.rebrickable.com/media/sets/10316-1.jpg",
-    "localImagePath": "data/images/10316.jpg",
-    "buildDate": "2024-01-05",
-    "buildTimeHours": 18.5,
-    "builtBy": "Bram & Family",
-    "rating": 5,
-    "funFacts": "Features 15 minifigures including the entire Fellowship. The roof tile technique was mesmerizing.",
-    "notes": "Masterpiece build."
+    "yearReleased": 2023,
+    "yearRetired": 2026,
+    "dateRetired": "July 2026",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 854,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6455601.pdf",
+        "filename": "6455601.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6455601.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75349-1/130224.jpg",
+    "media": {
+      "image": "images/75349.jpg"
+    },
+    "localImagePath": "data/images/75349.jpg",
+    "buildDate": "2025-06-12",
+    "buildTimeHours": 2.25,
+    "timeToBuildFormatted": "2h 15m",
+    "builtBy": "Bram",
+    "funFacts": ""
   },
   {
-    "id": "21309",
-    "setNum": "21309-1",
-    "name": "NASA Apollo Saturn V",
-    "year": 2017,
-    "theme": "NASA / Ideas",
-    "pieces": 1969,
-    "imageUrl": "https://cdn.rebrickable.com/media/sets/21309-1.jpg",
-    "localImagePath": "data/images/21309.jpg",
-    "buildDate": "2020-04-12",
-    "buildTimeHours": 6,
+    "id": "75351",
+    "setNum": "75351-1",
+    "name": "Princess Leia (Boushh) Helmet",
+    "year": 2023,
+    "yearReleased": 2023,
+    "dateRetired": "Retired",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 670,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6455606.pdf",
+        "filename": "6455606.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6455606.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75351-1/129779.jpg",
+    "media": {
+      "image": "images/75351.jpg"
+    },
+    "localImagePath": "data/images/75351.jpg",
+    "buildDate": "2025-07-04",
+    "buildTimeHours": 1.58,
+    "timeToBuildFormatted": "1h 35m",
     "builtBy": "Bram",
-    "rating": 5,
-    "funFacts": "Original Ideas edition. Incredible internal scaffolding structure.",
-    "notes": "Original release."
+    "funFacts": ""
+  },
+  {
+    "id": "75355",
+    "setNum": "75355-1",
+    "name": "X-wing Starfighter - UCS",
+    "year": 2023,
+    "yearReleased": 2023,
+    "yearRetired": 2025,
+    "dateReleased": "May 4, 2023",
+    "dateRetired": "December 2025",
+    "theme": "Star Wars / Ultimate Collector Series",
+    "age": "18+",
+    "pieces": 1949,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6494244.pdf",
+        "filename": "6494244.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6494244.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75355-1/119795.jpg",
+    "media": {
+      "image": "images/75355.jpg"
+    },
+    "localImagePath": "data/images/75355.jpg",
+    "buildDate": "2025-06-19",
+    "buildTimeHours": 3.65,
+    "timeToBuildFormatted": "3h 39m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75375",
+    "setNum": "75375-1",
+    "name": "Millennium Falcon",
+    "year": 2024,
+    "yearReleased": 2024,
+    "yearRetired": 2026,
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Starship Collection / Star Wars Episode 4/5/6",
+    "age": "18+",
+    "pieces": 921,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6509377.pdf",
+        "filename": "6509377.pdf",
+        "filesize": 34754963,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6509377.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75375-1/136884.jpg",
+    "media": {
+      "image": "images/75375.jpg"
+    },
+    "localImagePath": "data/images/75375.jpg",
+    "buildDate": "2025-09-25",
+    "buildTimeHours": 2.07,
+    "timeToBuildFormatted": "2h 4m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75381",
+    "setNum": "75381-1",
+    "name": "Droideka",
+    "year": 2024,
+    "yearReleased": 2024,
+    "yearRetired": 2025,
+    "dateRetired": "December 2025",
+    "theme": "Star Wars / Sculptures",
+    "age": "18+",
+    "pieces": 583,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6515753.pdf",
+        "filename": "6515753.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6515753.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75381-1/139292.jpg",
+    "media": {
+      "image": "images/75381.jpg"
+    },
+    "localImagePath": "data/images/75381.jpg",
+    "buildDate": "2025-10-07",
+    "buildTimeHours": 1.35,
+    "timeToBuildFormatted": "1h 21m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75394",
+    "setNum": "75394-1",
+    "name": "Imperial Star Destroyer",
+    "year": 2024,
+    "yearReleased": 2024,
+    "yearRetired": 2025,
+    "dateRetired": "December 2025",
+    "theme": "Star Wars",
+    "age": "10+",
+    "pieces": 1555,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6533888.pdf",
+        "filename": "6533888.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6533888.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75394-1/140420.jpg",
+    "media": {
+      "image": "images/75394.jpg"
+    },
+    "localImagePath": "data/images/75394.jpg",
+    "buildDate": "2025-07-06",
+    "buildTimeHours": 3.13,
+    "timeToBuildFormatted": "3h 8m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75397",
+    "setNum": "75397-1",
+    "name": "Jabba's Sail Barge - UCS",
+    "year": 2024,
+    "yearReleased": 2024,
+    "yearRetired": 2026,
+    "dateReleased": "October 6, 2024",
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Ultimate Collector Series",
+    "age": "18+",
+    "pieces": 3943,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6537984.pdf",
+        "filename": "6537984.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6537984.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 2
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6537986.pdf",
+        "filename": "6537986.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6537986.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 2
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75397-1/145805.jpg",
+    "media": {
+      "image": "images/75397.jpg"
+    },
+    "localImagePath": "data/images/75397.jpg",
+    "buildDate": "2026-04-30",
+    "buildTimeHours": 7.13,
+    "timeToBuildFormatted": "7h 8m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75398",
+    "setNum": "75398-1",
+    "name": "C-3PO",
+    "year": 2024,
+    "yearReleased": 2024,
+    "yearRetired": 2026,
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Sculptures / Star Wars Episode 4/5/6",
+    "age": "18+",
+    "pieces": 1140,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6533884.pdf",
+        "filename": "6533884.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6533884.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75398-1/142250.jpg",
+    "media": {
+      "image": "images/75398.jpg"
+    },
+    "localImagePath": "data/images/75398.jpg",
+    "buildDate": "2026-04-30",
+    "buildTimeHours": 2,
+    "timeToBuildFormatted": "2h 0m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75403",
+    "setNum": "75403-1",
+    "name": "Grogu with Hover Pram",
+    "year": 2025,
+    "yearReleased": 2025,
+    "yearRetired": 2026,
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Sculptures / Star Wars The Mandalorian",
+    "age": "10+",
+    "pieces": 1048,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6559570.pdf",
+        "filename": "6559570.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6559570.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 2
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6559572.pdf",
+        "filename": "6559572.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6559572.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 2
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75403-1/148930.jpg",
+    "media": {
+      "image": "images/75403.jpg"
+    },
+    "localImagePath": "data/images/75403.jpg",
+    "buildDate": "2026-07-13",
+    "buildTimeHours": 3.38,
+    "timeToBuildFormatted": "3h 23m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75407",
+    "setNum": "75407-1",
+    "name": "Brick-Built Star Wars Logo",
+    "year": 2025,
+    "yearReleased": 2025,
+    "dateReleased": "1 May 2025",
+    "theme": "Star Wars / Sculptures",
+    "age": "18+",
+    "pieces": 700,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6580061.pdf",
+        "filename": "6580061.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6580061.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 2
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6580063.pdf",
+        "filename": "6580063.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6580063.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 2
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75407-1/154222.jpg",
+    "media": {
+      "image": "images/75407.jpg"
+    },
+    "localImagePath": "data/images/75407.jpg",
+    "buildDate": "2026-01-26",
+    "buildTimeHours": 1.42,
+    "timeToBuildFormatted": "1h 25m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75408",
+    "setNum": "75408-1",
+    "name": "Jango Fett Helmet",
+    "year": 2025,
+    "yearReleased": 2025,
+    "yearRetired": 2026,
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 616,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6580066.pdf",
+        "filename": "6580066.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6580066.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75408-1/154261.jpg",
+    "media": {
+      "image": "images/75408.jpg"
+    },
+    "localImagePath": "data/images/75408.jpg",
+    "buildDate": "2025-11-22",
+    "buildTimeHours": 1.27,
+    "timeToBuildFormatted": "1h 16m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75415",
+    "setNum": "75415-1",
+    "name": "Kylo Ren Helmet",
+    "year": 2025,
+    "yearReleased": 2025,
+    "yearRetired": 2026,
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Helmet Collection",
+    "age": "18+",
+    "pieces": 529,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6580068.pdf",
+        "filename": "6580068.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6580068.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75415-1/154233.jpg",
+    "media": {
+      "image": "images/75415.jpg"
+    },
+    "localImagePath": "data/images/75415.jpg",
+    "buildDate": "2025-06-12",
+    "buildTimeHours": 1.33,
+    "timeToBuildFormatted": "1h 20m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75417",
+    "setNum": "75417-1",
+    "name": "AT-ST Walker - UCS",
+    "year": 2025,
+    "yearReleased": 2025,
+    "yearRetired": 2027,
+    "dateRetired": "December 31, 2027.",
+    "theme": "Star Wars / Ultimate Collector Series",
+    "age": "18+",
+    "pieces": 1513,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6594961.pdf",
+        "filename": "6594961.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6594961.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75417-1/158623.jpg",
+    "media": {
+      "image": "images/75417.jpg"
+    },
+    "localImagePath": "data/images/75417.jpg",
+    "buildDate": "2026-04-30",
+    "buildTimeHours": 3.08,
+    "timeToBuildFormatted": "3h 5m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75419",
+    "setNum": "75419-1",
+    "name": "Death Star - UCS",
+    "year": 2025,
+    "yearReleased": 2025,
+    "theme": "Star Wars / Ultimate Collector Series",
+    "age": "18+",
+    "pieces": 9031,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6602644.pdf",
+        "filename": "6602644.pdf",
+        "filesize": 92919030,
+        "previewUrl": null
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6602645.pdf",
+        "filename": "6602645.pdf",
+        "filesize": 64575790,
+        "previewUrl": null
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6602646.pdf",
+        "filename": "6602646.pdf",
+        "filesize": 118185063,
+        "previewUrl": null
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6602647.pdf",
+        "filename": "6602647.pdf",
+        "filesize": 72058297,
+        "previewUrl": null
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6602648.pdf",
+        "filename": "6602648.pdf",
+        "filesize": 99098890,
+        "previewUrl": null
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6602649.pdf",
+        "filename": "6602649.pdf",
+        "filesize": 42534194,
+        "previewUrl": null
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75419-1/160973.jpg",
+    "media": {
+      "image": "images/75419.jpg"
+    },
+    "localImagePath": "data/images/75419.jpg",
+    "buildDate": "2025-09-30",
+    "buildTimeHours": 20.15,
+    "timeToBuildFormatted": "20h 9m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75428",
+    "setNum": "75428-1",
+    "name": "Battle Droid with STAP",
+    "year": 2025,
+    "yearReleased": 2025,
+    "yearRetired": 2026,
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Sculptures / Star Wars Episode 1",
+    "age": "12+",
+    "pieces": 1088,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6590408.pdf",
+        "filename": "6590408.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6590408.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75428-1/155880.jpg",
+    "media": {
+      "image": "images/75428.jpg"
+    },
+    "localImagePath": "data/images/75428.jpg",
+    "buildDate": "2026-05-04",
+    "buildTimeHours": 4.52,
+    "timeToBuildFormatted": "4h 31m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75430",
+    "setNum": "75430-1",
+    "name": "Wicket the Ewok",
+    "year": 2025,
+    "yearReleased": 2025,
+    "yearRetired": 2026,
+    "dateRetired": "December 2026",
+    "theme": "Star Wars / Sculptures / Star Wars Episode 4/5/6",
+    "age": "12+",
+    "pieces": 1010,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6594963.pdf",
+        "filename": "6594963.pdf",
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6594963.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 1
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75430-1/158649.jpg",
+    "media": {
+      "image": "images/75430.jpg"
+    },
+    "localImagePath": "data/images/75430.jpg",
+    "buildDate": "2025-10-07",
+    "buildTimeHours": 2.12,
+    "timeToBuildFormatted": "2h 7m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75440",
+    "setNum": "75440-1",
+    "name": "AT-AT",
+    "year": 2026,
+    "yearReleased": 2026,
+    "theme": "Star Wars / Starship Collection / Star Wars Episode 4/5/6",
+    "pieces": 525,
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75440-1/163880.jpg",
+    "media": {
+      "image": "images/75440.jpg"
+    },
+    "localImagePath": "data/images/75440.jpg",
+    "buildDate": "2026-06-06",
+    "buildTimeHours": 1.25,
+    "timeToBuildFormatted": "1h 15m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "75452",
+    "setNum": "75452-1",
+    "name": "BB-8",
+    "year": 2026,
+    "yearReleased": 2026,
+    "yearRetired": 2028,
+    "dateRetired": "December 31, 2028.",
+    "theme": "Star Wars / Sculptures / Star Wars Episode 7",
+    "pieces": 569,
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/75452-1/165256.jpg",
+    "media": {
+      "image": "images/75452.jpg"
+    },
+    "localImagePath": "data/images/75452.jpg",
+    "buildDate": "2026-04-30",
+    "buildTimeHours": 2.02,
+    "timeToBuildFormatted": "2h 1m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "76393",
+    "setNum": "76393-1",
+    "name": "Harry Potter & Hermione Granger",
+    "year": 2021,
+    "yearReleased": 2021,
+    "theme": "Harry Potter / Sculptures",
+    "age": "10+",
+    "pieces": 1673,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6373277.pdf",
+        "filename": "6373277.pdf",
+        "filesize": 29137977,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6373277.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 2
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6373280.pdf",
+        "filename": "6373280.pdf",
+        "filesize": 31633880,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6373280.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 2
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/76393-1/86370.jpg",
+    "media": {
+      "image": "images/76393.jpg"
+    },
+    "localImagePath": "data/images/76393.jpg",
+    "buildDate": "2026-02-28",
+    "buildTimeHours": 5.02,
+    "timeToBuildFormatted": "5h 1m",
+    "builtBy": "Bram",
+    "funFacts": ""
+  },
+  {
+    "id": "79007",
+    "setNum": "79007-1",
+    "name": "Battle at the Black Gate",
+    "year": 2013,
+    "yearReleased": 2013,
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings",
+    "age": "9-14",
+    "pieces": 656,
+    "instructions": [
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6051200.pdf",
+        "filename": null,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6051200.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 1,
+        "sequenceTotal": 2
+      },
+      {
+        "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6051202.pdf",
+        "filename": null,
+        "previewUrl": "https://www.lego.com/cdn/product-assets/product.bi.core.img/6051202.png",
+        "isAdditionalInfoBooklet": false,
+        "sequenceNumber": 2,
+        "sequenceTotal": 2
+      }
+    ],
+    "imageUrl": "https://cdn.rebrickable.com/media/sets/79007-1/12394.jpg",
+    "media": {
+      "image": "images/79007.jpg"
+    },
+    "localImagePath": "data/images/79007.jpg",
+    "buildDate": "2025-11-05",
+    "buildTimeHours": 1.82,
+    "timeToBuildFormatted": "1h 49m",
+    "builtBy": "Bram",
+    "funFacts": ""
   }
 ]
