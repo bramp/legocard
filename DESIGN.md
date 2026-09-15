@@ -13,32 +13,50 @@ The primary physical interaction model is scanning:
 
 ## 2. High-Level Architecture
 
-```
-┌────────────────────────────────────────────────────────┐
-│                   Data Ingestion                       │
-│                                                        │
-│   data/sets.csv (Source of truth: build logs, notes)   │
-│                          │                             │
-│                          ▼                             │
-│              scripts/enrich-data.ts                    │
-│   (Rebrickable API: piece count, theme, stock photo)   │
-│                          │                             │
-│                          ▼                             │
-│        data/sets.json + data/images/{id}.jpg           │
-└──────────────────────────┬─────────────────────────────┘
-                           │
-             ┌─────────────┴─────────────┐
-             ▼                           ▼
-┌─────────────────────────┐ ┌─────────────────────────────┐
-│  Phase 1: Astro Site    │ │  Phase 2: Remotion Videos   │
-│                         │ │                             │
-│  - Mobile-first cards   │ │  - scripts/generate-tts.ts  │
-│  - QR code & RFID URLs  │ │    (edge-tts neural audio)  │
-│  - Gallery & Filters    │ │  - video/src/ (9:16 Shorts) │
-│  - Detail card pages    │ │  - scripts/render-videos.ts │
-│  - Zero-JS static HTML  │ │    (batch MP4 generation)   │
-│  - GitHub Pages deploy  │ │                             │
-└─────────────────────────┘ └─────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph LocalPipeline["Local Machine Data & Media Pipeline"]
+        direction TB
+        Sheet["Google Sheets<br/>(Build history & personal notes)"] -->|"npm run fetch:sheet"| CSV["data/sets.csv<br/>(Source of truth in Git)"]
+        CSV -->|"npm run enrich"| Enrich["scripts/enrich-data.ts<br/>(Rebrickable API & metadata)"]
+        Enrich -->|"Writes metadata"| JSON["data/sets.json<br/>(Tracked in Git)"]
+        Enrich -->|"Downloads stock photos"| ImgDir["data/images/{id}.jpg<br/>(Gitignored locally)"]
+        
+        JSON -->|"npm run facts"| Facts["scripts/generate-fun-facts.ts<br/>(Gemini 2.0 Flash)"]
+        Facts -->|"Updates trivia"| JSON
+
+        JSON -->|"npm run tts"| TTS["scripts/generate-tts.ts<br/>(Edge Neural TTS)"]
+        TTS -->|"Generates audio & subtitles"| AudioDir["data/audio/{id}.mp3, .json<br/>(Gitignored locally)"]
+
+        JSON & ImgDir & AudioDir -->|"npm run video:render"| Remotion["scripts/render-videos.ts<br/>(Remotion 9:16 Shorts)"]
+        Remotion -->|"Renders MP4s"| VideoDir["data/videos/{id}.mp4<br/>(Gitignored locally)"]
+
+        ImgDir & AudioDir & VideoDir -->|"npm run sync:cdn"| SyncScript["scripts/sync-cdn.ts<br/>(S3-compatible upload)"]
+    end
+
+    subgraph CDNStorage["Cloudflare R2 Object Storage & CDN"]
+        direction TB
+        R2Bucket[("Cloudflare R2 Bucket<br/>(Zero egress bandwidth fees)")]
+        EdgeCDN["Cloudflare Edge CDN<br/>https://legocard-media.bramp.net"]
+        R2Bucket --- EdgeCDN
+    end
+
+    subgraph GitHubPages["GitHub Pages & User Experience"]
+        direction TB
+        GitHubRepo["GitHub Repo (main)<br/>- Clean code & metadata only<br/>- Zero binary media blobs"]
+        GHActions["GitHub Actions CI/CD<br/>(withastro/action@v6)"]
+        AstroSite["Astro Static Web App<br/>https://legocard.bramp.net"]
+        NFC["Physical NFC Tag / QR Code<br/>(Mounted on Lego stand)"]
+        Mobile["Mobile Safari / Chrome<br/>(Collector & Visitor View)"]
+
+        GitHubRepo --> GHActions --> AstroSite
+        NFC -->|"Tap / Scan"| Mobile
+        Mobile -->|"Loads static HTML/CSS/QR"| AstroSite
+        Mobile -->|"Streams stock photos, audio, videos"| EdgeCDN
+    end
+
+    SyncScript -->|"Uploads media assets"| R2Bucket
+    JSON -->|"Committed to Git"| GitHubRepo
 ```
 
 ---
@@ -48,33 +66,35 @@ The primary physical interaction model is scanning:
 | Layer / Need | Technology | Rationale |
 | :--- | :--- | :--- |
 | **Data Source** | CSV (`data/sets.csv`) | Simple to export from Google Sheets / Excel, easy to edit locally or track in git. |
-| **Metadata & Imagery** | Rebrickable API + CDN cache | Reliable Lego catalog API providing exact piece counts, release year, themes, and high-resolution official stock images. |
+| **Metadata & Imagery** | Rebrickable API + Gemini API | Reliable Lego catalog API for specs & stock photos, plus Gemini 2.0 Flash for set trivia. |
+| **Media Hosting & CDN** | **Cloudflare R2** (`legocard-media.bramp.net`) | S3-compatible object storage with **zero egress fees**. Keeps large images, MP3s, and MP4 videos out of Git and GitHub Pages while streaming globally at edge speeds. |
 | **Web Framework** | **Astro 5** + Tailwind CSS | Zero client-side JavaScript by default, instant page load speeds on mobile, rich image optimization, content collections with type safety. |
-| **Physical Scannability** | QR Codes (`qrcode` package) + Clean URLs | Clean set URLs (`/sets/10497`) easily programmed onto NFC NTAG213/215 stickers or printed onto collectible physical cards. Auto-generates high-res printable QR SVGs for each set. |
+| **Dynamic QR Codes** | Astro Static Endpoints + `sharp` | Generates lightweight SVG, WebP, and PNG Lego stud QR codes on the fly at build time without offline generation scripts or external CLI tools. |
+| **Physical Scannability** | QR Codes + Clean URLs | Clean set URLs (`/sets/10497`) easily programmed onto NFC NTAG213/215 stickers or printed onto collectible physical cards. |
 | **Video Engine** | **Remotion** (React) | Code-driven motion graphics; allows reusing web CSS tokens, responsive typography, Ken Burns stock photo animations, and CLI batch rendering. |
 | **Voiceover Engine** | `msedge-tts` (Edge Neural TTS) | Completely free, natural Microsoft neural voices without API rate limits or recurring costs. |
-| **Hosting & CI/CD** | GitHub Pages + GitHub Actions | Free, zero maintenance static hosting automatically updated on git push. |
+| **Hosting & CI/CD** | GitHub Pages + GitHub Actions | Free, zero maintenance static hosting automatically updated on git push via `withastro/action`. |
 
 ---
 
 ## 4. Mobile-First Card UX & Scannability
 
 ### Physical Tagging Model
-- **URL Route Pattern**: `https://<user>.github.io/legocard/sets/<set_number>` (or custom domain `https://legocard.app/sets/<set_number>`).
+- **URL Route Pattern**: `https://legocard.bramp.net/sets/<set_number>`
 - **NFC / RFID**: NTAG213 / NTAG215 stickers (144 - 504 bytes) programmed with the direct URL. When a phone taps the tag on the Lego display stand, it opens directly in Safari/Chrome.
 - **Printed Cards**: Each set card page provides a printable mini-card view (or downloadable QR code SVG) to place on physical display stands.
 
 ### Mobile Screen Architecture
 1. **Header / Identity**: Set number badge, official theme pill, year, and set title.
-2. **Hero Visual**: Crisp stock photo with clean zoom / pinch preview.
+2. **Hero Visual**: Crisp stock photo loaded directly from CDN (`legocard-media.bramp.net/images/{id}.jpg`) with clean modal preview.
 3. **Key Stats Grid (2x2 or 3x1 on mobile)**:
    - Pieces ($1,254$)
    - Build Time ($4.5\text{ hrs}$)
    - Built By (e.g., *Bram & Family*)
    - Rating ($5/5\star$)
 4. **Story & Fun Facts**: Personal notes, build history, official Lego trivia.
-5. **Video Showcase**: Compact HTML5 9:16 video player with custom play button and animated captions.
-6. **QR Share & Navigation**: "Back to Collection" and "Show QR Code" popover for quick scanning by friends.
+5. **Video Showcase**: Compact HTML5 9:16 video player streaming from `legocard-media.bramp.net/videos/{id}.mp4` with custom play button and animated captions.
+6. **QR Share & Navigation**: "Back to Collection" and "Show QR Code" modal for quick scanning by friends.
 
 ---
 
@@ -82,22 +102,38 @@ The primary physical interaction model is scanning:
 
 ### Normalized Enriched Set (`data/sets.json`)
 ```typescript
+interface LegoDimensions {
+  height?: number; // cm
+  width?: number;  // cm
+  depth?: number;  // cm
+}
+
 interface EnrichedLegoSet {
-  id: string;               // "10497"
-  setNum: string;           // "10497-1"
-  name: string;             // "Galaxy Explorer"
-  year: number;             // 2022
-  theme: string;            // "Classic Space / Icons"
-  pieces: number;           // 1254
-  imageUrl: string;         // Remote CDN URL
-  localImagePath?: string;  // "data/images/10497.jpg"
-  buildDate?: string;       // "2023-08-15"
-  buildTimeHours?: number;  // 4.5
-  builtBy?: string;         // "Bram & Family"
-  rating?: number;          // 5
-  funFacts: string;         // Trivia / notes
-  notes?: string;           // Display location, etc.
-  audioPath?: string;       // "data/audio/10497.mp3"
-  videoPath?: string;       // "data/videos/10497.mp4"
+  id: string;                    // "10497"
+  setNum: string;                // "10497-1"
+  name: string;                  // "Galaxy Explorer"
+  year: number;                  // 2022
+  theme: string;                 // "Classic Space / Icons"
+  pieces: number;                // 1254
+  imageUrl: string;              // Remote fallback CDN URL (Rebrickable)
+  media?: {
+    image?: string;              // "images/10497.jpg" (served via legocard-media.bramp.net)
+    audio?: string;              // "audio/10497.mp3"
+    subtitles?: string;          // "audio/10497.json"
+    video?: string;              // "videos/10497.mp4"
+  };
+  buildDate?: string;            // "2023-08-15"
+  buildTimeHours?: number;       // 4.5
+  timeToBuildFormatted?: string; // "4h 30m"
+  builtBy?: string;              // "Bram & Family"
+  rating?: number;               // 5
+  funFacts: string;              // Trivia / notes
+  notes?: string;                // Display location, etc.
+  dimensions?: LegoDimensions;
 }
 ```
+
+### Media URL Resolution
+All media references are resolved dynamically in Astro via a central helper (`site/src/lib/assets.ts`):
+- Production: `https://legocard-media.bramp.net/<path>`
+- Development fallback: configured via `PUBLIC_MEDIA_BASE_URL` in `.env`.

@@ -38,12 +38,24 @@ cp .env.example .env
 | `npm run sync` | One-shot command: fetches Google Sheet and runs Rebrickable enrichment. |
 | `npm run enrich` | Reads `data/sets.csv`, queries Rebrickable API, downloads stock images, and updates `data/sets.json`. |
 | `npm run facts` | Queries Gemini API to discover fun facts and trivia for each set. |
+| `npm run sync:cdn` | Synchronizes local media (images, audio, videos) to Cloudflare R2 (`legocard-media.bramp.net`). |
 | `npm run dev:site` | Starts the Astro development server (open `http://localhost:4321` on desktop or phone via local WiFi). |
 | `npm run build:site` | Builds the static website into `site/dist/` for GitHub Pages. |
 | `npm run preview:site`| Serves the production static build locally to test performance and routes. |
 | `npm run tts` | Generates neural voiceover MP3s and word-level subtitle timings. |
 | `npm run video:preview` | Launches Remotion Studio to preview video animations in the browser. |
 | `npm run video:render` | Batch renders 9:16 vertical MP4 showcase videos for each set. |
+
+---
+
+## ☁️ Media Assets & Cloudflare R2 CDN
+
+To prevent multi-gigabyte video and image blobs from bloating the Git repository and exceeding GitHub Pages limits, media files are stored externally in **Cloudflare R2** with zero egress fees:
+
+* **CDN Edge Domain**: `https://legocard-media.bramp.net`
+* **Local Staging**: Images (`data/images/`), audio voiceovers (`data/audio/`), and MP4 videos (`data/videos/`) are generated or downloaded locally and gitignored.
+* **Syncing to CDN**: Running `npm run sync:cdn` uploads new or updated assets to the R2 bucket with immutable caching headers.
+* **Astro Serving**: The site fetches metadata from `data/sets.json` (tracked in Git) and streams all rich media from `legocard-media.bramp.net`.
 
 ---
 
@@ -94,22 +106,29 @@ Visit `/print-tags` on the running site to see a formatted, print-ready page of 
 ```
 legocard/
 ├── data/
-│   ├── sets.csv         # Source of truth: your build history
-│   ├── sets.json        # Normalized enriched metadata
-│   ├── images/          # Downloaded official stock photos
-│   └── audio/           # Generated TTS audio tracks & subtitles
+│   ├── sets.csv         # Source of truth: your build history (in Git)
+│   ├── sets.json        # Normalized enriched metadata (in Git)
+│   ├── images/          # Downloaded official stock photos (gitignored, synced to R2)
+│   ├── audio/           # Generated TTS audio tracks & subtitles (gitignored, synced to R2)
+│   └── videos/          # Remotion vertical MP4 videos (gitignored, synced to R2)
 ├── scripts/
 │   ├── enrich-data.ts   # Ingestion & Rebrickable fetcher
 │   ├── fetch-sheet.ts   # Google Sheets downloader
+│   ├── generate-fun-facts.ts # Gemini 2.0 Flash trivia finder
 │   ├── generate-tts.ts  # Neural TTS voiceover generator
-│   └── render-videos.ts # Remotion batch MP4 renderer
+│   ├── render-videos.ts # Remotion batch MP4 renderer
+│   └── sync-cdn.ts      # Cloudflare R2 asset synchronizer
 ├── site/                # Astro 5 static mobile-first web app
 │   ├── public/
 │   │   └── CNAME        # Custom domain (legocard.bramp.net)
-│   └── src/pages/
-│       ├── index.astro         # Catalog & filterable gallery
-│       ├── sets/[id].astro     # Mobile-optimized collectible card
-│       └── print-tags.astro    # Printable display stand QR cards
+│   └── src/
+│       ├── components/  # LegoQr.astro stud QR component
+│       ├── lib/         # sets.ts and assets.ts CDN resolver
+│       └── pages/
+│           ├── index.astro         # Catalog & filterable gallery
+│           ├── sets/[id].astro     # Mobile-optimized collectible card
+│           ├── qr/[id].[format].ts # Dynamic on-demand QR generator (SVG/WebP/PNG)
+│           └── print-tags/         # Paginated printable QR display tags
 ├── video/               # Remotion React video project (Phase 2)
 ├── shared/              # Shared TypeScript definitions
 ├── DESIGN.md            # System architecture & technology decisions

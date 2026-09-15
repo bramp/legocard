@@ -12,33 +12,38 @@ LegoCard is built in two primary phases:
 ### Step 1.1: Data Enrichment & Asset Storage
 - [x] Create monorepo structure and shared TypeScript definitions in [shared/types.ts](shared/types.ts).
 - [x] Implement CSV ingestion and Rebrickable API enrichment in [scripts/enrich-data.ts](scripts/enrich-data.ts).
-- [x] Download high-resolution official stock images into [data/images/](data/images/).
-- [ ] Add QR code generation script in [scripts/generate-qrcodes.ts](scripts/generate-qrcodes.ts) to produce SVG/PNG QR codes for every set pointing to its direct URL.
+- [x] Download high-resolution official stock images into [data/images/](data/images/) (gitignored locally).
+- [x] Build in-Astro dynamic QR generator ([site/src/pages/qr/[id].[format].ts](site/src/pages/qr/[id].[format].ts)) producing SVG/PNG/WebP stud codes.
 
 ### Step 1.2: Astro Web Application Scaffolding
-- [ ] Scaffold Astro 5 project inside [site/](site/) configured with Tailwind CSS.
-- [ ] Symlink or copy enriched datasets and images into Astro's `src/content/` or `public/` directory for fast, zero-JS builds.
-- [ ] Configure Astro site URL, base path, and image optimization in [site/astro.config.mjs](site/astro.config.mjs).
+- [x] Scaffold Astro 5 project inside [site/](site/) configured with Tailwind CSS.
+- [x] Load enriched dataset via [site/src/lib/sets.ts](site/src/lib/sets.ts) for fast, zero-JS builds.
+- [x] Configure custom domain `legocard.bramp.net` and build output in [site/astro.config.mjs](site/astro.config.mjs).
 
 ### Step 1.3: Mobile-First Card Design & Templates
-- [ ] **Individual Set Route (`/sets/[id]`)**:
+- [x] **Individual Set Route (`/sets/[id]`)**:
   - Optimized for mobile scanning: fast load time (<100ms static HTML).
-  - Prominent hero image viewer with touch zoom / modal.
+  - Hero image viewer with modal preview.
   - Spec callout pills: Piece count, Release year, Theme, Dimensions.
-  - Personal build badges: Build duration ($4.5\text{ hrs}$), Date completed, Built by, Star rating.
+  - Personal build badges: Build duration, Date completed, Built by, Star rating.
   - Fun facts & notes section.
-  - "Scan / Share" QR drawer for showing the set's QR code to another device.
-  - Video embed placeholder (ready for Phase 2).
-- [ ] **Collection Gallery Route (`/`)**:
-  - Filterable and searchable by theme, piece count, release year, and builder.
-  - Responsive collectible card grid (1 column on mobile, 2-3 on tablet/desktop).
-  - Quick stats bar: Total sets, total pieces assembled, total build hours.
-- [ ] **Printable Tags Route (`/print-tags`)**:
-  - A clean print-stylesheet page that formats 2x3" display stand cards with set title, piece count, thumbnail, and QR code to print onto cardstock.
+  - Interactive "Show QR Code" modal for physical card scanning.
+- [x] **Collection Gallery Route (`/`)**:
+  - Search and filter bar by keyword and theme.
+  - Responsive collectible card grid with cover photos and quick stats.
+- [x] **Printable Tags Route (`/print-tags`)**:
+  - Paginated print sheet (9 tags per page) sorted chronologically by build date.
+  - High-resolution SVG LEGO QR code on each tag ready for cardstock printing.
 
-### Step 1.4: Deployment & Automation
-- [ ] Set up GitHub Actions workflow in [.github/workflows/deploy.yml](.github/workflows/deploy.yml) for automated builds on push to `main`.
-- [ ] Verify responsive layouts across iPhone / Android viewports.
+### Step 1.4: Cloudflare R2 Media CDN Pipeline
+- [ ] Create Cloudflare R2 bucket (`legocard-media`) with custom domain `https://legocard-media.bramp.net`.
+- [ ] Add central asset resolver in [site/src/lib/assets.ts](site/src/lib/assets.ts) pointing to CDN URLs.
+- [ ] Implement [scripts/sync-cdn.ts](scripts/sync-cdn.ts) to sync local images, audio, and videos to R2 via S3 API with caching headers.
+- [ ] Update [scripts/enrich-data.ts](scripts/enrich-data.ts) to populate relative `media` keys in [data/sets.json](data/sets.json).
+
+### Step 1.5: Deployment & Automation
+- [x] Set up GitHub Actions workflow in [.github/workflows/deploy.yml](.github/workflows/deploy.yml) using `withastro/action@v6`.
+- [x] Configure automated static site builds and GitHub Pages deployment.
 
 ---
 
