@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import { parse } from 'csv-parse/sync';
 import dotenv from 'dotenv';
-import type { CsvLegoRecord, EnrichedLegoSet, RebrickableSetResponse } from '../shared/types.js';
+import type { CsvLegoRecord, EnrichedLegoSet, LegoInstructionPdf, RebrickableSetResponse } from '../shared/types.js';
 
 dotenv.config();
 
@@ -11,12 +12,61 @@ const CSV_FILE = path.join(DATA_DIR, 'sets.csv');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
 const IMAGES_DIR = path.join(DATA_DIR, 'images');
 const CACHE_DIR = path.join(DATA_DIR, 'cache', 'rebrickable');
+const LEGO_CACHE_DIR = path.join(DATA_DIR, 'cache', 'lego');
+const LEGO_INSTRUCTIONS_DIR = process.env.LEGO_INSTRUCTIONS_DIR || path.join(os.homedir(), 'personal/lego-instructions/data');
 
 const REBRICKABLE_API_KEY = process.env.REBRICKABLE_API_KEY;
 
 // Ensure cache directories exist
 fs.mkdirSync(CACHE_DIR, { recursive: true });
+fs.mkdirSync(LEGO_CACHE_DIR, { recursive: true });
 fs.mkdirSync(IMAGES_DIR, { recursive: true });
+
+interface LegoMetadata {
+  set?: string;
+  locale?: string;
+  name?: string;
+  theme?: string;
+  age?: string;
+  pieces?: number;
+  year?: number;
+  set_image_url?: string;
+  pdfs?: Array<{
+    url: string;
+    filename?: string;
+    filesize?: number;
+    preview_url?: string;
+    is_additional_info_booklet?: boolean;
+    sequence_number?: number;
+    sequence_total?: number;
+  }>;
+}
+
+function getLegoMetadata(cleanId: string): LegoMetadata | null {
+  const cacheFile = path.join(LEGO_CACHE_DIR, `${cleanId}.json`);
+  if (fs.existsSync(cacheFile)) {
+    try {
+      return JSON.parse(fs.readFileSync(cacheFile, 'utf-8')) as LegoMetadata;
+    } catch {
+      // ignore
+    }
+  }
+
+  // Fallback: copy from ~/personal/lego-instructions/data/{cleanId}/metadata.json
+  const sourceFile = path.join(LEGO_INSTRUCTIONS_DIR, cleanId, 'metadata.json');
+  if (fs.existsSync(sourceFile)) {
+    try {
+      const content = fs.readFileSync(sourceFile, 'utf-8');
+      const parsed = JSON.parse(content) as LegoMetadata;
+      fs.writeFileSync(cacheFile, JSON.stringify(parsed, null, 2), 'utf-8');
+      return parsed;
+    } catch {
+      // ignore
+    }
+  }
+
+  return null;
+}
 
 function getCachedJson<T>(filename: string): T | null {
   const filePath = path.join(CACHE_DIR, filename);
@@ -235,16 +285,42 @@ async function main() {
 
     const previous = existingSets[cleanId] || {};
 
-    let name = record['Name'] || record['name'] || previous.name;
-    let theme = record['Category'] || record['category'] || previous.theme;
-    let pieces = parsePieces(record['Number of Pieces'] || record['pieces']) || previous.pieces;
-    let imageUrl = previous.imageUrl || `https://cdn.rebrickable.com/media/sets/${setNum}.jpg`;
+    // Check local cache / ~/personal/lego-instructions/data for LEGO.com metadata
+    const legoMeta = getLegoMetadata(cleanId);
+    if (legoMeta) {
+      console.log(`  ✓ Supplemented with LEGO.com metadata (age: ${legoMeta.age || '—'}, pieces: ${legoMeta.pieces || '—'}, PDFs: ${legoMeta.pdfs?.length || 0})`);
+    }
 
-    // Year released / retired from spreadsheet
+    let name = record['Name'] || record['name'] || previous.name;
+    if (!name && legoMeta?.name) {
+      name = legoMeta.name.replace(/[™®]/g, '').trim();
+    }
+
+    let theme = record['Category'] || record['category'] || previous.theme;
+    if (!theme && legoMeta?.theme) {
+      theme = legoMeta.theme.replace(/LEGO®\s*/g, '').trim();
+    }
+
+    let pieces = parsePieces(record['Number of Pieces'] || record['pieces']) || legoMeta?.pieces || previous.pieces;
+
+    // Year released / retired from spreadsheet or LEGO metadata
     const csvDateReleased = record['Date Set Released'] || record['date_released'] || previous.dateReleased;
     const csvDateRetired = record['Date Set Retired'] || record['date_retired'] || previous.dateRetired;
-    let yearReleased = parseYear(csvDateReleased) || previous.yearReleased;
+    let yearReleased = parseYear(csvDateReleased) || legoMeta?.year || previous.yearReleased;
     let yearRetired = parseYear(csvDateRetired) || previous.yearRetired;
+
+    const age = legoMeta?.age || previous.age;
+    const instructions: LegoInstructionPdf[] | undefined = legoMeta?.pdfs?.map((p) => ({
+      url: p.url,
+      filename: p.filename,
+      filesize: p.filesize,
+      previewUrl: p.preview_url,
+      isAdditionalInfoBooklet: p.is_additional_info_booklet,
+      sequenceNumber: p.sequence_number,
+      sequenceTotal: p.sequence_total,
+    })) || previous.instructions;
+
+    let imageUrl = previous.imageUrl || (legoMeta?.set_image_url ? legoMeta.set_image_url : `https://cdn.rebrickable.com/media/sets/${setNum}.jpg`);
 
     // 1. Try Rebrickable API (uses local cache in data/cache/rebrickable first)
     if (REBRICKABLE_API_KEY) {
@@ -276,7 +352,7 @@ async function main() {
       name = `Lego Set #${cleanId}`;
     }
 
-    // Primary display year: release year, or fallback to previous display year
+    // Primary display year: release year, or fallback to previous display year (never hardcode arbitrary defaults)
     const displayYear = yearReleased || previous.year;
 
     // 2. Download high-res stock photo
@@ -312,6 +388,10 @@ async function main() {
     const dateFinished = record['Date Finished'] && !record['Date Finished'].includes('#REF!') ? record['Date Finished'] : undefined;
     const datePurchased = record['Date Purchased'] || undefined;
 
+    // Ratings: only keep if explicitly specified in CSV row (never default to 5)
+    const rawRating = record['rating'] ? parseFloat(String(record['rating'])) : undefined;
+    const rating = (rawRating && !isNaN(rawRating)) ? rawRating : undefined;
+
     const enriched: EnrichedLegoSet = {
       id: cleanId,
       setNum,
@@ -322,7 +402,10 @@ async function main() {
       dateReleased: csvDateReleased || undefined,
       dateRetired: csvDateRetired || undefined,
       theme,
+      age,
       pieces,
+      instructions,
+      rating,
       imageUrl,
       media: {
         image: `images/${imageFilename}`,
@@ -352,11 +435,20 @@ async function main() {
     if (!uniqueMap.has(set.id)) {
       uniqueMap.set(set.id, set);
     } else {
-      // Merge: prefer whichever has build info or later date
+      // Merge: prefer whichever has build info or more complete metadata
       const existing = uniqueMap.get(set.id)!;
-      if (!existing.timeToBuildFormatted && set.timeToBuildFormatted) {
-        uniqueMap.set(set.id, set);
-      }
+      const merged: EnrichedLegoSet = {
+        ...existing,
+        ...set,
+        timeToBuildFormatted: existing.timeToBuildFormatted || set.timeToBuildFormatted,
+        buildTimeHours: existing.buildTimeHours || set.buildTimeHours,
+        buildDate: existing.buildDate || set.buildDate,
+        funFacts: existing.funFacts || set.funFacts || '',
+        notes: existing.notes || set.notes,
+        age: existing.age || set.age,
+        instructions: existing.instructions || set.instructions,
+      };
+      uniqueMap.set(set.id, merged);
     }
   }
 
