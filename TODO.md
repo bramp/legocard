@@ -2,7 +2,7 @@
 
 - [ ] Create a custom QR code generator that renders QR code modules shaped like Lego bricks / round studs.
 - [x] Add script to pull collection spreadsheet directly from Google Sheets (`scripts/fetch-sheet.ts` / `npm run fetch:sheet`).
-- [ ] Implement Phase 2: Remotion vertical video showcase composition and batch MP4 rendering.
+- [x] Implement Phase 2: Remotion vertical video showcase composition and batch MP4 rendering.
 
 ## Metadata Enrichment & Data Sources
 - [ ] **Minifigures (Rebrickable / BrickLink)**: Pull minifigure count (`num_minifigs`) and list of minifigures (names, IDs, minifig images) via `/api/v3/lego/sets/{set_num}/minifigs/`.

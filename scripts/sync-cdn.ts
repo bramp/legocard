@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import {
   S3Client,
   ListObjectsV2Command,
+  type ListObjectsV2CommandOutput,
   PutObjectCommand,
   type _Object,
 } from '@aws-sdk/client-s3';
@@ -59,7 +60,7 @@ async function listAllRemoteObjects(s3: S3Client, bucket: string): Promise<Map<s
 
   try {
     do {
-      const res = await s3.send(
+      const res: ListObjectsV2CommandOutput = await s3.send(
         new ListObjectsV2Command({
           Bucket: bucket,
           ContinuationToken: continuationToken,

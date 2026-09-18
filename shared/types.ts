@@ -48,6 +48,21 @@ export interface WordTimestamp {
   end: number;   // in milliseconds
 }
 
+export interface LegoShowcaseProps {
+  id: string;
+  name: string;
+  theme?: string;
+  year?: number;
+  pieces?: number;
+  buildTimeHours?: number;
+  timeToBuildFormatted?: string;
+  funFacts?: string;
+  imageSrc: string; // File URL, data URL, or web URL
+  audioSrc?: string; // File URL, data URL, or web URL
+  subtitles?: WordTimestamp[];
+  audioDurationInSeconds?: number;
+}
+
 export interface LegoDimensions {
   height?: number; // cm
   width?: number;  // cm

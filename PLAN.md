@@ -50,21 +50,21 @@ LegoCard is built in two primary phases:
 ## Phase 2: Video Highlight Reel Pipeline (Remotion & TTS)
 
 ### Step 2.1: Neural Voiceover Narration
-- [ ] Build [scripts/generate-tts.ts](scripts/generate-tts.ts) using Edge Neural TTS to synthesize audio narration (.mp3) from set specs and fun facts.
-- [ ] Extract word-level subtitle timing into `.subtitles.json` for animated captions.
+- [x] Build [scripts/generate-tts.ts](scripts/generate-tts.ts) using Edge Neural TTS to synthesize audio narration (.mp3) from set specs and fun facts.
+- [x] Extract word-level subtitle timing into `.subtitles.json` for animated captions.
 
 ### Step 2.2: Remotion Video PoC
-- [ ] Scaffold Remotion project in [video/](video/) with 9:16 vertical (1080x1920) resolution.
-- [ ] Create animated composition:
+- [x] Scaffold Remotion project in [video/](video/) with 9:16 vertical (1080x1920) resolution.
+- [x] Create animated composition:
   - Intro card with set title and piece count badge.
   - Ken Burns pan/zoom on stock photo.
   - Animated stat counters.
   - Synchronized subtitle captions.
-- [ ] Interactive review using `npm run video:preview` (Remotion Studio).
+- [x] Interactive review using `npm run video:preview` (Remotion Studio).
 
 ### Step 2.3: Batch Video Renderer
-- [ ] Implement CLI renderer in [scripts/render-videos.ts](scripts/render-videos.ts) using `@remotion/renderer`.
-- [ ] Link rendered videos into the Astro set pages.
+- [x] Implement CLI renderer in [scripts/render-videos.ts](scripts/render-videos.ts) using `@remotion/renderer`.
+- [x] Link rendered videos into the Astro set pages.
 
 ---
 

@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 import type { EnrichedLegoSet, WordTimestamp } from '../shared/types.js';
 
@@ -23,7 +24,7 @@ interface EdgeMetadataItem {
   };
 }
 
-function buildNarration(set: EnrichedLegoSet): string {
+export function buildNarration(set: EnrichedLegoSet): string {
   const parts: string[] = [];
 
   parts.push(`Lego set ${set.id}: ${set.name}.`);
@@ -38,11 +39,7 @@ function buildNarration(set: EnrichedLegoSet): string {
 
   if (set.buildTimeHours) {
     const hoursText = set.buildTimeHours === 1 ? '1 hour' : `${set.buildTimeHours} hours`;
-    if (set.builtBy) {
-      parts.push(`Built by ${set.builtBy} in ${hoursText}.`);
-    } else {
-      parts.push(`Took ${hoursText} to build.`);
-    }
+    parts.push(`Took ${hoursText} to build.`);
   }
 
   if (set.funFacts) {
@@ -52,17 +49,31 @@ function buildNarration(set: EnrichedLegoSet): string {
   return parts.join(' ');
 }
 
+// TODO It seems odd we need to do this - shouldn't the API do this, or shouldn't we use a proper html encoder
+function escapeXml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 async function generateSetAudio(set: EnrichedLegoSet): Promise<{ audioPath: string; subtitles: WordTimestamp[]; narrationText: string }> {
   const narration = buildNarration(set);
   const audioFilePath = path.join(AUDIO_DIR, `${set.id}.mp3`);
   const subtitlesFilePath = path.join(AUDIO_DIR, `${set.id}.subtitles.json`);
+
+  if (!fs.existsSync(AUDIO_DIR)) {
+    fs.mkdirSync(AUDIO_DIR, { recursive: true });
+  }
 
   const tts = new MsEdgeTTS();
   await tts.setMetadata(VOICE_NAME, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3, {
     wordBoundaryEnabled: true,
   });
 
-  const { audioStream, metadataStream } = tts.toStream(narration);
+  const { audioStream, metadataStream } = tts.toStream(escapeXml(narration));
 
   const wordTimestamps: WordTimestamp[] = [];
   if (metadataStream) {
@@ -112,9 +123,7 @@ async function main() {
     process.exit(1);
   }
 
-  const sets = JSON.parse(fs.readFileSync(JSON_FILE, 'utf-8')) as EnrichedLegoSet[];
-  console.log(`Generating TTS audio and subtitles for ${sets.length} sets...`);
-
+  const isPreview = process.argv.includes('--preview') || process.argv.includes('--dry-run');
   const filterArg = process.argv.find((arg) => arg.startsWith('--set=') || arg === '--set');
   let targetId: string | undefined;
   if (filterArg) {
@@ -126,18 +135,40 @@ async function main() {
     }
   }
 
+  const sets = JSON.parse(fs.readFileSync(JSON_FILE, 'utf-8')) as EnrichedLegoSet[];
+
+  if (isPreview) {
+    console.log(`📋 Previewing voiceover narration text for sets:\n`);
+    let count = 0;
+    for (const set of sets) {
+      if (targetId && set.id !== targetId) {
+        continue;
+      }
+      const narration = set.narrationText || buildNarration(set);
+      console.log(`[#${set.id}] ${set.name}`);
+      console.log(`   "${narration}"\n`);
+      count++;
+    }
+    console.log(`Total sets previewed: ${count}`);
+    return;
+  }
+
+  console.log(`Generating TTS audio and subtitles for ${sets.length} sets...`);
+
   let count = 0;
   for (const set of sets) {
     if (targetId && set.id !== targetId) {
       continue;
     }
+    const previewText = buildNarration(set);
     console.log(`🎙️  Narrating #${set.id}: ${set.name}...`);
+    console.log(`   "${previewText}"`);
     try {
       const result = await generateSetAudio(set);
       set.audioPath = result.audioPath;
       set.subtitles = result.subtitles;
       set.narrationText = result.narrationText;
-      console.log(`   ✓ Audio: ${result.audioPath} (${result.subtitles.length} words timed)`);
+      console.log(`   ✓ Audio: ${result.audioPath} (${result.subtitles.length} words timed)\n`);
       count++;
     } catch (err) {
       console.error(`   ✗ Failed to generate TTS for #${set.id}:`, err);
@@ -148,7 +179,10 @@ async function main() {
   console.log(`\n🎉 TTS generation complete for ${count} set(s). Updated ${JSON_FILE}`);
 }
 
-main().catch((err) => {
-  console.error('Fatal TTS generation error:', err);
-  process.exit(1);
-});
+const isDirectRun = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
+if (isDirectRun) {
+  main().catch((err) => {
+    console.error('Fatal TTS generation error:', err);
+    process.exit(1);
+  });
+}

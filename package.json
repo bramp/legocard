@@ -27,6 +27,8 @@
     "qrcode": "^1.5.4"
   },
   "devDependencies": {
+    "@remotion/bundler": "^4.0.524",
+    "@remotion/renderer": "^4.0.524",
     "@types/csv-stringify": "^1.4.3",
     "@types/mime-types": "^3.0.1",
     "@types/node": "^22.13.0",

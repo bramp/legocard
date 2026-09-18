@@ -21,6 +21,18 @@ data/cache/
 # Downloaded stock photos (cached locally, site uses CDN URLs)
 data/images/
 
+# Generated voiceover audio and subtitles (cached locally, site uses CDN URLs)
+data/audio/
+
+# Rendered MP4 videos (cached locally, site uses CDN URLs)
+data/videos/
+
+# Video workspace public assets & outputs
+video/public/images/
+video/public/audio/
+video/public/videos/
+video/out/
+
 # OS and Editor files
 .DS_Store
 Thumbs.db
