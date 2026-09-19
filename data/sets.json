@@ -35,12 +35,10 @@
       "depth": 38
     },
     "media": {
-      "image": "images/10234.jpg",
       "audio": "audio/10234.mp3",
       "subtitles": "audio/10234.json",
       "video": "videos/10234.mp4"
     },
-    "localImagePath": "data/images/10234.jpg",
     "audioPath": "data/audio/10234.mp3",
     "subtitles": [
       {
@@ -337,10 +335,7 @@
       "width": 21,
       "depth": 16
     },
-    "media": {
-      "image": "images/10237.jpg"
-    },
-    "localImagePath": "data/images/10237.jpg",
+    "media": {},
     "buildDate": "2025-08-31",
     "buildTimeHours": 5.68,
     "timeToBuildFormatted": "5 hours 41 minutes",
@@ -388,10 +383,7 @@
       "width": 51,
       "depth": 51
     },
-    "media": {
-      "image": "images/10256.jpg"
-    },
-    "localImagePath": "data/images/10256.jpg",
+    "media": {},
     "buildDate": "2026-06-30",
     "buildTimeHours": 1.87,
     "timeToBuildFormatted": "1 hour 52 minutes",
@@ -469,10 +461,7 @@
       "width": 45,
       "depth": 30
     },
-    "media": {
-      "image": "images/10333.jpg"
-    },
-    "localImagePath": "data/images/10333.jpg",
+    "media": {},
     "buildDate": "2025",
     "funFacts": ""
   },
@@ -525,10 +514,7 @@
       "height": 12,
       "width": 8
     },
-    "media": {
-      "image": "images/10349.jpg"
-    },
-    "localImagePath": "data/images/10349.jpg",
+    "media": {},
     "buildDate": "2026-01-09",
     "buildTimeHours": 0.78,
     "timeToBuildFormatted": "47 minutes",
@@ -592,10 +578,7 @@
       "width": 45,
       "depth": 27
     },
-    "media": {
-      "image": "images/10354.jpg"
-    },
-    "localImagePath": "data/images/10354.jpg",
+    "media": {},
     "buildDate": "2025-08-09",
     "buildTimeHours": 4.8,
     "timeToBuildFormatted": "4 hours 48 minutes",
@@ -657,10 +640,7 @@
       "width": 44,
       "depth": 17
     },
-    "media": {
-      "image": "images/10367.jpg"
-    },
-    "localImagePath": "data/images/10367.jpg",
+    "media": {},
     "buildDate": "2026-01-10",
     "buildTimeHours": 2.38,
     "timeToBuildFormatted": "2 hours 23 minutes",
@@ -724,10 +704,7 @@
       "width": 13,
       "depth": 13
     },
-    "media": {
-      "image": "images/11373.jpg"
-    },
-    "localImagePath": "data/images/11373.jpg",
+    "media": {},
     "buildDate": "2026-06-19",
     "buildTimeHours": 1.82,
     "timeToBuildFormatted": "1 hour 49 minutes",
@@ -814,10 +791,7 @@
       "width": 62,
       "depth": 37
     },
-    "media": {
-      "image": "images/11377.jpg"
-    },
-    "localImagePath": "data/images/11377.jpg",
+    "media": {},
     "buildDate": "2026-06-01",
     "buildTimeHours": 16.22,
     "timeToBuildFormatted": "16 hours 13 minutes",
@@ -867,10 +841,7 @@
       "width": 14,
       "depth": 14
     },
-    "media": {
-      "image": "images/21042.jpg"
-    },
-    "localImagePath": "data/images/21042.jpg",
+    "media": {},
     "buildDate": "2026-06-06",
     "buildTimeHours": 2.57,
     "timeToBuildFormatted": "2 hours 34 minutes",
@@ -924,10 +895,7 @@
       "width": 35,
       "depth": 32
     },
-    "media": {
-      "image": "images/21058.jpg"
-    },
-    "localImagePath": "data/images/21058.jpg",
+    "media": {},
     "buildDate": "2026-06-12",
     "buildTimeHours": 2.4,
     "timeToBuildFormatted": "2 hours 24 minutes",
@@ -984,10 +952,7 @@
       "width": 30,
       "depth": 25
     },
-    "media": {
-      "image": "images/21336.jpg"
-    },
-    "localImagePath": "data/images/21336.jpg",
+    "media": {},
     "buildDate": "2025-08-14",
     "buildTimeHours": 3.67,
     "timeToBuildFormatted": "3 hours 40 minutes",
@@ -1007,10 +972,7 @@
     "images": [],
     "categories": [],
     "productVideos": [],
-    "media": {
-      "image": "images/30685.jpg"
-    },
-    "localImagePath": "data/images/30685.jpg",
+    "media": {},
     "buildDate": "2026",
     "funFacts": ""
   },
@@ -1042,10 +1004,7 @@
       "Sets"
     ],
     "productVideos": [],
-    "media": {
-      "image": "images/30708.jpg"
-    },
-    "localImagePath": "data/images/30708.jpg",
+    "media": {},
     "buildDate": "2025-06-08",
     "buildTimeHours": 0.15,
     "timeToBuildFormatted": "9 minutes",
@@ -1096,10 +1055,7 @@
     "dimensions": {
       "height": 20
     },
-    "media": {
-      "image": "images/31157.jpg"
-    },
-    "localImagePath": "data/images/31157.jpg",
+    "media": {},
     "buildDate": "2026-04-30",
     "buildTimeHours": 0.87,
     "timeToBuildFormatted": "52 minutes",
@@ -1163,10 +1119,7 @@
       "height": 39,
       "width": 52
     },
-    "media": {
-      "image": "images/31208.jpg"
-    },
-    "localImagePath": "data/images/31208.jpg",
+    "media": {},
     "buildDate": "2026-06-19",
     "buildTimeHours": 2.27,
     "timeToBuildFormatted": "2 hours 16 minutes",
@@ -1219,10 +1172,7 @@
       "width": 87,
       "depth": 4
     },
-    "media": {
-      "image": "images/31216.jpg"
-    },
-    "localImagePath": "data/images/31216.jpg",
+    "media": {},
     "buildDate": "2025-08-12",
     "buildTimeHours": 4.07,
     "timeToBuildFormatted": "4 hours 4 minutes",
@@ -1280,10 +1230,7 @@
       "width": 18,
       "depth": 12
     },
-    "media": {
-      "image": "images/40516.jpg"
-    },
-    "localImagePath": "data/images/40516.jpg",
+    "media": {},
     "buildDate": "2025-11-28",
     "buildTimeHours": 0.53,
     "timeToBuildFormatted": "32 minutes",
@@ -1336,10 +1283,7 @@
     "dimensions": {
       "height": 30
     },
-    "media": {
-      "image": "images/40573.jpg"
-    },
-    "localImagePath": "data/images/40573.jpg",
+    "media": {},
     "buildDate": "2025-11-11",
     "buildTimeHours": 0.93,
     "timeToBuildFormatted": "56 minutes",
@@ -1385,10 +1329,7 @@
     "dimensions": {
       "height": 27
     },
-    "media": {
-      "image": "images/40649.jpg"
-    },
-    "localImagePath": "data/images/40649.jpg",
+    "media": {},
     "buildDate": "2025-11-21",
     "buildTimeHours": 1.58,
     "timeToBuildFormatted": "1 hour 35 minutes",
@@ -1430,10 +1371,7 @@
       "width": 40,
       "depth": 28
     },
-    "media": {
-      "image": "images/40693.jpg"
-    },
-    "localImagePath": "data/images/40693.jpg",
+    "media": {},
     "buildDate": "2025-07-27",
     "buildTimeHours": 1.05,
     "timeToBuildFormatted": "1 hour 3 minutes",
@@ -1474,10 +1412,7 @@
       "width": 14,
       "depth": 6
     },
-    "media": {
-      "image": "images/40761.jpg"
-    },
-    "localImagePath": "data/images/40761.jpg",
+    "media": {},
     "buildDate": "2025-09-18",
     "buildTimeHours": 0.6,
     "timeToBuildFormatted": "36 minutes",
@@ -1522,10 +1457,7 @@
       "width": 11,
       "depth": 8
     },
-    "media": {
-      "image": "images/40771.jpg"
-    },
-    "localImagePath": "data/images/40771.jpg",
+    "media": {},
     "buildDate": "2025-09-30",
     "buildTimeHours": 0.47,
     "timeToBuildFormatted": "28 minutes",
@@ -1566,10 +1498,7 @@
       "width": 13,
       "depth": 13
     },
-    "media": {
-      "image": "images/40788.jpg"
-    },
-    "localImagePath": "data/images/40788.jpg",
+    "media": {},
     "buildDate": "2025-07-06",
     "buildTimeHours": 1.03,
     "timeToBuildFormatted": "1 hour 2 minutes",
@@ -1615,10 +1544,7 @@
     "dimensions": {
       "height": 25
     },
-    "media": {
-      "image": "images/40819.jpg"
-    },
-    "localImagePath": "data/images/40819.jpg",
+    "media": {},
     "buildDate": "2025-11-21",
     "buildTimeHours": 1.48,
     "timeToBuildFormatted": "1 hour 29 minutes",
@@ -1666,10 +1592,7 @@
     "dimensions": {
       "height": 27
     },
-    "media": {
-      "image": "images/40820.jpg"
-    },
-    "localImagePath": "data/images/40820.jpg",
+    "media": {},
     "buildDate": "2025-11-21",
     "buildTimeHours": 1.38,
     "timeToBuildFormatted": "1 hour 23 minutes",
@@ -1714,10 +1637,7 @@
       "height": 29,
       "width": 26
     },
-    "media": {
-      "image": "images/40825.jpg"
-    },
-    "localImagePath": "data/images/40825.jpg",
+    "media": {},
     "buildDate": "2025-09-30",
     "buildTimeHours": 1.18,
     "timeToBuildFormatted": "1 hour 11 minutes",
@@ -1762,10 +1682,7 @@
       "width": 10,
       "depth": 14
     },
-    "media": {
-      "image": "images/40893.jpg"
-    },
-    "localImagePath": "data/images/40893.jpg",
+    "media": {},
     "buildDate": "2026-06-01",
     "buildTimeHours": 1.37,
     "timeToBuildFormatted": "1 hour 22 minutes",
@@ -1822,10 +1739,7 @@
       "width": 8,
       "depth": 16
     },
-    "media": {
-      "image": "images/42221.jpg"
-    },
-    "localImagePath": "data/images/42221.jpg",
+    "media": {},
     "buildDate": "2026-06-14",
     "buildTimeHours": 1.8,
     "timeToBuildFormatted": "1 hour 48 minutes",
@@ -1891,10 +1805,7 @@
       "width": 84,
       "depth": 60
     },
-    "media": {
-      "image": "images/75192.jpg"
-    },
-    "localImagePath": "data/images/75192.jpg",
+    "media": {},
     "buildDate": "2025-07-07",
     "buildTimeHours": 18.53,
     "timeToBuildFormatted": "18 hours 32 minutes",
@@ -1948,10 +1859,7 @@
       "width": 13,
       "depth": 15
     },
-    "media": {
-      "image": "images/75274.jpg"
-    },
-    "localImagePath": "data/images/75274.jpg",
+    "media": {},
     "buildDate": "2025-08-01",
     "buildTimeHours": 1.75,
     "timeToBuildFormatted": "1 hour 45 minutes",
@@ -2003,10 +1911,7 @@
       "width": 11,
       "depth": 11
     },
-    "media": {
-      "image": "images/75277.jpg"
-    },
-    "localImagePath": "data/images/75277.jpg",
+    "media": {},
     "buildDate": "2025-08-02",
     "buildTimeHours": 1.75,
     "timeToBuildFormatted": "1 hour 45 minutes",
@@ -2057,10 +1962,7 @@
       "width": 15,
       "depth": 14
     },
-    "media": {
-      "image": "images/75304.jpg"
-    },
-    "localImagePath": "data/images/75304.jpg",
+    "media": {},
     "buildDate": "2025-06-12",
     "buildTimeHours": 2.18,
     "timeToBuildFormatted": "2 hours 11 minutes",
@@ -2123,10 +2025,7 @@
       "width": 11,
       "depth": 12
     },
-    "media": {
-      "image": "images/75305.jpg"
-    },
-    "localImagePath": "data/images/75305.jpg",
+    "media": {},
     "buildDate": "2025-08-04",
     "buildTimeHours": 1.08,
     "timeToBuildFormatted": "1 hour 5 minutes",
@@ -2187,10 +2086,7 @@
       "width": 24,
       "depth": 69
     },
-    "media": {
-      "image": "images/75313.jpg"
-    },
-    "localImagePath": "data/images/75313.jpg",
+    "media": {},
     "buildDate": "2025-07-06",
     "buildTimeHours": 15.97,
     "timeToBuildFormatted": "15 hours 58 minutes",
@@ -2241,10 +2137,7 @@
       "width": 12,
       "depth": 13
     },
-    "media": {
-      "image": "images/75327.jpg"
-    },
-    "localImagePath": "data/images/75327.jpg",
+    "media": {},
     "buildDate": "2025-06-09",
     "buildTimeHours": 2,
     "timeToBuildFormatted": "2 hours",
@@ -2297,10 +2190,7 @@
       "width": 11,
       "depth": 12
     },
-    "media": {
-      "image": "images/75328.jpg"
-    },
-    "localImagePath": "data/images/75328.jpg",
+    "media": {},
     "buildDate": "2025-06-12",
     "buildTimeHours": 1.5,
     "timeToBuildFormatted": "1 hour 30 minutes",
@@ -2348,10 +2238,7 @@
       "width": 12,
       "depth": 15
     },
-    "media": {
-      "image": "images/75343.jpg"
-    },
-    "localImagePath": "data/images/75343.jpg",
+    "media": {},
     "buildDate": "2025-08-02",
     "buildTimeHours": 1.75,
     "timeToBuildFormatted": "1 hour 45 minutes",
@@ -2403,10 +2290,7 @@
       "width": 12,
       "depth": 13
     },
-    "media": {
-      "image": "images/75349.jpg"
-    },
-    "localImagePath": "data/images/75349.jpg",
+    "media": {},
     "buildDate": "2025-06-12",
     "buildTimeHours": 2.25,
     "timeToBuildFormatted": "2 hours 15 minutes",
@@ -2455,10 +2339,7 @@
       "width": 11,
       "depth": 14
     },
-    "media": {
-      "image": "images/75351.jpg"
-    },
-    "localImagePath": "data/images/75351.jpg",
+    "media": {},
     "buildDate": "2025-07-04",
     "buildTimeHours": 1.58,
     "timeToBuildFormatted": "1 hour 35 minutes",
@@ -2529,10 +2410,7 @@
       "width": 44,
       "depth": 55
     },
-    "media": {
-      "image": "images/75355.jpg"
-    },
-    "localImagePath": "data/images/75355.jpg",
+    "media": {},
     "buildDate": "2025-06-19",
     "buildTimeHours": 3.65,
     "timeToBuildFormatted": "3 hours 39 minutes",
@@ -2587,10 +2465,7 @@
       "width": 19,
       "depth": 24
     },
-    "media": {
-      "image": "images/75375.jpg"
-    },
-    "localImagePath": "data/images/75375.jpg",
+    "media": {},
     "buildDate": "2025-09-25",
     "buildTimeHours": 2.07,
     "timeToBuildFormatted": "2 hours 4 minutes",
@@ -2640,10 +2515,7 @@
     "dimensions": {
       "height": 21
     },
-    "media": {
-      "image": "images/75381.jpg"
-    },
-    "localImagePath": "data/images/75381.jpg",
+    "media": {},
     "buildDate": "2025-10-07",
     "buildTimeHours": 1.35,
     "timeToBuildFormatted": "1 hour 21 minutes",
@@ -2695,10 +2567,7 @@
       "height": 16,
       "depth": 46
     },
-    "media": {
-      "image": "images/75394.jpg"
-    },
-    "localImagePath": "data/images/75394.jpg",
+    "media": {},
     "buildDate": "2025-07-06",
     "buildTimeHours": 3.13,
     "timeToBuildFormatted": "3 hours 8 minutes",
@@ -2761,10 +2630,7 @@
       "width": 77,
       "depth": 25
     },
-    "media": {
-      "image": "images/75397.jpg"
-    },
-    "localImagePath": "data/images/75397.jpg",
+    "media": {},
     "buildDate": "2026-04-30",
     "buildTimeHours": 7.13,
     "timeToBuildFormatted": "7 hours 8 minutes",
@@ -2815,10 +2681,7 @@
     "dimensions": {
       "height": 38
     },
-    "media": {
-      "image": "images/75398.jpg"
-    },
-    "localImagePath": "data/images/75398.jpg",
+    "media": {},
     "buildDate": "2026-04-30",
     "buildTimeHours": 2,
     "timeToBuildFormatted": "2 hours",
@@ -2871,10 +2734,7 @@
       "width": 16,
       "depth": 18
     },
-    "media": {
-      "image": "images/75403.jpg"
-    },
-    "localImagePath": "data/images/75403.jpg",
+    "media": {},
     "buildDate": "2026-07-13",
     "buildTimeHours": 3.38,
     "timeToBuildFormatted": "3 hours 23 minutes",
@@ -2928,10 +2788,7 @@
       "width": 30,
       "depth": 3
     },
-    "media": {
-      "image": "images/75407.jpg"
-    },
-    "localImagePath": "data/images/75407.jpg",
+    "media": {},
     "buildDate": "2026-01-26",
     "buildTimeHours": 1.42,
     "timeToBuildFormatted": "1 hour 25 minutes",
@@ -2983,10 +2840,7 @@
       "width": 12,
       "depth": 11
     },
-    "media": {
-      "image": "images/75408.jpg"
-    },
-    "localImagePath": "data/images/75408.jpg",
+    "media": {},
     "buildDate": "2025-11-22",
     "buildTimeHours": 1.27,
     "timeToBuildFormatted": "1 hour 16 minutes",
@@ -3035,10 +2889,7 @@
       "width": 11,
       "depth": 13
     },
-    "media": {
-      "image": "images/75415.jpg"
-    },
-    "localImagePath": "data/images/75415.jpg",
+    "media": {},
     "buildDate": "2025-06-12",
     "buildTimeHours": 1.33,
     "timeToBuildFormatted": "1 hour 20 minutes",
@@ -3094,10 +2945,7 @@
       "width": 22,
       "depth": 22
     },
-    "media": {
-      "image": "images/75417.jpg"
-    },
-    "localImagePath": "data/images/75417.jpg",
+    "media": {},
     "buildDate": "2026-04-30",
     "buildTimeHours": 3.08,
     "timeToBuildFormatted": "3 hours 5 minutes",
@@ -3177,10 +3025,7 @@
       "width": 79,
       "depth": 27
     },
-    "media": {
-      "image": "images/75419.jpg"
-    },
-    "localImagePath": "data/images/75419.jpg",
+    "media": {},
     "buildDate": "2025-09-30",
     "buildTimeHours": 20.15,
     "timeToBuildFormatted": "20 hours 9 minutes",
@@ -3234,10 +3079,7 @@
       "width": 14,
       "depth": 30
     },
-    "media": {
-      "image": "images/75428.jpg"
-    },
-    "localImagePath": "data/images/75428.jpg",
+    "media": {},
     "buildDate": "2026-05-04",
     "buildTimeHours": 4.52,
     "timeToBuildFormatted": "4 hours 31 minutes",
@@ -3287,10 +3129,7 @@
     "dimensions": {
       "height": 23
     },
-    "media": {
-      "image": "images/75430.jpg"
-    },
-    "localImagePath": "data/images/75430.jpg",
+    "media": {},
     "buildDate": "2025-10-07",
     "buildTimeHours": 2.12,
     "timeToBuildFormatted": "2 hours 7 minutes",
@@ -3346,10 +3185,7 @@
       "width": 11,
       "depth": 19
     },
-    "media": {
-      "image": "images/75440.jpg"
-    },
-    "localImagePath": "data/images/75440.jpg",
+    "media": {},
     "buildDate": "2026-06-06",
     "buildTimeHours": 1.25,
     "timeToBuildFormatted": "1 hour 15 minutes",
@@ -3401,10 +3237,7 @@
     "dimensions": {
       "height": 9
     },
-    "media": {
-      "image": "images/75452.jpg"
-    },
-    "localImagePath": "data/images/75452.jpg",
+    "media": {},
     "buildDate": "2026-04-30",
     "buildTimeHours": 2.02,
     "timeToBuildFormatted": "2 hours 1 minute",
@@ -3424,10 +3257,7 @@
     "images": [],
     "categories": [],
     "productVideos": [],
-    "media": {
-      "image": "images/76393.jpg"
-    },
-    "localImagePath": "data/images/76393.jpg",
+    "media": {},
     "buildDate": "2026-02-28",
     "buildTimeHours": 5.02,
     "timeToBuildFormatted": "5 hours 1 minute",
@@ -3447,10 +3277,7 @@
     "images": [],
     "categories": [],
     "productVideos": [],
-    "media": {
-      "image": "images/79007.jpg"
-    },
-    "localImagePath": "data/images/79007.jpg",
+    "media": {},
     "buildDate": "2025-11-05",
     "buildTimeHours": 1.82,
     "timeToBuildFormatted": "1 hour 49 minutes",

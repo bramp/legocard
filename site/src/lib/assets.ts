@@ -18,16 +18,18 @@ export function getAssetUrl(path: string | undefined): string | undefined {
 
 /**
  * Returns the best image URL for a given Lego set.
- * Prefers the CDN asset on legocard-media.bramp.net, falling back to Rebrickable CDN.
+ * Uses official external URLs directly (LEGO high-res or Rebrickable),
+ * falling back to custom media if specified.
  */
 export function getSetImageUrl(set: EnrichedLegoSet): string {
+  if (set.hiresImageUrl) return set.hiresImageUrl;
+  if (set.imageUrl) return set.imageUrl;
+  if (set.images && set.images.length > 0) return set.images[0];
+  if (set.thumbnailImageUrl) return set.thumbnailImageUrl;
   if (set.media?.image) {
     return getAssetUrl(set.media.image)!;
   }
-  if (set.id) {
-    return getAssetUrl(`images/${set.id}.jpg`)!;
-  }
-  return set.imageUrl;
+  return '';
 }
 
 /**

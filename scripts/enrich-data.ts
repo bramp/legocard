@@ -17,7 +17,6 @@ dotenv.config();
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const CSV_FILE = path.join(DATA_DIR, 'sets.csv');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
-const IMAGES_DIR = path.join(DATA_DIR, 'images');
 const CACHE_DIR = path.join(DATA_DIR, 'cache', 'rebrickable');
 const LEGO_CACHE_DIR = path.join(DATA_DIR, 'cache', 'lego');
 
@@ -48,7 +47,6 @@ const REBRICKABLE_API_KEY = process.env.REBRICKABLE_API_KEY;
 // Ensure cache directories exist
 fs.mkdirSync(CACHE_DIR, { recursive: true });
 fs.mkdirSync(LEGO_CACHE_DIR, { recursive: true });
-fs.mkdirSync(IMAGES_DIR, { recursive: true });
 
 interface LegoMetadata {
   set?: string;
@@ -295,24 +293,6 @@ async function fetchRebrickableSet(
   return {};
 }
 
-async function downloadImage(url: string, destPath: string): Promise<boolean> {
-  if (fs.existsSync(destPath)) {
-    return true; // Already downloaded
-  }
-  try {
-    const res = await fetch(url);
-    if (!res.ok) {
-      return false;
-    }
-    const buffer = Buffer.from(await res.arrayBuffer());
-    fs.writeFileSync(destPath, buffer);
-    return true;
-  } catch (err) {
-    console.warn(`[Warning] Failed to download image from ${url}:`, err);
-    return false;
-  }
-}
-
 async function main() {
   if (!fs.existsSync(CSV_FILE)) {
     console.error(`CSV file not found at ${CSV_FILE}`);
@@ -468,16 +448,6 @@ async function main() {
     // Primary display year: release year, or fallback to previous display year (never hardcode arbitrary defaults)
     const displayYear = yearReleased || previous.year;
 
-    // 2. Download high-res stock photo
-    const imageFilename = `${cleanId}.jpg`;
-    const localImagePath = path.join(IMAGES_DIR, imageFilename);
-    const downloaded = await downloadImage(imageUrl, localImagePath);
-    if (downloaded) {
-      console.log(`  ✓ Image saved: data/images/${imageFilename}`);
-    } else {
-      console.log(`  ⚠ Could not download image for #${cleanId}`);
-    }
-
     const rawBuildTime = record['Time to Build'] || record['time_to_build'] || record['build_time_hours'];
     let buildTimeHours = previous.buildTimeHours;
     let timeToBuildFormatted = previous.timeToBuildFormatted;
@@ -556,12 +526,10 @@ async function main() {
       productVideos,
       dimensions,
       media: {
-        image: `images/${imageFilename}`,
         audio: previous.media?.audio || (previous.audioPath ? `audio/${cleanId}.mp3` : undefined),
         subtitles: previous.media?.subtitles || (previous.subtitles ? `audio/${cleanId}.json` : undefined),
         video: previous.media?.video || (previous.videoPath ? `videos/${cleanId}.mp4` : undefined),
       },
-      localImagePath: downloaded ? `data/images/${imageFilename}` : undefined,
       audioPath: previous.audioPath,
       subtitles: previous.subtitles,
       narrationText: previous.narrationText,

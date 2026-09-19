@@ -119,7 +119,6 @@ export interface EnrichedLegoSet {
   categories?: string[];
   productVideos?: LegoProductVideo[];
   media?: LegoMedia;
-  localImagePath?: string;
   audioPath?: string;
   subtitles?: WordTimestamp[];
   narrationText?: string;

@@ -164,7 +164,7 @@ async function main() {
     const localAudioPath = path.join(AUDIO_DIR, `${set.id}.mp3`);
     const localSubtitlesPath = path.join(AUDIO_DIR, `${set.id}.subtitles.json`);
 
-    let imageSrc = set.imageUrl || '';
+    let imageSrc = set.hiresImageUrl || set.imageUrl || (set.images && set.images[0]) || '';
     if (fs.existsSync(localImagePath)) {
       const imgBuffer = fs.readFileSync(localImagePath);
       imageSrc = `data:image/jpeg;base64,${imgBuffer.toString('base64')}`;
