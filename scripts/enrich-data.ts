@@ -121,6 +121,14 @@ function getLegoMetadata(cleanId: string): LegoMetadata | null {
   return null;
 }
 
+function getInstructionBooksCount(pdfs?: LegoMetadata['pdfs']): number | undefined {
+  if (!pdfs || pdfs.length === 0) return undefined;
+  const nonInfo = pdfs.filter((p) => !p.is_additional_info_booklet);
+  const seqTotals = pdfs.map((p) => p.sequence_total).filter(Boolean) as number[];
+  const maxSeq = seqTotals.length ? Math.max(...seqTotals) : 0;
+  return maxSeq || nonInfo.length || pdfs.length || undefined;
+}
+
 function parseDimensions(record: Record<string, string>, text?: string): LegoDimensions | undefined {
   let h = parseFloat(record['Height'] || '');
   let w = parseFloat(record['Width'] || '');
@@ -485,7 +493,8 @@ async function main() {
     const categories = legoMeta?.categories || previous.categories;
     const hiresImageUrl = legoMeta?.hires_image_url || previous.hiresImageUrl;
     const thumbnailImageUrl = legoMeta?.thumbnail_image_url || previous.thumbnailImageUrl;
-    const images = legoMeta?.images?.map((img) => ({ id: img.id, url: img.url })) || previous.images;
+    const images = legoMeta?.images?.map((img) => img.url) || (previous.images?.map((img: any) => typeof img === 'string' ? img : img.url));
+    const instructionBooks = getInstructionBooksCount(legoMeta?.pdfs) || previous.instructionBooks;
     const productVideos = legoMeta?.videos?.map((v) => ({
       id: v.id,
       title: v.title || undefined,
@@ -508,7 +517,7 @@ async function main() {
       theme,
       age,
       pieces,
-      instructions,
+      instructionBooks,
       rating,
       imageUrl,
       hiresImageUrl,
@@ -562,7 +571,7 @@ async function main() {
         funFacts: existing.funFacts || set.funFacts || '',
         notes: existing.notes || set.notes,
         age: existing.age || set.age,
-        instructions: existing.instructions || set.instructions,
+        instructionBooks: existing.instructionBooks || set.instructionBooks,
         dimensions: existing.dimensions || set.dimensions,
         images: existing.images || set.images,
         hiresImageUrl: existing.hiresImageUrl || set.hiresImageUrl,

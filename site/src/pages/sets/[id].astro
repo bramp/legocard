@@ -114,11 +114,16 @@ const media = getSetMediaUrls(set);
         </div>
 
         <!-- Release / Retirement Timeline Badges if available -->
-        {(set.dateReleased || set.dateRetired || set.yearRetired || set.age || set.dimensions) && (
+        {(set.dateReleased || set.dateRetired || set.yearRetired || set.age || set.dimensions || set.instructionBooks) && (
           <div class="flex flex-wrap gap-2 text-xs">
             {set.age && (
               <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
                 <strong class="text-slate-300">Age:</strong> {set.age}
+              </span>
+            )}
+            {set.instructionBooks && (
+              <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
+                <strong class="text-slate-300">Instruction Books:</strong> {set.instructionBooks}
               </span>
             )}
             {set.dimensions && (set.dimensions.height || set.dimensions.width || set.dimensions.depth) && (
@@ -143,35 +148,6 @@ const media = getSetMediaUrls(set);
           </div>
         )}
 
-        <!-- Official Building Instructions -->
-        {set.instructions && set.instructions.length > 0 && (
-          <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4 sm:p-5">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
-              <span>📖</span> Official Building Instructions ({set.instructions.length} booklet{set.instructions.length > 1 ? 's' : ''})
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {set.instructions.map((pdf, idx) => (
-                <a
-                  href={pdf.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center justify-between p-3 rounded-xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 hover:border-slate-700 transition group text-xs text-slate-300"
-                >
-                  <div class="flex items-center gap-2.5 truncate">
-                    <span class="text-base group-hover:scale-110 transition">📄</span>
-                    <span class="font-medium truncate">
-                      {pdf.sequenceTotal && pdf.sequenceTotal > 1 ? `Booklet ${pdf.sequenceNumber || idx + 1} of ${pdf.sequenceTotal}` : (pdf.filename || 'Instructions PDF')}
-                    </span>
-                  </div>
-                  <span class="text-amber-400 font-semibold shrink-0 ml-2 text-[11px] group-hover:translate-x-0.5 transition">
-                    View ↗
-                  </span>
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-
         <!-- Official Photo Gallery -->
         {set.images && set.images.length > 1 && (
           <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4 sm:p-5">
@@ -182,16 +158,16 @@ const media = getSetMediaUrls(set);
               <span class="text-[11px] font-normal text-slate-500">Tap to expand</span>
             </h3>
             <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 sm:gap-3">
-              {set.images.map((img, idx) => (
+              {set.images.map((imgUrl, idx) => (
                 <a
-                  href={img.url}
+                  href={imgUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="aspect-square rounded-xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/50 p-1.5 sm:p-2 flex items-center justify-center overflow-hidden transition group"
                   title={`${set.name} Photo ${idx + 1}`}
                 >
                   <img
-                    src={img.url}
+                    src={imgUrl}
                     alt={`${set.name} photo ${idx + 1}`}
                     loading="lazy"
                     class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-200"

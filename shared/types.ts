@@ -79,11 +79,6 @@ export interface LegoInstructionPdf {
   sequenceTotal?: number;
 }
 
-export interface LegoProductImage {
-  id: string;
-  url: string;
-}
-
 export interface LegoProductVideo {
   id: string;
   title?: string;
@@ -113,7 +108,8 @@ export interface EnrichedLegoSet {
   imageUrl?: string;
   hiresImageUrl?: string;
   thumbnailImageUrl?: string;
-  images?: LegoProductImage[];
+  images?: string[];
+  instructionBooks?: number;
   description?: string;
   featuresText?: string;
   metaDescription?: string;
