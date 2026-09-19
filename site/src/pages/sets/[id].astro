@@ -114,11 +114,20 @@ const media = getSetMediaUrls(set);
         </div>
 
         <!-- Release / Retirement Timeline Badges if available -->
-        {(set.dateReleased || set.dateRetired || set.yearRetired || set.age) && (
+        {(set.dateReleased || set.dateRetired || set.yearRetired || set.age || set.dimensions) && (
           <div class="flex flex-wrap gap-2 text-xs">
             {set.age && (
               <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
                 <strong class="text-slate-300">Age:</strong> {set.age}
+              </span>
+            )}
+            {set.dimensions && (set.dimensions.height || set.dimensions.width || set.dimensions.depth) && (
+              <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
+                <strong class="text-slate-300">Size:</strong> {[
+                  set.dimensions.height ? `${set.dimensions.height}cm H` : null,
+                  set.dimensions.width ? `${set.dimensions.width}cm W` : null,
+                  set.dimensions.depth ? `${set.dimensions.depth}cm D` : null,
+                ].filter(Boolean).join(' × ')}
               </span>
             )}
             {set.dateReleased && (
@@ -160,6 +169,68 @@ const media = getSetMediaUrls(set);
                 </a>
               ))}
             </div>
+          </div>
+        )}
+
+        <!-- Official Photo Gallery -->
+        {set.images && set.images.length > 1 && (
+          <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4 sm:p-5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span>🖼️</span> Official Gallery ({set.images.length} photos)
+              </span>
+              <span class="text-[11px] font-normal text-slate-500">Tap to expand</span>
+            </h3>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 sm:gap-3">
+              {set.images.map((img, idx) => (
+                <a
+                  href={img.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="aspect-square rounded-xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/50 p-1.5 sm:p-2 flex items-center justify-center overflow-hidden transition group"
+                  title={`${set.name} Photo ${idx + 1}`}
+                >
+                  <img
+                    src={img.url}
+                    alt={`${set.name} photo ${idx + 1}`}
+                    loading="lazy"
+                    class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-200"
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Official LEGO Videos -->
+        {set.productVideos && set.productVideos.length > 0 && (
+          <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4 sm:p-5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
+              <span>🎥</span> Official LEGO Videos ({set.productVideos.length})
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {set.productVideos.map((vid) => (
+                <div class="rounded-xl overflow-hidden bg-black border border-slate-800">
+                  <video
+                    src={vid.url}
+                    controls
+                    playsinline
+                    preload="none"
+                    class="w-full aspect-video object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Official LEGO Features & Overview -->
+        {set.featuresText && (
+          <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-4 sm:p-5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+              <span>✨</span> Set Features & Details
+            </h3>
+            <div class="text-xs sm:text-sm leading-relaxed text-slate-300 space-y-2 [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1 [&_li]:text-slate-300" set:html={set.featuresText} />
           </div>
         )}
 
