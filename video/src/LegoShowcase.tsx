@@ -8,7 +8,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
-import type { LegoShowcaseProps } from './types';
+import { formatBuildTime, type LegoShowcaseProps } from './types';
 
 export const LegoShowcase: React.FC<LegoShowcaseProps> = ({
   id,
@@ -312,12 +312,13 @@ export const LegoShowcase: React.FC<LegoShowcaseProps> = ({
           </div>
           <div
             style={{
-              fontSize: 44,
+              fontSize: 32,
               fontWeight: 900,
               color: '#fbbf24',
+              lineHeight: 1.15,
             }}
           >
-            {timeToBuildFormatted || (buildTimeHours ? `${buildTimeHours}h` : '—')}
+            {formatBuildTime({ buildTimeHours, timeToBuildFormatted }) || '—'}
           </div>
         </div>
       </div>

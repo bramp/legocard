@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import LegoQr from '../../components/LegoQr.astro';
 import { getLegoSets } from '../../lib/sets';
 import { getSetMediaUrls } from '../../lib/assets';
+import { formatBuildTime } from '../../../../shared/format.js';
 
 export function getStaticPaths() {
   const sets = getLegoSets();
@@ -84,8 +85,8 @@ const media = getSetMediaUrls(set);
 
           <div class="bg-slate-950/70 border border-slate-800/90 rounded-2xl p-3.5">
             <span class="text-[11px] font-medium uppercase tracking-wider text-slate-500 block">Build Time</span>
-            <span class="text-xl font-black text-amber-400">
-              {set.buildTimeHours ? `${set.buildTimeHours}h` : '—'}
+            <span class="text-sm sm:text-base font-black text-amber-400 leading-snug block mt-0.5">
+              {formatBuildTime(set) || '—'}
             </span>
           </div>
 

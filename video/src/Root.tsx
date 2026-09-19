@@ -10,7 +10,7 @@ const defaultShowcaseProps: LegoShowcaseProps = {
   year: 2013,
   pieces: 2989,
   buildTimeHours: 7.37,
-  timeToBuildFormatted: '7h 22m',
+  timeToBuildFormatted: '7 hours 22 minutes',
   funFacts: 'Features 2,989 pieces recreating the iconic Australian landmark.',
   imageSrc: staticFile('images/10234.jpg'),
   audioSrc: staticFile('audio/10234.mp3'),

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 import { Liquid } from 'liquidjs';
 import type { EnrichedLegoSet, WordTimestamp } from '../shared/types.js';
+import { formatBuildTime } from '../shared/format.js';
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
@@ -129,33 +130,7 @@ interface EdgeMetadataItem {
 }
 
 function formatBuildDuration(set: EnrichedLegoSet): string | null {
-  let hours = 0;
-  let minutes = 0;
-
-  if (set.timeToBuildFormatted) {
-    const match = set.timeToBuildFormatted.match(/^(?:(\d+)\s*h)?\s*(?:(\d+)\s*m)?$/i);
-    if (match && (match[1] || match[2])) {
-      hours = parseInt(match[1] || '0', 10);
-      minutes = parseInt(match[2] || '0', 10);
-    }
-  }
-
-  if (hours === 0 && minutes === 0 && set.buildTimeHours) {
-    const totalMinutes = Math.round(set.buildTimeHours * 60);
-    hours = Math.floor(totalMinutes / 60);
-    minutes = totalMinutes % 60;
-  }
-
-  const durationParts: string[] = [];
-  if (hours > 0) {
-    durationParts.push(hours === 1 ? '1 hour' : `${hours} hours`);
-  }
-  if (minutes > 0) {
-    durationParts.push(minutes === 1 ? '1 minute' : `${minutes} minutes`);
-  }
-
-  if (durationParts.length === 0) return null;
-  return durationParts.join(' and ');
+  return formatBuildTime(set, { useAnd: true });
 }
 
 export interface CollectionFactsInfo {
