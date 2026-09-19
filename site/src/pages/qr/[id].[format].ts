@@ -1,7 +1,20 @@
 import type { APIRoute, GetStaticPaths } from 'astro';
+import fs from 'node:fs';
+import path from 'node:path';
 import sharp from 'sharp';
 import { getLegoSets } from '../../lib/sets.js';
 import { generateLegoQrSvg } from '../../../../shared/lego-qr.js';
+
+// Resolve persistent disk cache in data/cache/qr
+const CACHE_DIR = (() => {
+  const rootDataCache = path.resolve(process.cwd(), '../data/cache/qr');
+  const directDataCache = path.resolve(process.cwd(), 'data/cache/qr');
+  const dir = fs.existsSync(path.dirname(rootDataCache)) ? rootDataCache : directDataCache;
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  return dir;
+})();
 
 export const getStaticPaths: GetStaticPaths = () => {
   const sets = getLegoSets();
@@ -31,10 +44,27 @@ export const GET: APIRoute = async ({ params, props }) => {
     });
   }
 
+  const cachedFile = path.join(CACHE_DIR, `${id}.${format}`);
+  if (fs.existsSync(cachedFile)) {
+    const cachedBuffer = fs.readFileSync(cachedFile);
+    const contentType = format === 'webp' ? 'image/webp' : 'image/png';
+    return new Response(cachedBuffer, {
+      headers: {
+        'Content-Type': contentType,
+        'Cache-Control': 'public, max-age=31536000, immutable',
+      },
+    });
+  }
+
   const svgBuffer = Buffer.from(svg, 'utf-8');
 
   if (format === 'webp') {
     const webpBuffer = await sharp(svgBuffer).resize(400, 400).webp({ quality: 90 }).toBuffer();
+    try {
+      fs.writeFileSync(cachedFile, webpBuffer);
+    } catch {
+      // ignore cache write errors
+    }
     return new Response(webpBuffer, {
       headers: {
         'Content-Type': 'image/webp',
@@ -45,6 +75,11 @@ export const GET: APIRoute = async ({ params, props }) => {
 
   if (format === 'png') {
     const pngBuffer = await sharp(svgBuffer).resize(400, 400).png().toBuffer();
+    try {
+      fs.writeFileSync(cachedFile, pngBuffer);
+    } catch {
+      // ignore cache write errors
+    }
     return new Response(pngBuffer, {
       headers: {
         'Content-Type': 'image/png',
