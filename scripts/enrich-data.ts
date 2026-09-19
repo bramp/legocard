@@ -10,6 +10,7 @@ import type {
   LegoInstructionPdf,
   RebrickableSetResponse,
 } from '../shared/types.js';
+import { formatBuildTime } from '../shared/format.js';
 
 dotenv.config();
 
@@ -78,6 +79,11 @@ interface LegoMetadata {
   }>;
   categories?: string[];
   brand?: string;
+  dimensions?: {
+    height?: number;
+    width?: number;
+    depth?: number;
+  };
   pdfs?: Array<{
     url: string;
     filename?: string;
@@ -129,11 +135,26 @@ function getInstructionBooksCount(pdfs?: LegoMetadata['pdfs']): number | undefin
   return maxSeq || nonInfo.length || pdfs.length || undefined;
 }
 
-function parseDimensions(record: Record<string, string>, text?: string): LegoDimensions | undefined {
-  let h = parseFloat(record['Height'] || '');
-  let w = parseFloat(record['Width'] || '');
-  let d = parseFloat(record['Depth'] || '');
+function parseDimensions(
+  metaDimensions?: LegoMetadata['dimensions'],
+  record?: Record<string, string>,
+  text?: string
+): LegoDimensions | undefined {
+  // 1. Prefer structured dimensions object directly from LEGO metadata if available
+  if (metaDimensions && (metaDimensions.height || metaDimensions.width || metaDimensions.depth)) {
+    const result: LegoDimensions = {};
+    if (typeof metaDimensions.height === 'number' && metaDimensions.height > 0) result.height = metaDimensions.height;
+    if (typeof metaDimensions.width === 'number' && metaDimensions.width > 0) result.width = metaDimensions.width;
+    if (typeof metaDimensions.depth === 'number' && metaDimensions.depth > 0) result.depth = metaDimensions.depth;
+    if (Object.keys(result).length > 0) return result;
+  }
 
+  // 2. Next check spreadsheet columns (Height, Width, Depth)
+  let h = record ? parseFloat(record['Height'] || '') : NaN;
+  let w = record ? parseFloat(record['Width'] || '') : NaN;
+  let d = record ? parseFloat(record['Depth'] || '') : NaN;
+
+  // 3. Fallback: parse dimensions from description / featuresText only if needed
   if ((isNaN(h) || !h) || (isNaN(w) || !w) || (isNaN(d) || !d)) {
     if (text) {
       const hMatch = text.match(/(\d+(?:\.\d+)?)\s*cm[^\w]*(?:high|tall|in height)/i) || text.match(/(?:high|tall|height)[^\w]*(\d+(?:\.\d+)?)\s*cm/i);
@@ -467,14 +488,16 @@ async function main() {
         const h = parseInt(hmMatch[1] || '0', 10);
         const m = parseInt(hmMatch[2] || '0', 10);
         buildTimeHours = Math.round((h + m / 60) * 100) / 100;
-        timeToBuildFormatted = trimmedTime;
+        timeToBuildFormatted = formatBuildTime({ buildTimeHours, timeToBuildFormatted: trimmedTime }) || undefined;
       } else {
         const parsed = parseFloat(trimmedTime);
         if (!isNaN(parsed)) {
           buildTimeHours = parsed;
-          timeToBuildFormatted = `${parsed}h`;
+          timeToBuildFormatted = formatBuildTime(parsed) || undefined;
         }
       }
+    } else if (buildTimeHours || timeToBuildFormatted) {
+      timeToBuildFormatted = formatBuildTime({ buildTimeHours, timeToBuildFormatted }) || undefined;
     }
 
     const dateFinished = record['Date Finished'] && !record['Date Finished'].includes('#REF!') ? record['Date Finished'] : undefined;
@@ -503,7 +526,7 @@ async function main() {
     })) || previous.productVideos;
 
     const combinedText = `${featuresText || ''} ${description || ''}`;
-    const dimensions = parseDimensions(record, combinedText) || previous.dimensions;
+    const dimensions = parseDimensions(legoMeta?.dimensions, record, combinedText) || previous.dimensions;
 
     const enriched: EnrichedLegoSet = {
       id: cleanId,
