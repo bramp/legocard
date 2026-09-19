@@ -1,0 +1,706 @@
+---
+import Layout from '../layouts/Layout.astro';
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="Lego QR Code Generator"
+  description="Generate custom, full-screen LEGO-styled QR codes with configurable brick styles, margins, error correction, and stud logos."
+>
+  <div class="space-y-6">
+    <!-- Header banner -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
+          <span>🧱</span> Lego QR Code Generator
+        </h1>
+        <p class="text-sm text-slate-400 mt-1">
+          Create arbitrary QR codes rendered as realistic LEGO bricks and studs.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          id="fullscreenBtn"
+          type="button"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold shadow-lg shadow-amber-500/20 transition-all cursor-pointer"
+        >
+          <span>⛶</span> Full Screen QR
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Grid: Controls & Preview -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <!-- Options Column -->
+      <div class="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-6 space-y-5 shadow-xl">
+        <!-- QR Data Type Selector -->
+        <div class="space-y-2">
+          <label for="qrTypeSelect" class="text-xs font-bold uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+            <span>🏷️</span> QR Content Type
+          </label>
+          <select
+            id="qrTypeSelect"
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm font-medium text-white cursor-pointer"
+          >
+            <option value="url" selected>🌐 Website URL</option>
+            <option value="text">📝 Plain Text</option>
+            <option value="wifi">📶 Wi-Fi Network</option>
+            <option value="vcard">👤 Contact Card (vCard)</option>
+            <option value="email">✉️ Email Message</option>
+            <option value="phone">📞 Phone Call</option>
+            <option value="sms">💬 SMS Message</option>
+            <option value="geo">📍 Geo Location</option>
+          </select>
+        </div>
+
+        <!-- Dynamic Inputs Per Type -->
+        <div id="typeInputsContainer" class="space-y-3 pt-1 border-t border-slate-800/80">
+          <!-- 1. URL -->
+          <div id="typeUrl" class="type-panel space-y-1.5">
+            <label for="inputUrl" class="block text-xs font-semibold text-slate-300">
+              Target URL
+            </label>
+            <input
+              id="inputUrl"
+              type="url"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-white font-mono"
+              placeholder="https://example.com"
+              value="https://legocard.bramp.net"
+            />
+            <div class="flex justify-end">
+              <button
+                id="resetSiteUrlBtn"
+                type="button"
+                class="text-[11px] text-amber-400/80 hover:text-amber-300 underline underline-offset-2 cursor-pointer"
+              >
+                Reset to Site URL
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Plain Text -->
+          <div id="typeText" class="type-panel hidden space-y-1.5">
+            <label for="inputText" class="block text-xs font-semibold text-slate-300">
+              Text Content
+            </label>
+            <textarea
+              id="inputText"
+              rows="4"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-white font-mono resize-y"
+              placeholder="Type any arbitrary message or notes..."
+            >Hello from LegoCard!</textarea>
+          </div>
+
+          <!-- 3. Wi-Fi Network -->
+          <div id="typeWifi" class="type-panel hidden space-y-3">
+            <div class="space-y-1">
+              <label for="wifiSsid" class="block text-xs font-semibold text-slate-300">
+                Network Name (SSID)
+              </label>
+              <input
+                id="wifiSsid"
+                type="text"
+                class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-white"
+                placeholder="MyHomeWiFi"
+              />
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label for="wifiPassword" class="block text-xs font-semibold text-slate-300">
+                  Password
+                </label>
+                <input
+                  id="wifiPassword"
+                  type="text"
+                  class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-white font-mono"
+                  placeholder="Network password"
+                />
+              </div>
+              <div class="space-y-1">
+                <label for="wifiAuth" class="block text-xs font-semibold text-slate-300">
+                  Security
+                </label>
+                <select
+                  id="wifiAuth"
+                  class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-slate-200 cursor-pointer"
+                >
+                  <option value="WPA" selected>WPA / WPA2 / WPA3</option>
+                  <option value="WEP">WEP</option>
+                  <option value="nopass">None (Open)</option>
+                </select>
+              </div>
+            </div>
+            <label class="flex items-center gap-2 text-xs text-slate-400 cursor-pointer">
+              <input id="wifiHidden" type="checkbox" class="rounded bg-slate-950 border-slate-700 text-amber-500 focus:ring-amber-500" />
+              <span>Hidden network</span>
+            </label>
+          </div>
+
+          <!-- 4. Contact Card (vCard) -->
+          <div id="typeVcard" class="type-panel hidden space-y-2.5">
+            <div class="grid grid-cols-2 gap-2.5">
+              <div class="space-y-1">
+                <label for="vcardFirstName" class="block text-xs font-semibold text-slate-300">First Name</label>
+                <input id="vcardFirstName" type="text" class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white" placeholder="First name" />
+              </div>
+              <div class="space-y-1">
+                <label for="vcardLastName" class="block text-xs font-semibold text-slate-300">Last Name</label>
+                <input id="vcardLastName" type="text" class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white" placeholder="Last name" />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div class="space-y-1">
+                <label for="vcardPhone" class="block text-xs font-semibold text-slate-300">Phone</label>
+                <input id="vcardPhone" type="tel" class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white" placeholder="+1 (555) 000-0000" />
+              </div>
+              <div class="space-y-1">
+                <label for="vcardEmail" class="block text-xs font-semibold text-slate-300">Email</label>
+                <input id="vcardEmail" type="email" class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white" placeholder="person@example.com" />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div class="space-y-1">
+                <label for="vcardOrg" class="block text-xs font-semibold text-slate-300">Company / Org</label>
+                <input id="vcardOrg" type="text" class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white" placeholder="Organization" />
+              </div>
+              <div class="space-y-1">
+                <label for="vcardUrl" class="block text-xs font-semibold text-slate-300">Website</label>
+                <input id="vcardUrl" type="url" class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white" placeholder="https://..." />
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Email -->
+          <div id="typeEmail" class="type-panel hidden space-y-2.5">
+            <div class="space-y-1">
+              <label for="emailTo" class="block text-xs font-semibold text-slate-300">Recipient Email</label>
+              <input id="emailTo" type="email" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white" placeholder="hello@example.com" />
+            </div>
+            <div class="space-y-1">
+              <label for="emailSubject" class="block text-xs font-semibold text-slate-300">Subject</label>
+              <input id="emailSubject" type="text" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white" placeholder="Subject line" />
+            </div>
+            <div class="space-y-1">
+              <label for="emailBody" class="block text-xs font-semibold text-slate-300">Body</label>
+              <textarea id="emailBody" rows="2" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white resize-y" placeholder="Email message..."></textarea>
+            </div>
+          </div>
+
+          <!-- 6. Phone Call -->
+          <div id="typePhone" class="type-panel hidden space-y-1.5">
+            <label for="phoneNum" class="block text-xs font-semibold text-slate-300">Phone Number</label>
+            <input id="phoneNum" type="tel" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white font-mono" placeholder="+1234567890" />
+          </div>
+
+          <!-- 7. SMS Message -->
+          <div id="typeSms" class="type-panel hidden space-y-2.5">
+            <div class="space-y-1">
+              <label for="smsPhone" class="block text-xs font-semibold text-slate-300">Phone Number</label>
+              <input id="smsPhone" type="tel" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white font-mono" placeholder="+1234567890" />
+            </div>
+            <div class="space-y-1">
+              <label for="smsMessage" class="block text-xs font-semibold text-slate-300">Message</label>
+              <textarea id="smsMessage" rows="2" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white resize-y" placeholder="Pre-filled SMS text..."></textarea>
+            </div>
+          </div>
+
+          <!-- 8. Geo Location -->
+          <div id="typeGeo" class="type-panel hidden space-y-2.5">
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label for="geoLat" class="block text-xs font-semibold text-slate-300">Latitude</label>
+                <input id="geoLat" type="number" step="any" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white font-mono" placeholder="37.7749" />
+              </div>
+              <div class="space-y-1">
+                <label for="geoLng" class="block text-xs font-semibold text-slate-300">Longitude</label>
+                <input id="geoLng" type="number" step="any" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-white font-mono" placeholder="-122.4194" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Encoded Payload Summary & Accordion -->
+        <details class="text-xs group border border-slate-800/80 rounded-xl bg-slate-950/60 p-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none text-slate-400 hover:text-slate-200">
+            <span class="font-semibold flex items-center gap-1.5">
+              <span>🔍</span> Raw QR Payload (<span id="charCount">0 chars</span>)
+            </span>
+            <span class="text-[10px] text-slate-500 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <div class="mt-2.5 pt-2 border-t border-slate-800">
+            <pre id="rawPayloadDisplay" class="font-mono text-[11px] text-amber-300/90 whitespace-pre-wrap break-all select-all"></pre>
+          </div>
+        </details>
+
+        <!-- LEGO Brick & QR Rendering Options -->
+        <div class="space-y-4 pt-2 border-t border-slate-800/80">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+            <span>⚙️</span> Brick Styling
+          </h3>
+
+          <!-- Brick Style Selection -->
+          <div class="space-y-1.5">
+            <label for="brickStyle" class="block text-xs font-semibold text-slate-300">
+              LEGO Brick Style
+            </label>
+            <select
+              id="brickStyle"
+              class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-slate-200 cursor-pointer"
+            >
+              <option value="merged" selected>Merged Bricks (2x4, 2x2, 1x2 realistic layout)</option>
+              <option value="individual">Individual Plates (1x1 with tile seams)</option>
+              <option value="baseplate">Continuous Baseplate (solid background)</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <!-- Margin (Quiet Zone) -->
+            <div class="space-y-1.5">
+              <label for="marginSelect" class="block text-xs font-semibold text-slate-300">
+                Margin / Quiet Zone
+              </label>
+              <select
+                id="marginSelect"
+                class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-slate-200 cursor-pointer"
+              >
+                <option value="1">1 Stud</option>
+                <option value="2">2 Studs</option>
+                <option value="3">3 Studs</option>
+                <option value="4" selected>4 Studs (Standard)</option>
+                <option value="5">5 Studs</option>
+              </select>
+            </div>
+
+            <!-- Error Correction Level -->
+            <div class="space-y-1.5">
+              <label for="ecLevel" class="block text-xs font-semibold text-slate-300">
+                Error Correction
+              </label>
+              <select
+                id="ecLevel"
+                class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-slate-200 cursor-pointer"
+              >
+                <option value="L">Low (~7%)</option>
+                <option value="M">Medium (~15%)</option>
+                <option value="Q">Quartile (~25%)</option>
+                <option value="H" selected>High (~30%)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Stud Logo -->
+          <div class="space-y-1.5">
+            <label for="studLogo" class="block text-xs font-semibold text-slate-300">
+              Stud Embossing
+            </label>
+            <select
+              id="studLogo"
+              class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-slate-200 cursor-pointer"
+            >
+              <option value="none" selected>Plain Studs (Clean & fast scan)</option>
+              <option value="lego">Embossed LEGO Logo</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Column -->
+      <div class="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl flex flex-col items-center justify-center space-y-4">
+        <div class="w-full flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <span>👁️</span> Live Preview
+          </span>
+          <span id="qrDimensions" class="text-xs font-mono text-slate-500">
+            --
+          </span>
+        </div>
+
+        <!-- Preview viewport -->
+        <div
+          id="qrContainer"
+          class="relative w-full aspect-square max-w-115 bg-slate-950 border border-slate-800 rounded-2xl p-4 flex items-center justify-center shadow-inner overflow-hidden"
+        >
+          <div id="qrOutput" class="w-full h-full flex items-center justify-center">
+            <!-- Rendered SVG inserted dynamically -->
+          </div>
+        </div>
+
+        <!-- Download & Export Actions Underneath Rendered QR -->
+        <div class="w-full max-w-115 flex flex-wrap gap-2 pt-1">
+          <button
+            id="downloadPngBtn"
+            type="button"
+            class="flex-1 min-w-28 px-3.5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 shadow-md shadow-amber-500/10 cursor-pointer"
+          >
+            <span>🖼️</span> Download PNG
+          </button>
+          <button
+            id="downloadSvgBtn"
+            type="button"
+            class="flex-1 min-w-28 px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs sm:text-sm font-semibold text-white transition flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <span>💾</span> Download SVG
+          </button>
+          <button
+            id="copySvgBtn"
+            type="button"
+            class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5 cursor-pointer"
+            title="Copy SVG to Clipboard"
+          >
+            <span id="copyIcon">📋</span> Copy SVG
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Modal Overlay -->
+  <div
+    id="fullscreenModal"
+    class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex-col items-center justify-center p-4 sm:p-8 select-none"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Full screen Lego QR Code"
+  >
+    <!-- Top toolbar -->
+    <div class="absolute top-4 sm:top-6 left-4 sm:left-6 right-4 sm:right-6 flex items-center justify-between pointer-events-auto z-10">
+      <div class="flex items-center gap-2">
+        <span class="text-amber-500 font-black text-xl">🧱</span>
+        <span class="text-white font-bold text-sm sm:text-base tracking-tight">Full Screen Lego QR</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          id="nativeFullscreenBtn"
+          type="button"
+          class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium backdrop-blur transition cursor-pointer"
+        >
+          🖥️ Expand Window
+        </button>
+        <button
+          id="closeFullscreenBtn"
+          type="button"
+          class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-lg font-bold backdrop-blur transition cursor-pointer"
+          aria-label="Close full screen"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+
+    <!-- Centered Fullscreen QR -->
+    <div class="w-full h-full max-w-[min(90vw,90vh)] max-h-[min(90vw,90vh)] aspect-square flex items-center justify-center p-2">
+      <div id="fullscreenQrTarget" class="w-full h-full flex items-center justify-center drop-shadow-[0_25px_50px_rgba(0,0,0,0.9)]">
+        <!-- Cloned SVG inserted here -->
+      </div>
+    </div>
+
+    <!-- Bottom label / esc note -->
+    <div class="absolute bottom-4 sm:bottom-6 text-center text-xs text-slate-400">
+      <p id="fullscreenTextCaption" class="font-mono truncate max-w-[80vw] mb-1 text-slate-300"></p>
+      <p class="text-slate-500 text-[11px]">Press <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">ESC</kbd> or click ✕ to exit</p>
+    </div>
+  </div>
+
+  <!-- Client-side generator script -->
+  <script>
+    import { generateLegoQrResult } from '../../../shared/lego-qr.js';
+    import { buildQrPayload } from '../../../shared/qr-payload.js';
+
+    // UI Elements - Selectors
+    const qrTypeSelect = document.getElementById('qrTypeSelect') as HTMLSelectElement;
+    const typePanels = document.querySelectorAll('.type-panel');
+
+    // Inputs
+    const inputUrl = document.getElementById('inputUrl') as HTMLInputElement;
+    const resetSiteUrlBtn = document.getElementById('resetSiteUrlBtn') as HTMLButtonElement;
+    const inputText = document.getElementById('inputText') as HTMLTextAreaElement;
+
+    // Wi-Fi inputs
+    const wifiSsid = document.getElementById('wifiSsid') as HTMLInputElement;
+    const wifiPassword = document.getElementById('wifiPassword') as HTMLInputElement;
+    const wifiAuth = document.getElementById('wifiAuth') as HTMLSelectElement;
+    const wifiHidden = document.getElementById('wifiHidden') as HTMLInputElement;
+
+    // vCard inputs
+    const vcardFirstName = document.getElementById('vcardFirstName') as HTMLInputElement;
+    const vcardLastName = document.getElementById('vcardLastName') as HTMLInputElement;
+    const vcardPhone = document.getElementById('vcardPhone') as HTMLInputElement;
+    const vcardEmail = document.getElementById('vcardEmail') as HTMLInputElement;
+    const vcardOrg = document.getElementById('vcardOrg') as HTMLInputElement;
+    const vcardUrl = document.getElementById('vcardUrl') as HTMLInputElement;
+
+    // Email inputs
+    const emailTo = document.getElementById('emailTo') as HTMLInputElement;
+    const emailSubject = document.getElementById('emailSubject') as HTMLInputElement;
+    const emailBody = document.getElementById('emailBody') as HTMLTextAreaElement;
+
+    // Phone & SMS inputs
+    const phoneNum = document.getElementById('phoneNum') as HTMLInputElement;
+    const smsPhone = document.getElementById('smsPhone') as HTMLInputElement;
+    const smsMessage = document.getElementById('smsMessage') as HTMLTextAreaElement;
+
+    // Geo inputs
+    const geoLat = document.getElementById('geoLat') as HTMLInputElement;
+    const geoLng = document.getElementById('geoLng') as HTMLInputElement;
+
+    // Styling & Options
+    const charCount = document.getElementById('charCount') as HTMLElement;
+    const rawPayloadDisplay = document.getElementById('rawPayloadDisplay') as HTMLElement;
+    const brickStyle = document.getElementById('brickStyle') as HTMLSelectElement;
+    const marginSelect = document.getElementById('marginSelect') as HTMLSelectElement;
+    const ecLevel = document.getElementById('ecLevel') as HTMLSelectElement;
+    const studLogo = document.getElementById('studLogo') as HTMLSelectElement;
+    const qrOutput = document.getElementById('qrOutput') as HTMLElement;
+    const qrDimensions = document.getElementById('qrDimensions') as HTMLElement;
+
+    // Buttons
+    const downloadPngBtn = document.getElementById('downloadPngBtn') as HTMLButtonElement;
+    const downloadSvgBtn = document.getElementById('downloadSvgBtn') as HTMLButtonElement;
+    const copySvgBtn = document.getElementById('copySvgBtn') as HTMLButtonElement;
+    const copyIcon = document.getElementById('copyIcon') as HTMLElement;
+    const fullscreenBtn = document.getElementById('fullscreenBtn') as HTMLButtonElement;
+    const fullscreenModal = document.getElementById('fullscreenModal') as HTMLElement;
+    const fullscreenQrTarget = document.getElementById('fullscreenQrTarget') as HTMLElement;
+    const fullscreenTextCaption = document.getElementById('fullscreenTextCaption') as HTMLElement;
+    const closeFullscreenBtn = document.getElementById('closeFullscreenBtn') as HTMLButtonElement;
+    const nativeFullscreenBtn = document.getElementById('nativeFullscreenBtn') as HTMLButtonElement;
+
+    let currentSvg = '';
+    let currentPayload = '';
+
+    function computeCurrentPayload(): string {
+      const type = qrTypeSelect.value;
+      switch (type) {
+        case 'url':
+          return buildQrPayload({ type: 'url', url: inputUrl.value });
+
+        case 'text':
+          return buildQrPayload({ type: 'text', text: inputText.value });
+
+        case 'wifi':
+          return buildQrPayload({
+            type: 'wifi',
+            ssid: wifiSsid.value,
+            password: wifiPassword.value,
+            auth: wifiAuth.value as 'WPA' | 'WEP' | 'nopass',
+            hidden: wifiHidden.checked,
+          });
+
+        case 'vcard':
+          return buildQrPayload({
+            type: 'vcard',
+            firstName: vcardFirstName.value,
+            lastName: vcardLastName.value,
+            phone: vcardPhone.value,
+            email: vcardEmail.value,
+            org: vcardOrg.value,
+            url: vcardUrl.value,
+          });
+
+        case 'email':
+          return buildQrPayload({
+            type: 'email',
+            to: emailTo.value,
+            subject: emailSubject.value,
+            body: emailBody.value,
+          });
+
+        case 'phone':
+          return buildQrPayload({ type: 'phone', phone: phoneNum.value });
+
+        case 'sms':
+          return buildQrPayload({
+            type: 'sms',
+            phone: smsPhone.value,
+            message: smsMessage.value,
+          });
+
+        case 'geo':
+          return buildQrPayload({
+            type: 'geo',
+            lat: geoLat.value,
+            lng: geoLng.value,
+          });
+
+        default:
+          return 'https://legocard.bramp.net';
+      }
+    }
+
+    function switchTypePanel() {
+      const type = qrTypeSelect.value;
+      typePanels.forEach((panel) => panel.classList.add('hidden'));
+
+      const map: Record<string, string> = {
+        url: 'typeUrl',
+        text: 'typeText',
+        wifi: 'typeWifi',
+        vcard: 'typeVcard',
+        email: 'typeEmail',
+        phone: 'typePhone',
+        sms: 'typeSms',
+        geo: 'typeGeo',
+      };
+
+      const activeId = map[type];
+      if (activeId) {
+        document.getElementById(activeId)?.classList.remove('hidden');
+      }
+      updateQr();
+    }
+
+    function updateQr() {
+      const payload = computeCurrentPayload();
+      currentPayload = payload;
+
+      charCount.textContent = `${payload.length} char${payload.length === 1 ? '' : 's'}`;
+      rawPayloadDisplay.textContent = payload;
+
+      try {
+        const { svg, size } = generateLegoQrResult(payload, {
+          margin: parseInt(marginSelect.value, 10),
+          brickStyle: brickStyle.value as 'merged' | 'individual' | 'baseplate',
+          errorCorrectionLevel: ecLevel.value as 'L' | 'M' | 'Q' | 'H',
+          studLogo: studLogo.value as 'none' | 'lego',
+        });
+
+        currentSvg = svg;
+        qrOutput.innerHTML = svg;
+        qrDimensions.textContent = `${size}×${size} Studs`;
+
+        if (!fullscreenModal.classList.contains('hidden')) {
+          fullscreenQrTarget.innerHTML = svg;
+          fullscreenTextCaption.textContent = payload;
+        }
+      } catch (err) {
+        console.error('Error rendering Lego QR:', err);
+        qrOutput.innerHTML = `<div class="p-4 text-center text-red-400 text-xs">Failed to generate QR code: ${(err as Error).message}</div>`;
+      }
+    }
+
+    // Event listeners
+    qrTypeSelect.addEventListener('change', switchTypePanel);
+
+    const allInputs = document.querySelectorAll('#typeInputsContainer input, #typeInputsContainer textarea, #typeInputsContainer select');
+    allInputs.forEach((el) => {
+      el.addEventListener('input', updateQr);
+      el.addEventListener('change', updateQr);
+    });
+
+    brickStyle.addEventListener('change', updateQr);
+    marginSelect.addEventListener('change', updateQr);
+    ecLevel.addEventListener('change', updateQr);
+    studLogo.addEventListener('change', updateQr);
+
+    resetSiteUrlBtn.addEventListener('click', () => {
+      inputUrl.value = window.location.origin;
+      updateQr();
+    });
+
+    // Download PNG
+    downloadPngBtn.addEventListener('click', () => {
+      if (!currentSvg) return;
+      const img = new Image();
+      const svgBlob = new Blob([currentSvg], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const exportSize = 1200;
+        canvas.width = exportSize;
+        canvas.height = exportSize;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, exportSize, exportSize);
+          canvas.toBlob((blob) => {
+            if (!blob) return;
+            const pngUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = pngUrl;
+            a.download = `lego-qr-${Date.now()}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(pngUrl);
+          }, 'image/png');
+        }
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    });
+
+    // Download SVG
+    downloadSvgBtn.addEventListener('click', () => {
+      if (!currentSvg) return;
+      const blob = new Blob([currentSvg], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `lego-qr-${Date.now()}.svg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // Copy SVG
+    copySvgBtn.addEventListener('click', async () => {
+      if (!currentSvg) return;
+      try {
+        await navigator.clipboard.writeText(currentSvg);
+        copyIcon.textContent = '✓';
+        setTimeout(() => {
+          copyIcon.textContent = '📋';
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy SVG:', err);
+      }
+    });
+
+    // Open Fullscreen
+    function openFullscreen() {
+      fullscreenQrTarget.innerHTML = currentSvg;
+      fullscreenTextCaption.textContent = currentPayload;
+      fullscreenModal.classList.remove('hidden');
+      fullscreenModal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeFullscreen() {
+      fullscreenModal.classList.add('hidden');
+      fullscreenModal.classList.remove('flex');
+      document.body.style.overflow = '';
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    fullscreenBtn.addEventListener('click', openFullscreen);
+    closeFullscreenBtn.addEventListener('click', closeFullscreen);
+
+    fullscreenModal.addEventListener('click', (e) => {
+      if (e.target === fullscreenModal) {
+        closeFullscreen();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !fullscreenModal.classList.contains('hidden')) {
+        closeFullscreen();
+      }
+    });
+
+    nativeFullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        fullscreenModal.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    });
+
+    // Initial render
+    updateQr();
+  </script>
+</Layout>

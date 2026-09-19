@@ -43,6 +43,12 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
         <div class="flex items-center gap-2">
           <a
+            href={`${baseUrl}/qr-generator`}
+            class="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-slate-700 hover:border-slate-500 bg-slate-900/60 text-slate-300 hover:text-white transition-colors"
+          >
+            📱 QR Generator
+          </a>
+          <a
             href={`${baseUrl}/print-tags`}
             class="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-slate-700 hover:border-slate-500 bg-slate-900/60 text-slate-300 hover:text-white transition-colors"
           >

@@ -102,9 +102,13 @@ export function tileBricks(grid: boolean[][], unitScale = 10): LegoBrick[] {
 }
 
 /**
- * Generates a lightweight, responsive SVG string of a QR code styled as LEGO bricks viewed from directly above.
+ * Generates a lightweight, responsive SVG string of a QR code styled as LEGO bricks viewed from directly above,
+ * along with the stud dimension size.
  */
-export function generateLegoQrSvg(text: string, options: LegoQrOptions = {}): string {
+export function generateLegoQrResult(
+  text: string,
+  options: LegoQrOptions = {}
+): { svg: string; size: number } {
   const {
     margin = 3,
     brickStyle = 'merged',
@@ -213,5 +217,12 @@ ${studLogo === 'lego' ? '<text y=".3" font-family="Arial,sans-serif" font-weight
   }
 
   parts.push(`</svg>`);
-  return parts.join('');
+  return { svg: parts.join(''), size: totalSize };
+}
+
+/**
+ * Generates a lightweight, responsive SVG string of a QR code styled as LEGO bricks viewed from directly above.
+ */
+export function generateLegoQrSvg(text: string, options: LegoQrOptions = {}): string {
+  return generateLegoQrResult(text, options).svg;
 }
