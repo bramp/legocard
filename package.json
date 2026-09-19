@@ -12,6 +12,7 @@
     "sync:cdn": "tsx scripts/sync-cdn.ts",
     "video:preview": "npm --prefix video run dev",
     "video:render": "tsx scripts/render-videos.ts",
+    "test": "tsx --test test/**/*.test.ts",
     "dev:site": "npm --prefix site run dev",
     "build:site": "npm --prefix site run build",
     "preview:site": "npm --prefix site run preview"
