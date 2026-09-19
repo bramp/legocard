@@ -92,8 +92,9 @@ async function main() {
           // ignore
         }
       }
+      const latestTemplateText = buildNarration(set, sets);
       if (!text) {
-        text = buildNarration(set);
+        text = latestTemplateText;
       }
 
       const hasAudio = fs.existsSync(localAudioPath);
@@ -104,6 +105,10 @@ async function main() {
       console.log(`   Theme: ${set.theme || '—'} | Year: ${set.yearReleased || set.year || '—'} | Pieces: ${set.pieces ? set.pieces.toLocaleString() : '—'}`);
       console.log(`   Audio status: ${hasAudio ? `✓ generated (${audioDuration?.toFixed(1)}s, ${subsList.length} timed words)` : '✗ not generated yet'}`);
       console.log(`\n   Narration Script:\n   "${text}"`);
+
+      if (hasAudio && text !== latestTemplateText) {
+        console.log(`\n   ⚠ Notice: Generated audio differs from latest Liquid template:\n   "${latestTemplateText}"\n   (Run 'npm run tts -- --set=${set.id}' to update audio)`);
+      }
 
       if (subsList.length > 0) {
         console.log(`\n   Word Subtitle Timestamps:`);

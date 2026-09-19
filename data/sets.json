@@ -48,14 +48,265 @@
     ],
     "imageUrl": "https://cdn.rebrickable.com/media/sets/10234-1/15850.jpg",
     "media": {
-      "image": "images/10234.jpg"
+      "image": "images/10234.jpg",
+      "video": "videos/10234.mp4"
     },
     "localImagePath": "data/images/10234.jpg",
     "buildDate": "2026-08-22",
     "buildTimeHours": 7.37,
     "timeToBuildFormatted": "7h 22m",
     "builtBy": "Bram",
-    "funFacts": ""
+    "funFacts": "",
+    "audioPath": "data/audio/10234.mp3",
+    "subtitles": [
+      {
+        "word": "Lego",
+        "start": 100,
+        "end": 525
+      },
+      {
+        "word": "set",
+        "start": 538,
+        "end": 826
+      },
+      {
+        "word": "10234",
+        "start": 838,
+        "end": 2501
+      },
+      {
+        "word": "Sydney",
+        "start": 2763,
+        "end": 3213
+      },
+      {
+        "word": "Opera",
+        "start": 3225,
+        "end": 3525
+      },
+      {
+        "word": "House",
+        "start": 3538,
+        "end": 4088
+      },
+      {
+        "word": "A",
+        "start": 4950,
+        "end": 5075
+      },
+      {
+        "word": "2013",
+        "start": 5088,
+        "end": 6251
+      },
+      {
+        "word": "release",
+        "start": 6263,
+        "end": 6626
+      },
+      {
+        "word": "from",
+        "start": 6638,
+        "end": 6776
+      },
+      {
+        "word": "the",
+        "start": 6788,
+        "end": 6863
+      },
+      {
+        "word": "Icons",
+        "start": 6875,
+        "end": 7563
+      },
+      {
+        "word": "Creator",
+        "start": 7838,
+        "end": 8351
+      },
+      {
+        "word": "Expert",
+        "start": 8363,
+        "end": 8801
+      },
+      {
+        "word": "&amp;",
+        "start": 8813,
+        "end": 8938
+      },
+      {
+        "word": "Advanced",
+        "start": 8950,
+        "end": 9400
+      },
+      {
+        "word": "Models",
+        "start": 9413,
+        "end": 9863
+      },
+      {
+        "word": "/",
+        "start": 10175,
+        "end": 10538
+      },
+      {
+        "word": "Landmark",
+        "start": 10550,
+        "end": 11088
+      },
+      {
+        "word": "line",
+        "start": 11100,
+        "end": 11488
+      },
+      {
+        "word": "Features",
+        "start": 12350,
+        "end": 12888
+      },
+      {
+        "word": "2,989",
+        "start": 12900,
+        "end": 14513
+      },
+      {
+        "word": "pieces",
+        "start": 14525,
+        "end": 15150
+      },
+      {
+        "word": "Took",
+        "start": 16013,
+        "end": 16251
+      },
+      {
+        "word": "7 hours",
+        "start": 16263,
+        "end": 17076
+      },
+      {
+        "word": "and",
+        "start": 17088,
+        "end": 17213
+      },
+      {
+        "word": "22",
+        "start": 17225,
+        "end": 17725
+      },
+      {
+        "word": "minutes",
+        "start": 17738,
+        "end": 18101
+      },
+      {
+        "word": "to",
+        "start": 18113,
+        "end": 18226
+      },
+      {
+        "word": "build",
+        "start": 18238,
+        "end": 18688
+      },
+      {
+        "word": "It",
+        "start": 19550,
+        "end": 19688
+      },
+      {
+        "word": "is",
+        "start": 19700,
+        "end": 19813
+      },
+      {
+        "word": "the",
+        "start": 19825,
+        "end": 19938
+      },
+      {
+        "word": "2nd",
+        "start": 19950,
+        "end": 20313
+      },
+      {
+        "word": "largest",
+        "start": 20325,
+        "end": 20788
+      },
+      {
+        "word": "Icons",
+        "start": 20800,
+        "end": 21313
+      },
+      {
+        "word": "set",
+        "start": 21325,
+        "end": 21550
+      },
+      {
+        "word": "in",
+        "start": 21563,
+        "end": 21638
+      },
+      {
+        "word": "the",
+        "start": 21650,
+        "end": 21713
+      },
+      {
+        "word": "collection",
+        "start": 21725,
+        "end": 22338
+      },
+      {
+        "word": "It",
+        "start": 23200,
+        "end": 23338
+      },
+      {
+        "word": "is",
+        "start": 23350,
+        "end": 23463
+      },
+      {
+        "word": "the",
+        "start": 23475,
+        "end": 23588
+      },
+      {
+        "word": "5th",
+        "start": 23600,
+        "end": 23925
+      },
+      {
+        "word": "longest",
+        "start": 23938,
+        "end": 24451
+      },
+      {
+        "word": "build",
+        "start": 24463,
+        "end": 24763
+      },
+      {
+        "word": "in",
+        "start": 24775,
+        "end": 24838
+      },
+      {
+        "word": "the",
+        "start": 24850,
+        "end": 24913
+      },
+      {
+        "word": "collection",
+        "start": 24925,
+        "end": 25550
+      }
+    ],
+    "narrationText": "Lego set 10234: Sydney Opera House. A 2013 release from the Icons (Creator Expert & Advanced Models) / Landmark line. Features 2,989 pieces. Took 7 hours and 22 minutes to build. It is the 2nd largest Icons set in the collection. It is the 5th longest build in the collection.",
+    "videoPath": "data/videos/10234.mp4"
   },
   {
     "id": "10237",

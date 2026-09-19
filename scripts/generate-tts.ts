@@ -2,11 +2,48 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
+import { Liquid } from 'liquidjs';
 import type { EnrichedLegoSet, WordTimestamp } from '../shared/types.js';
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
 const AUDIO_DIR = path.join(DATA_DIR, 'audio');
+const TEMPLATES_DIR = path.resolve(process.cwd(), 'templates');
+const NARRATION_TEMPLATE_FILE = path.join(TEMPLATES_DIR, 'narration.liquid');
+
+const engine = new Liquid({
+  root: TEMPLATES_DIR,
+  extname: '.liquid',
+});
+
+export function ordinal(n: number): string {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+export function cleanThemeName(theme?: string): string {
+  if (!theme) return '';
+  if (theme.includes('Lord of the Rings')) return 'Lord of the Rings';
+  if (theme.includes('Star Wars')) return 'Star Wars';
+  if (theme.includes('Icons')) return 'Icons';
+  if (theme.includes('Harry Potter')) return 'Harry Potter';
+  if (theme.includes('Architecture')) return 'Architecture';
+  return theme.split('/')[0].replace(/\(.*?\)/g, '').trim();
+}
+
+// Custom filter to format piece counts with commas
+engine.registerFilter('format_number', (v: number | string) => {
+  if (typeof v === 'number') return v.toLocaleString();
+  const num = Number(v);
+  return isNaN(num) ? v : num.toLocaleString();
+});
+
+// Custom filter to convert a number to an ordinal string (1 -> 1st, 2 -> 2nd)
+engine.registerFilter('ordinal', (v: number | string) => {
+  const num = Number(v);
+  return isNaN(num) ? v : ordinal(num);
+});
 
 // Select a crisp, natural neural voice
 const VOICE_NAME = process.env.EDGE_TTS_VOICE || 'en-US-ChristopherNeural';
@@ -24,29 +61,233 @@ interface EdgeMetadataItem {
   };
 }
 
-export function buildNarration(set: EnrichedLegoSet): string {
-  const parts: string[] = [];
+function formatBuildDuration(set: EnrichedLegoSet): string | null {
+  let hours = 0;
+  let minutes = 0;
 
-  parts.push(`Lego set ${set.id}: ${set.name}.`);
-
-  if (set.theme && set.year) {
-    parts.push(`A ${set.year} release from the ${set.theme} line.`);
+  if (set.timeToBuildFormatted) {
+    const match = set.timeToBuildFormatted.match(/^(?:(\d+)\s*h)?\s*(?:(\d+)\s*m)?$/i);
+    if (match && (match[1] || match[2])) {
+      hours = parseInt(match[1] || '0', 10);
+      minutes = parseInt(match[2] || '0', 10);
+    }
   }
 
-  if (set.pieces) {
-    parts.push(`Features ${set.pieces.toLocaleString()} pieces.`);
+  if (hours === 0 && minutes === 0 && set.buildTimeHours) {
+    const totalMinutes = Math.round(set.buildTimeHours * 60);
+    hours = Math.floor(totalMinutes / 60);
+    minutes = totalMinutes % 60;
   }
 
-  if (set.buildTimeHours) {
-    const hoursText = set.buildTimeHours === 1 ? '1 hour' : `${set.buildTimeHours} hours`;
-    parts.push(`Took ${hoursText} to build.`);
+  const durationParts: string[] = [];
+  if (hours > 0) {
+    durationParts.push(hours === 1 ? '1 hour' : `${hours} hours`);
+  }
+  if (minutes > 0) {
+    durationParts.push(minutes === 1 ? '1 minute' : `${minutes} minutes`);
   }
 
-  if (set.funFacts) {
-    parts.push(set.funFacts);
+  if (durationParts.length === 0) return null;
+  return durationParts.join(' and ');
+}
+
+export interface CollectionFactsInfo {
+  facts: string[];
+  collectionFact: string;
+  primaryCollectionFact: string;
+  piecesRank: number;
+  piecesRankOrdinal: string;
+  piecesTotal: number;
+  isLargest: boolean;
+  isSmallest: boolean;
+  buildTimeRank: number | null;
+  buildTimeRankOrdinal: string | null;
+  buildTimeTotal: number;
+  isLongestBuild: boolean;
+  isFastestBuild: boolean;
+  themePiecesRank: number | null;
+  themePiecesRankOrdinal: string | null;
+  themeTotal: number;
+  themeName: string;
+  isOldest: boolean;
+  isNewest: boolean;
+}
+
+let cachedSetsJson: EnrichedLegoSet[] | null = null;
+function getCollectionSets(): EnrichedLegoSet[] {
+  if (!cachedSetsJson && fs.existsSync(JSON_FILE)) {
+    try {
+      cachedSetsJson = JSON.parse(fs.readFileSync(JSON_FILE, 'utf-8')) as EnrichedLegoSet[];
+    } catch {
+      cachedSetsJson = [];
+    }
+  }
+  return cachedSetsJson || [];
+}
+
+export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]): CollectionFactsInfo {
+  const collection = allSets && allSets.length > 0 ? allSets : getCollectionSets();
+
+  const byPieces = [...collection].filter((s) => typeof s.pieces === 'number').sort((a, b) => (b.pieces || 0) - (a.pieces || 0));
+  const byBuildTime = [...collection].filter((s) => typeof s.buildTimeHours === 'number').sort((a, b) => (b.buildTimeHours || 0) - (a.buildTimeHours || 0));
+  const byYearAsc = [...collection].filter((s) => s.yearReleased || s.year).sort((a, b) => ((a.yearReleased || a.year)!) - ((b.yearReleased || b.year)!));
+
+  const minYear = byYearAsc[0] ? (byYearAsc[0].yearReleased || byYearAsc[0].year) : null;
+  const maxYear = byYearAsc[byYearAsc.length - 1] ? (byYearAsc[byYearAsc.length - 1].yearReleased || byYearAsc[byYearAsc.length - 1].year) : null;
+
+  const themeGroups: Record<string, EnrichedLegoSet[]> = {};
+  collection.forEach((s) => {
+    const p = cleanThemeName(s.theme);
+    if (!p) return;
+    if (!themeGroups[p]) themeGroups[p] = [];
+    themeGroups[p].push(s);
+  });
+  Object.values(themeGroups).forEach((group) => {
+    group.sort((a, b) => (b.pieces || 0) - (a.pieces || 0));
+  });
+
+  const facts: string[] = [];
+
+  const pIdx = byPieces.findIndex((s) => s.id === set.id);
+  const pRank = pIdx !== -1 ? pIdx + 1 : 0;
+  const isLargest = pRank === 1;
+  const isSmallest = pRank === byPieces.length && byPieces.length > 1;
+
+  if (isLargest) {
+    facts.push('It has the most pieces in the collection.');
+  } else if (pRank >= 2 && pRank <= 3) {
+    facts.push(`It is the ${ordinal(pRank)} largest set in the collection.`);
+  } else if (isSmallest) {
+    facts.push('It is the smallest set in the collection.');
   }
 
-  return parts.join(' ');
+  const bIdx = byBuildTime.findIndex((s) => s.id === set.id);
+  let bRank: number | null = null;
+  let isLongest = false;
+  let isFastest = false;
+  if (bIdx !== -1) {
+    bRank = bIdx + 1;
+    isLongest = bRank === 1;
+    isFastest = bRank === byBuildTime.length && byBuildTime.length > 1;
+    if (isLongest) {
+      facts.push('It is the longest build in the collection.');
+    } else if (bRank >= 2 && bRank <= 3) {
+      facts.push(`It is the ${ordinal(bRank)} longest build in the collection.`);
+    } else if (isFastest) {
+      facts.push('It is the fastest build in the collection.');
+    }
+  }
+
+  const cleanTheme = cleanThemeName(set.theme);
+  const group = themeGroups[cleanTheme];
+  let tRank: number | null = null;
+  if (group && group.length >= 3) {
+    const tIdx = group.findIndex((s) => s.id === set.id);
+    if (tIdx !== -1) {
+      tRank = tIdx + 1;
+      if (tRank === 1 && pRank > 3) {
+        facts.push(`It is the largest ${cleanTheme} set in the collection.`);
+      } else if (tRank === 2 && pRank > 5 && group.length >= 5) {
+        facts.push(`It is the 2nd largest ${cleanTheme} set in the collection.`);
+      }
+    }
+  }
+
+  if (facts.length < 2 && bRank !== null && bRank > 3 && bRank <= 5) {
+    facts.push(`It is the ${ordinal(bRank)} longest build in the collection.`);
+  }
+  if (facts.length < 2 && pRank > 3 && pRank <= 5) {
+    facts.push(`It is the ${ordinal(pRank)} largest set in the collection.`);
+  }
+
+  const setYear = set.yearReleased || set.year;
+  const isOldest = !!(setYear && setYear === minYear);
+  const isNewest = !!(setYear && setYear === maxYear);
+
+  if (facts.length === 0 && isOldest) {
+    facts.push('It is tied for the oldest set in the collection.');
+  } else if (facts.length === 0 && isNewest) {
+    facts.push('It is one of the newest additions to the collection.');
+  }
+
+  return {
+    facts,
+    collectionFact: facts.join(' '),
+    primaryCollectionFact: facts[0] || '',
+    piecesRank: pRank,
+    piecesRankOrdinal: pRank ? ordinal(pRank) : '',
+    piecesTotal: byPieces.length,
+    isLargest,
+    isSmallest,
+    buildTimeRank: bRank,
+    buildTimeRankOrdinal: bRank ? ordinal(bRank) : null,
+    buildTimeTotal: byBuildTime.length,
+    isLongestBuild: isLongest,
+    isFastestBuild: isFastest,
+    themePiecesRank: tRank,
+    themePiecesRankOrdinal: tRank ? ordinal(tRank) : null,
+    themeTotal: group ? group.length : 1,
+    themeName: cleanTheme,
+    isOldest,
+    isNewest,
+  };
+}
+
+export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]): string {
+  const factsInfo = computeCollectionFacts(set, allSets);
+  const context = {
+    ...set,
+    year: set.yearReleased || set.year,
+    buildDuration: formatBuildDuration(set),
+    collectionFacts: factsInfo.facts,
+    collectionFact: factsInfo.collectionFact,
+    primaryCollectionFact: factsInfo.primaryCollectionFact,
+    piecesRank: factsInfo.piecesRank,
+    piecesRankOrdinal: factsInfo.piecesRankOrdinal,
+    piecesTotal: factsInfo.piecesTotal,
+    isLargest: factsInfo.isLargest,
+    isSmallest: factsInfo.isSmallest,
+    buildTimeRank: factsInfo.buildTimeRank,
+    buildTimeRankOrdinal: factsInfo.buildTimeRankOrdinal,
+    buildTimeTotal: factsInfo.buildTimeTotal,
+    isLongestBuild: factsInfo.isLongestBuild,
+    isFastestBuild: factsInfo.isFastestBuild,
+    themePiecesRank: factsInfo.themePiecesRank,
+    themePiecesRankOrdinal: factsInfo.themePiecesRankOrdinal,
+    themeTotal: factsInfo.themeTotal,
+    themeName: factsInfo.themeName,
+    isOldest: factsInfo.isOldest,
+    isNewest: factsInfo.isNewest,
+  };
+
+  let rendered: string;
+  if (fs.existsSync(NARRATION_TEMPLATE_FILE)) {
+    const templateContent = fs.readFileSync(NARRATION_TEMPLATE_FILE, 'utf-8');
+    rendered = engine.parseAndRenderSync(templateContent, context);
+  } else {
+    // Fallback if template is not found
+    const parts: string[] = [`Lego set ${set.id}: ${set.name}.`];
+    if (set.theme && (set.yearReleased || set.year)) {
+      parts.push(`A ${set.yearReleased || set.year} release from the ${set.theme} line.`);
+    }
+    if (set.pieces) {
+      parts.push(`Features ${set.pieces.toLocaleString()} pieces.`);
+    }
+    const duration = formatBuildDuration(set);
+    if (duration) {
+      parts.push(`Took ${duration} to build.`);
+    }
+    if (factsInfo.collectionFact) {
+      parts.push(factsInfo.collectionFact);
+    }
+    if (set.funFacts) {
+      parts.push(set.funFacts);
+    }
+    rendered = parts.join(' ');
+  }
+
+  // Normalize multi-spaces and whitespace into clean sentence spacing
+  return rendered.replace(/\s+/g, ' ').trim();
 }
 
 // TODO It seems odd we need to do this - shouldn't the API do this, or shouldn't we use a proper html encoder
@@ -59,8 +300,8 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;');
 }
 
-async function generateSetAudio(set: EnrichedLegoSet): Promise<{ audioPath: string; subtitles: WordTimestamp[]; narrationText: string }> {
-  const narration = buildNarration(set);
+async function generateSetAudio(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]): Promise<{ audioPath: string; subtitles: WordTimestamp[]; narrationText: string }> {
+  const narration = buildNarration(set, allSets);
   const audioFilePath = path.join(AUDIO_DIR, `${set.id}.mp3`);
   const subtitlesFilePath = path.join(AUDIO_DIR, `${set.id}.subtitles.json`);
 
@@ -144,7 +385,7 @@ async function main() {
       if (targetId && set.id !== targetId) {
         continue;
       }
-      const narration = set.narrationText || buildNarration(set);
+      const narration = buildNarration(set, sets);
       console.log(`[#${set.id}] ${set.name}`);
       console.log(`   "${narration}"\n`);
       count++;
@@ -160,11 +401,11 @@ async function main() {
     if (targetId && set.id !== targetId) {
       continue;
     }
-    const previewText = buildNarration(set);
+    const previewText = buildNarration(set, sets);
     console.log(`🎙️  Narrating #${set.id}: ${set.name}...`);
     console.log(`   "${previewText}"`);
     try {
-      const result = await generateSetAudio(set);
+      const result = await generateSetAudio(set, sets);
       set.audioPath = result.audioPath;
       set.subtitles = result.subtitles;
       set.narrationText = result.narrationText;
