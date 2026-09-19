@@ -3,7 +3,13 @@ import path from 'node:path';
 import os from 'node:os';
 import { parse } from 'csv-parse/sync';
 import dotenv from 'dotenv';
-import type { CsvLegoRecord, EnrichedLegoSet, LegoInstructionPdf, RebrickableSetResponse } from '../shared/types.js';
+import type {
+  CsvLegoRecord,
+  EnrichedLegoSet,
+  LegoDimensions,
+  LegoInstructionPdf,
+  RebrickableSetResponse,
+} from '../shared/types.js';
 
 dotenv.config();
 
@@ -13,7 +19,28 @@ const JSON_FILE = path.join(DATA_DIR, 'sets.json');
 const IMAGES_DIR = path.join(DATA_DIR, 'images');
 const CACHE_DIR = path.join(DATA_DIR, 'cache', 'rebrickable');
 const LEGO_CACHE_DIR = path.join(DATA_DIR, 'cache', 'lego');
-const LEGO_INSTRUCTIONS_DIR = process.env.LEGO_INSTRUCTIONS_DIR;
+
+function resolveLegoDataDir(): string | undefined {
+  const args = process.argv.slice(2);
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg.startsWith('--lego-data-dir=')) {
+      return path.resolve(arg.split('=')[1]);
+    }
+    if (arg === '--lego-data-dir' && i + 1 < args.length) {
+      return path.resolve(args[i + 1]);
+    }
+  }
+
+  const envDir = process.env.LEGO_DATA_DIR || process.env.LEGO_INSTRUCTIONS_DIR;
+  if (envDir && envDir.trim()) {
+    return path.resolve(envDir.trim());
+  }
+
+  return undefined;
+}
+
+const resolvedLegoDataDir = resolveLegoDataDir();
 
 const REBRICKABLE_API_KEY = process.env.REBRICKABLE_API_KEY;
 
@@ -31,6 +58,26 @@ interface LegoMetadata {
   pieces?: number;
   year?: number;
   set_image_url?: string;
+  set_image_alt?: string;
+  description?: string;
+  features_text?: string;
+  meta_description?: string;
+  meta_title?: string;
+  slug?: string;
+  hires_image_url?: string;
+  thumbnail_image_url?: string;
+  images?: Array<{
+    id: string;
+    url: string;
+  }>;
+  videos?: Array<{
+    id: string;
+    title?: string;
+    description?: string;
+    url: string;
+  }>;
+  categories?: string[];
+  brand?: string;
   pdfs?: Array<{
     url: string;
     filename?: string;
@@ -43,7 +90,26 @@ interface LegoMetadata {
 }
 
 function getLegoMetadata(cleanId: string): LegoMetadata | null {
+  // If no source directory is provided via --lego-data-dir or env variable, do not fetch this supplemental metadata
+  if (!resolvedLegoDataDir) {
+    return null;
+  }
+
   const cacheFile = path.join(LEGO_CACHE_DIR, `${cleanId}.json`);
+  const sourceFile = path.join(resolvedLegoDataDir, cleanId, 'metadata.json');
+
+  if (fs.existsSync(sourceFile)) {
+    try {
+      const content = fs.readFileSync(sourceFile, 'utf-8');
+      const parsed = JSON.parse(content) as LegoMetadata;
+      fs.writeFileSync(cacheFile, JSON.stringify(parsed, null, 2), 'utf-8');
+      return parsed;
+    } catch {
+      // ignore
+    }
+  }
+
+  // Fallback to cache if source directory is configured but file not found on disk
   if (fs.existsSync(cacheFile)) {
     try {
       return JSON.parse(fs.readFileSync(cacheFile, 'utf-8')) as LegoMetadata;
@@ -52,22 +118,32 @@ function getLegoMetadata(cleanId: string): LegoMetadata | null {
     }
   }
 
-  // Fallback: copy from LEGO_INSTRUCTIONS_DIR/{cleanId}/metadata.json if configured
-  if (LEGO_INSTRUCTIONS_DIR) {
-    const sourceFile = path.join(LEGO_INSTRUCTIONS_DIR, cleanId, 'metadata.json');
-    if (fs.existsSync(sourceFile)) {
-      try {
-        const content = fs.readFileSync(sourceFile, 'utf-8');
-        const parsed = JSON.parse(content) as LegoMetadata;
-        fs.writeFileSync(cacheFile, JSON.stringify(parsed, null, 2), 'utf-8');
-        return parsed;
-      } catch {
-        // ignore
-      }
+  return null;
+}
+
+function parseDimensions(record: Record<string, string>, text?: string): LegoDimensions | undefined {
+  let h = parseFloat(record['Height'] || '');
+  let w = parseFloat(record['Width'] || '');
+  let d = parseFloat(record['Depth'] || '');
+
+  if ((isNaN(h) || !h) || (isNaN(w) || !w) || (isNaN(d) || !d)) {
+    if (text) {
+      const hMatch = text.match(/(\d+(?:\.\d+)?)\s*cm[^\w]*(?:high|tall|in height)/i) || text.match(/(?:high|tall|height)[^\w]*(\d+(?:\.\d+)?)\s*cm/i);
+      const wMatch = text.match(/(\d+(?:\.\d+)?)\s*cm[^\w]*(?:wide|in width|width)/i) || text.match(/(?:wide|width)[^\w]*(\d+(?:\.\d+)?)\s*cm/i);
+      const dMatch = text.match(/(\d+(?:\.\d+)?)\s*cm[^\w]*(?:deep|long|in depth|in length|depth|length)/i) || text.match(/(?:deep|long|depth|length)[^\w]*(\d+(?:\.\d+)?)\s*cm/i);
+
+      if ((isNaN(h) || !h) && hMatch) h = parseFloat(hMatch[1]);
+      if ((isNaN(w) || !w) && wMatch) w = parseFloat(wMatch[1]);
+      if ((isNaN(d) || !d) && dMatch) d = parseFloat(dMatch[1]);
     }
   }
 
-  return null;
+  const result: LegoDimensions = {};
+  if (!isNaN(h) && h > 0) result.height = h;
+  if (!isNaN(w) && w > 0) result.width = w;
+  if (!isNaN(d) && d > 0) result.depth = d;
+
+  return Object.keys(result).length > 0 ? result : undefined;
 }
 
 function getCachedJson<T>(filename: string): T | null {
@@ -259,6 +335,12 @@ async function main() {
 
   console.log(`Found ${records.length} built Lego sets in spreadsheet (filtered out unbuilt/future rows).`);
 
+  if (resolvedLegoDataDir) {
+    console.log(`ℹ️  Supplemental LEGO metadata directory enabled: ${resolvedLegoDataDir}`);
+  } else {
+    console.log(`ℹ️  No supplemental LEGO metadata directory specified (set LEGO_DATA_DIR in .env or pass --lego-data-dir=<path>). Skipping supplemental LEGO metadata enrichment.`);
+  }
+
   if (!REBRICKABLE_API_KEY) {
     console.log(`ℹ️  No REBRICKABLE_API_KEY detected in .env. Using CDN images and fallback metadata.`);
     console.log(`   Get a free API key at https://rebrickable.com/api/ to enable full live metadata enrichment.`);
@@ -394,6 +476,26 @@ async function main() {
     const rawRating = record['rating'] ? parseFloat(String(record['rating'])) : undefined;
     const rating = (rawRating && !isNaN(rawRating)) ? rawRating : undefined;
 
+    const featuresText = legoMeta?.features_text || previous.featuresText;
+    const description = legoMeta?.description || previous.description;
+    const metaDescription = legoMeta?.meta_description || previous.metaDescription;
+    const metaTitle = legoMeta?.meta_title || previous.metaTitle;
+    const slug = legoMeta?.slug || previous.slug;
+    const brand = legoMeta?.brand || previous.brand;
+    const categories = legoMeta?.categories || previous.categories;
+    const hiresImageUrl = legoMeta?.hires_image_url || previous.hiresImageUrl;
+    const thumbnailImageUrl = legoMeta?.thumbnail_image_url || previous.thumbnailImageUrl;
+    const images = legoMeta?.images?.map((img) => ({ id: img.id, url: img.url })) || previous.images;
+    const productVideos = legoMeta?.videos?.map((v) => ({
+      id: v.id,
+      title: v.title || undefined,
+      description: v.description || undefined,
+      url: v.url,
+    })) || previous.productVideos;
+
+    const combinedText = `${featuresText || ''} ${description || ''}`;
+    const dimensions = parseDimensions(record, combinedText) || previous.dimensions;
+
     const enriched: EnrichedLegoSet = {
       id: cleanId,
       setNum,
@@ -409,6 +511,18 @@ async function main() {
       instructions,
       rating,
       imageUrl,
+      hiresImageUrl,
+      thumbnailImageUrl,
+      images,
+      description,
+      featuresText,
+      metaDescription,
+      metaTitle,
+      slug,
+      brand,
+      categories,
+      productVideos,
+      dimensions,
       media: {
         image: `images/${imageFilename}`,
         audio: previous.media?.audio || (previous.audioPath ? `audio/${cleanId}.mp3` : undefined),
@@ -449,6 +563,18 @@ async function main() {
         notes: existing.notes || set.notes,
         age: existing.age || set.age,
         instructions: existing.instructions || set.instructions,
+        dimensions: existing.dimensions || set.dimensions,
+        images: existing.images || set.images,
+        hiresImageUrl: existing.hiresImageUrl || set.hiresImageUrl,
+        thumbnailImageUrl: existing.thumbnailImageUrl || set.thumbnailImageUrl,
+        description: existing.description || set.description,
+        featuresText: existing.featuresText || set.featuresText,
+        metaDescription: existing.metaDescription || set.metaDescription,
+        metaTitle: existing.metaTitle || set.metaTitle,
+        slug: existing.slug || set.slug,
+        brand: existing.brand || set.brand,
+        categories: existing.categories || set.categories,
+        productVideos: existing.productVideos || set.productVideos,
       };
       uniqueMap.set(set.id, merged);
     }

@@ -79,6 +79,18 @@ export interface LegoInstructionPdf {
   sequenceTotal?: number;
 }
 
+export interface LegoProductImage {
+  id: string;
+  url: string;
+}
+
+export interface LegoProductVideo {
+  id: string;
+  title?: string;
+  description?: string;
+  url: string;
+}
+
 export interface LegoMedia {
   image?: string;     // Relative path on CDN, e.g. "images/10497.jpg"
   audio?: string;     // Relative path on CDN, e.g. "audio/10497.mp3"
@@ -99,6 +111,17 @@ export interface EnrichedLegoSet {
   age?: string; // Recommended age, e.g. "18+", "16+"
   pieces?: number;
   imageUrl?: string;
+  hiresImageUrl?: string;
+  thumbnailImageUrl?: string;
+  images?: LegoProductImage[];
+  description?: string;
+  featuresText?: string;
+  metaDescription?: string;
+  metaTitle?: string;
+  slug?: string;
+  brand?: string;
+  categories?: string[];
+  productVideos?: LegoProductVideo[];
   media?: LegoMedia;
   localImagePath?: string;
   audioPath?: string;
