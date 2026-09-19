@@ -32,6 +32,68 @@ export function cleanThemeName(theme?: string): string {
   return theme.split('/')[0].replace(/\(.*?\)/g, '').trim();
 }
 
+/**
+ * Explicit theme overrides for spoken audio narration.
+ * NOTE: In the future, we could move these into an external file (e.g. templates/themes.json)
+ * for non-code editorial management if the list grows large.
+ */
+export const THEME_OVERRIDES: Record<string, string> = {
+  'Creator / Creator 3in1 / Creature': 'Creator 3-in-1',
+  'Holiday & Event / Christmas': 'Holiday Christmas',
+  'Holiday & Event / Halloween': 'Halloween',
+  'Technic / Model / Space Exploration': 'Technic Space',
+};
+
+/**
+ * Simplifies verbose catalog themes into natural spoken lines.
+ * e.g. "Icons (Creator Expert & Advanced Models) / Landmark" -> "Icons Landmark"
+ * e.g. "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (...)" -> "Lord of the Rings"
+ */
+export function simplifyTheme(theme?: string): string {
+  if (!theme) return '';
+  if (THEME_OVERRIDES[theme]) return THEME_OVERRIDES[theme];
+
+  // 1. Strip parenthetical notes like (Creator Expert & Advanced Models), (CUUSOO), etc.
+  const cleaned = theme.replace(/\s*\([^)]*\)/g, '');
+
+  // 2. Split segments by '/'
+  let parts = cleaned
+    .split('/')
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  // 3. Drop filler and internal episode segments
+  parts = parts.filter(
+    (p) => !['Miscellaneous', 'Model'].includes(p) && !p.startsWith('Star Wars Episode')
+  );
+
+  // 4. Normalize common franchise prefixes
+  parts = parts.map((p) => {
+    if (p.includes('The Lord of the Rings') || p.includes('Lord of the Rings')) {
+      return 'Lord of the Rings';
+    }
+    return p;
+  });
+
+  // 5. Deduplicate segments
+  const deduped: string[] = [];
+  for (const p of parts) {
+    if (!deduped.includes(p)) {
+      deduped.push(p);
+    }
+  }
+
+  if (deduped.includes('Lord of the Rings')) {
+    return 'Lord of the Rings';
+  }
+
+  if (deduped[0] === 'Star Wars' && deduped[1] === 'Sculptures') {
+    return 'Star Wars';
+  }
+
+  return deduped.slice(0, 2).join(' ');
+}
+
 // Custom filter to format piece counts with commas
 engine.registerFilter('format_number', (v: number | string) => {
   if (typeof v === 'number') return v.toLocaleString();
@@ -43,6 +105,11 @@ engine.registerFilter('format_number', (v: number | string) => {
 engine.registerFilter('ordinal', (v: number | string) => {
   const num = Number(v);
   return isNaN(num) ? v : ordinal(num);
+});
+
+// Custom filter to shorten verbose themes for spoken audio
+engine.registerFilter('short_theme', (v: string) => {
+  return simplifyTheme(v);
 });
 
 // Select a crisp, natural neural voice
@@ -238,6 +305,7 @@ export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]
   const context = {
     ...set,
     year: set.yearReleased || set.year,
+    shortTheme: simplifyTheme(set.theme),
     buildDuration: formatBuildDuration(set),
     collectionFacts: factsInfo.facts,
     collectionFact: factsInfo.collectionFact,

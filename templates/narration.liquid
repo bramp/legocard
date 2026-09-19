@@ -1,5 +1,5 @@
 Lego set {{ id }}: {{ name }}.
-{%- if theme and year %} A {{ year }} release from the {{ theme }} line.{% endif -%}
+{%- if shortTheme and year %} A {{ year }} release from the {{ shortTheme }} line.{% endif -%}
 {%- if pieces %} Features {{ pieces | format_number }} pieces.{% endif -%}
 {%- if buildDuration %} Took {{ buildDuration }} to build.{% endif -%}
 {%- if collectionFact %} {{ collectionFact }}{% endif -%}
