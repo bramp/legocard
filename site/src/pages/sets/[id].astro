@@ -96,21 +96,12 @@ const media = getSetMediaUrls(set);
             </span>
           </div>
 
-          {set.builtBy ? (
-            <div class="bg-slate-950/70 border border-slate-800/90 rounded-2xl p-3.5">
-              <span class="text-[11px] font-medium uppercase tracking-wider text-slate-500 block">Built By</span>
-              <span class="text-sm font-bold text-slate-200 truncate block mt-0.5">
-                {set.builtBy}
-              </span>
-            </div>
-          ) : (
-            <div class="bg-slate-950/70 border border-slate-800/90 rounded-2xl p-3.5">
-              <span class="text-[11px] font-medium uppercase tracking-wider text-slate-500 block">Theme</span>
-              <span class="text-sm font-bold text-slate-200 truncate block mt-0.5">
-                {set.theme || 'Lego'}
-              </span>
-            </div>
-          )}
+          <div class="bg-slate-950/70 border border-slate-800/90 rounded-2xl p-3.5">
+            <span class="text-[11px] font-medium uppercase tracking-wider text-slate-500 block">Theme</span>
+            <span class="text-sm font-bold text-slate-200 truncate block mt-0.5">
+              {set.theme || 'Lego'}
+            </span>
+          </div>
         </div>
 
         <!-- Release / Retirement Timeline Badges if available -->

@@ -127,7 +127,6 @@ export interface EnrichedLegoSet {
   buildDate?: string;
   buildTimeHours?: number;
   timeToBuildFormatted?: string;
-  builtBy?: string;
   rating?: number;
   funFacts?: string;
   notes?: string;

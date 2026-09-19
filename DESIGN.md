@@ -125,7 +125,6 @@ interface EnrichedLegoSet {
   buildDate?: string;            // "2023-08-15"
   buildTimeHours?: number;       // 4.5
   timeToBuildFormatted?: string; // "4h 30m"
-  builtBy?: string;              // "Bram & Family"
   rating?: number;               // 5
   funFacts: string;              // Trivia / notes
   notes?: string;                // Display location, etc.

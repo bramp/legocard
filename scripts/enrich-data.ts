@@ -546,7 +546,6 @@ async function main() {
       buildDate: dateFinished || datePurchased || record['build_date'] || previous.buildDate,
       buildTimeHours,
       timeToBuildFormatted,
-      builtBy: record['built_by'] || record['Built By'] || previous.builtBy || undefined,
       funFacts: record['fun_facts'] || previous.funFacts || '',
       notes: record['Notes'] || record['notes'] || previous.notes,
     };
