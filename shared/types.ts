@@ -26,7 +26,16 @@ export interface CsvLegoRecord {
   Depth?: string | number;
   Notes?: string;
   notes?: string;
+  Collection?: string;
+  collection?: string;
+  'Rating (Build)'?: string | number;
+  rating_build?: string | number;
+  ratingBuild?: string | number;
+  'Rating (Looks)'?: string | number;
+  rating_looks?: string | number;
+  ratingLooks?: string | number;
   built_by?: string;
+  Rating?: string | number;
   rating?: string | number;
   fun_facts?: string;
 }
@@ -120,10 +129,14 @@ export interface LegoShowcaseProps {
   id: string;
   name: string;
   theme?: string;
+  collection?: string;
   year?: number;
   pieces?: number;
   buildTimeHours?: number;
   timeToBuildFormatted?: string;
+  rating?: number;
+  ratingBuild?: number;
+  ratingLooks?: number;
   funFacts?: string;
   imageSrc: string; // File URL, data URL, or web URL
   audioSrc?: string; // File URL, data URL, or web URL
@@ -203,6 +216,12 @@ export interface EnrichedLegoSet {
   gwpWithSetNumber?: string;
 
   theme?: string;
+
+  /**
+   * User-defined collection/sub-series grouping from spreadsheet (e.g. "Starwars Helmets", "Upscale Minifigs", "Lightsabers").
+   */
+  collection?: string;
+
   age?: string; // Recommended age, e.g. "18+", "16+"
   pieces?: number;
   imageUrl?: string;
@@ -227,6 +246,17 @@ export interface EnrichedLegoSet {
   buildTimeHours?: number;
   timeToBuildFormatted?: string;
   rating?: number;
+
+  /**
+   * User rating for the build experience (e.g. 1-5).
+   */
+  ratingBuild?: number;
+
+  /**
+   * User rating for display aesthetics / appearance (e.g. 1-5).
+   */
+  ratingLooks?: number;
+
   funFacts?: string;
   notes?: string;
   dimensions?: LegoDimensions;

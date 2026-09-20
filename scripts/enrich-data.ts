@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { parse } from 'csv-parse/sync';
 import dotenv from 'dotenv';
 import type {
@@ -51,6 +52,43 @@ function parsePieces(val: string | number | undefined): number | undefined {
   const clean = String(val).replace(/,/g, '').trim();
   const num = parseInt(clean, 10);
   return isNaN(num) || num <= 0 ? undefined : num;
+}
+
+export function parseRating(val: string | number | null | undefined): number | undefined {
+  if (val === undefined || val === null) return undefined;
+  const str = String(val).trim();
+  if (!str || str.startsWith('#')) return undefined;
+
+  const fractionMatch = str.match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/);
+  if (fractionMatch) {
+    const num = parseFloat(fractionMatch[1]);
+    const den = parseFloat(fractionMatch[2]);
+    if (den > 0) {
+      if (den === 5) return num;
+      if (den === 10) return Math.round((num / 2) * 10) / 10;
+      return Math.round((num / den) * 5 * 10) / 10;
+    }
+  }
+
+  const clean = str.replace(',', '.');
+  const num = parseFloat(clean);
+  return isNaN(num) || num < 0 ? undefined : num;
+}
+
+export function getRecordField(record: Record<string, string>, ...keys: string[]): string | undefined {
+  for (const key of keys) {
+    if (record[key] !== undefined && record[key].trim() !== '') {
+      return record[key].trim();
+    }
+  }
+  // Case-insensitive fallback
+  const lowerKeys = keys.map((k) => k.toLowerCase());
+  for (const [k, v] of Object.entries(record)) {
+    if (lowerKeys.includes(k.trim().toLowerCase()) && v.trim() !== '') {
+      return v.trim();
+    }
+  }
+  return undefined;
 }
 
 function parseDimensionsFromRecord(
@@ -138,6 +176,8 @@ async function main() {
     const dateFinished = (r['Date Finished'] || '').trim();
     const yearFinished = (r['Year Finished'] || '').trim();
     const timeToBuild = (r['Time to Build'] || r['time_to_build'] || '').trim();
+    const ratingBuild = (getRecordField(r, 'Rating (Build)', 'rating_build', 'ratingBuild', 'Build Rating') || '').trim();
+    const ratingLooks = (getRecordField(r, 'Rating (Looks)', 'rating_looks', 'ratingLooks', 'Looks Rating') || '').trim();
 
     // Exclude planned / future sets explicitly marked "Future"
     if (
@@ -148,11 +188,13 @@ async function main() {
       return false;
     }
 
-    // Must have evidence of being built (Time to Build, Date Finished, or Year Finished)
+    // Must have evidence of being built (Time to Build, Date Finished, Year Finished, or personal Rating)
     const hasBuildEvidence =
       (timeToBuild && !timeToBuild.includes('#REF!')) ||
       (dateFinished && !dateFinished.includes('#REF!')) ||
-      (yearFinished && !yearFinished.includes('#REF!'));
+      (yearFinished && !yearFinished.includes('#REF!')) ||
+      (ratingBuild && !ratingBuild.includes('#REF!')) ||
+      (ratingLooks && !ratingLooks.includes('#REF!'));
 
     return hasBuildEvidence;
   });
@@ -314,9 +356,22 @@ async function main() {
     const gwpDescription = brickset?.gwpDescription || previous.gwpDescription;
     const gwpWithSetNumber = brickset?.gwpWithSetNumber || previous.gwpWithSetNumber;
 
-    // Ratings: CSV rating from user takes precedence
-    const rawRating = record['rating'] ? parseFloat(String(record['rating'])) : undefined;
-    const rating = (rawRating && !isNaN(rawRating)) ? rawRating : (previous.rating || brickset?.rating);
+    // Collection
+    const rawCollection = getRecordField(record, 'Collection', 'collection');
+    const collection = rawCollection || previous.collection || undefined;
+
+    // Build and Looks ratings from CSV
+    const ratingBuild =
+      parseRating(getRecordField(record, 'Rating (Build)', 'rating_build', 'ratingBuild', 'Build Rating')) ??
+      previous.ratingBuild;
+
+    const ratingLooks =
+      parseRating(getRecordField(record, 'Rating (Looks)', 'rating_looks', 'ratingLooks', 'Looks Rating')) ??
+      previous.ratingLooks;
+
+    // Overall ratings: CSV rating from user takes precedence, fallback to previous or brickset
+    const rawRating = parseRating(getRecordField(record, 'Rating', 'rating'));
+    const rating = rawRating ?? (previous.rating || brickset?.rating);
 
     const enriched: EnrichedLegoSet = {
       id: cleanId,
@@ -329,10 +384,13 @@ async function main() {
       gwpDescription,
       gwpWithSetNumber,
       theme,
+      collection,
       age,
       pieces,
       instructionBooks,
       rating,
+      ratingBuild,
+      ratingLooks,
       imageUrl,
       hiresImageUrl,
       thumbnailImageUrl,
@@ -380,6 +438,10 @@ async function main() {
         buildDate: existing.buildDate || set.buildDate,
         funFacts: existing.funFacts || set.funFacts || '',
         notes: existing.notes || set.notes,
+        collection: set.collection || existing.collection,
+        ratingBuild: set.ratingBuild ?? existing.ratingBuild,
+        ratingLooks: set.ratingLooks ?? existing.ratingLooks,
+        rating: set.rating ?? existing.rating,
         age: existing.age || set.age,
         instructionBooks: existing.instructionBooks || set.instructionBooks,
         dimensions: existing.dimensions || set.dimensions,
@@ -411,7 +473,10 @@ async function main() {
   console.log(`\n🎉 Enriched data successfully written to ${JSON_FILE} (${finalSets.length} sets).`);
 }
 
-main().catch((err) => {
-  console.error('Fatal enrichment error:', err);
-  process.exit(1);
-});
+const currentFilePath = fileURLToPath(import.meta.url);
+if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(currentFilePath)) {
+  main().catch((err) => {
+    console.error('Fatal enrichment error:', err);
+    process.exit(1);
+  });
+}

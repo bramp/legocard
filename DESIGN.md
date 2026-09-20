@@ -114,6 +114,7 @@ interface EnrichedLegoSet {
   name: string;                  // "Galaxy Explorer"
   year: number;                  // 2022
   theme: string;                 // "Classic Space / Icons"
+  collection?: string;           // "Starwars Helmets"
   pieces: number;                // 1254
   imageUrl: string;              // Remote fallback CDN URL (Rebrickable)
   media?: {
@@ -125,7 +126,9 @@ interface EnrichedLegoSet {
   buildDate?: string;            // "2023-08-15"
   buildTimeHours?: number;       // 4.5
   timeToBuildFormatted?: string; // "4h 30m"
-  rating?: number;               // 5
+  rating?: number;               // 4.5 (overall / Brickset community)
+  ratingBuild?: number;          // 5 (user build experience rating)
+  ratingLooks?: number;          // 4 (user display aesthetics rating)
   funFacts: string;              // Trivia / notes
   notes?: string;                // Display location, etc.
   dimensions?: LegoDimensions;
