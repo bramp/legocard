@@ -106,7 +106,7 @@ const media = getSetMediaUrls(set);
         </div>
 
         <!-- Release / Retirement Timeline Badges if available -->
-        {(set.collection || set.ratingBuild !== undefined || set.ratingLooks !== undefined || set.dateReleased || set.dateRetired || set.isGwp || set.age || set.dimensions || set.instructionBooks) && (
+        {(set.collection || set.ratingBuild !== undefined || set.ratingLooks !== undefined || set.dateStarted || set.dateFinished || set.dateReleased || set.dateRetired || set.isGwp || set.age || set.dimensions || set.instructionBooks) && (
           <div class="flex flex-wrap gap-2 text-xs">
             {set.collection && (
               <span class="bg-amber-500/15 border border-amber-500/40 text-amber-300 px-3 py-1.5 rounded-xl font-medium">
@@ -121,6 +121,16 @@ const media = getSetMediaUrls(set);
             {set.ratingLooks !== undefined && (
               <span class="bg-slate-950/60 border border-slate-800 text-slate-300 px-3 py-1.5 rounded-xl font-medium">
                 <strong class="text-amber-400">✨ Looks:</strong> {set.ratingLooks}/5★
+              </span>
+            )}
+            {set.dateStarted && (
+              <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
+                <strong class="text-slate-300">Started:</strong> {set.dateStarted}
+              </span>
+            )}
+            {set.dateFinished && (
+              <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
+                <strong class="text-slate-300">Finished:</strong> {set.dateFinished}
               </span>
             )}
             {set.isGwp && (

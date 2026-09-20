@@ -123,8 +123,10 @@ interface EnrichedLegoSet {
     subtitles?: string;          // "audio/10497.json"
     video?: string;              // "videos/10497.mp4"
   };
-  buildDate?: string;            // "2023-08-15"
-  buildTimeHours?: number;       // 4.5
+  dateStarted?: string;          // "2023-08-10 19:30" (when build began)
+  dateFinished?: string;         // "2023-08-15 21:00" (when build finished)
+  buildDate?: string;            // "2023-08-15" (primary build completion date)
+  buildTimeHours?: number;       // 4.5 (actual build time spent between dates)
   timeToBuildFormatted?: string; // "4h 30m"
   rating?: number;               // 4.5 (overall / Brickset community)
   ratingBuild?: number;          // 5 (user build experience rating)

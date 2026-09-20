@@ -76,19 +76,28 @@ describe('Enrichment Helpers', () => {
   });
 
   describe('EnrichedLegoSet types and field integration', () => {
-    it('allows assigning collection and rating fields to EnrichedLegoSet', () => {
+    it('allows assigning collection, dates, and rating fields to EnrichedLegoSet', () => {
       const set: EnrichedLegoSet = {
         id: '75304',
         setNum: '75304-1',
         name: 'Darth Vader Helmet',
         theme: 'Star Wars / Helmet Collection',
         collection: 'Starwars Helmets',
+        dateStarted: '2025-06-12 18:00',
+        dateFinished: '2025-06-12 20:11',
+        buildDate: '2025-06-12 20:11',
+        buildTimeHours: 2.18,
+        timeToBuildFormatted: '2 hours 11 minutes',
         ratingBuild: 4.5,
         ratingLooks: 5,
         rating: 4.1,
       };
 
       assert.strictEqual(set.collection, 'Starwars Helmets');
+      assert.strictEqual(set.dateStarted, '2025-06-12 18:00');
+      assert.strictEqual(set.dateFinished, '2025-06-12 20:11');
+      assert.strictEqual(set.buildDate, '2025-06-12 20:11');
+      assert.strictEqual(set.buildTimeHours, 2.18);
       assert.strictEqual(set.ratingBuild, 4.5);
       assert.strictEqual(set.ratingLooks, 5);
       assert.strictEqual(set.rating, 4.1);
@@ -99,6 +108,9 @@ describe('Enrichment Helpers', () => {
         'Set Number': '75304',
         Name: 'Darth Vader Helmet',
         Collection: 'Starwars Helmets',
+        'Date Started': '2025-06-12 18:00',
+        'Date Finished': '2025-06-12 20:11',
+        'Time to Build': '2h 11m',
         'Rating (Build)': '4.5',
         'Rating (Looks)': '5/5',
       };
@@ -124,8 +136,22 @@ describe('Enrichment Helpers', () => {
         'Collection',
         'collection'
       );
+      const dateStarted = getRecordField(
+        csvRecord as Record<string, string>,
+        'Date Started',
+        'date_started',
+        'dateStarted'
+      );
+      const dateFinished = getRecordField(
+        csvRecord as Record<string, string>,
+        'Date Finished',
+        'date_finished',
+        'dateFinished'
+      );
 
       assert.strictEqual(collection, 'Starwars Helmets');
+      assert.strictEqual(dateStarted, '2025-06-12 18:00');
+      assert.strictEqual(dateFinished, '2025-06-12 20:11');
       assert.strictEqual(ratingBuild, 4.5);
       assert.strictEqual(ratingLooks, 5);
     });

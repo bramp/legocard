@@ -11,7 +11,12 @@ export interface CsvLegoRecord {
   'Time to Build'?: string;
   time_to_build?: string;
   build_time_hours?: string | number;
+  'Date Started'?: string;
+  date_started?: string;
+  dateStarted?: string;
   'Date Finished'?: string;
+  date_finished?: string;
+  dateFinished?: string;
   build_date?: string;
   'Year Finished'?: string;
   'Year Purchased'?: string;
@@ -134,6 +139,8 @@ export interface LegoShowcaseProps {
   pieces?: number;
   buildTimeHours?: number;
   timeToBuildFormatted?: string;
+  dateStarted?: string;
+  dateFinished?: string;
   rating?: number;
   ratingBuild?: number;
   ratingLooks?: number;
@@ -242,6 +249,17 @@ export interface EnrichedLegoSet {
   subtitles?: WordTimestamp[];
   narrationText?: string;
   videoPath?: string;
+
+  /**
+   * Date or datetime when building started (e.g. "2026-08-23 21:36").
+   */
+  dateStarted?: string;
+
+  /**
+   * Date or datetime when building finished (e.g. "2026-09-10 22:50").
+   */
+  dateFinished?: string;
+
   buildDate?: string;
   buildTimeHours?: number;
   timeToBuildFormatted?: string;

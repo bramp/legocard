@@ -173,7 +173,8 @@ async function main() {
 
     const datePurchased = (r['Date Purchased'] || '').trim().toLowerCase();
     const yearPurchased = (r['Year Purchased'] || '').trim().toLowerCase();
-    const dateFinished = (r['Date Finished'] || '').trim();
+    const dateStarted = (r['Date Started'] || r['date_started'] || '').trim();
+    const dateFinished = (r['Date Finished'] || r['date_finished'] || '').trim();
     const yearFinished = (r['Year Finished'] || '').trim();
     const timeToBuild = (r['Time to Build'] || r['time_to_build'] || '').trim();
     const ratingBuild = (getRecordField(r, 'Rating (Build)', 'rating_build', 'ratingBuild', 'Build Rating') || '').trim();
@@ -183,15 +184,17 @@ async function main() {
     if (
       datePurchased.includes('future') ||
       yearPurchased.includes('future') ||
+      dateStarted.toLowerCase().includes('future') ||
       dateFinished.toLowerCase().includes('future')
     ) {
       return false;
     }
 
-    // Must have evidence of being built (Time to Build, Date Finished, Year Finished, or personal Rating)
+    // Must have evidence of being built (Time to Build, Date Finished, Date Started, Year Finished, or personal Rating)
     const hasBuildEvidence =
       (timeToBuild && !timeToBuild.includes('#REF!')) ||
       (dateFinished && !dateFinished.includes('#REF!')) ||
+      (dateStarted && !dateStarted.includes('#REF!')) ||
       (yearFinished && !yearFinished.includes('#REF!')) ||
       (ratingBuild && !ratingBuild.includes('#REF!')) ||
       (ratingLooks && !ratingLooks.includes('#REF!'));
@@ -339,7 +342,11 @@ async function main() {
       timeToBuildFormatted = formatBuildTime({ buildTimeHours, timeToBuildFormatted }) || undefined;
     }
 
-    const dateFinished = record['Date Finished'] && !record['Date Finished'].includes('#REF!') ? record['Date Finished'] : undefined;
+    const rawDateStarted = getRecordField(record, 'Date Started', 'date_started', 'dateStarted');
+    const rawDateFinished = getRecordField(record, 'Date Finished', 'date_finished', 'dateFinished');
+
+    const dateStarted = rawDateStarted && !rawDateStarted.includes('#REF!') ? rawDateStarted : previous.dateStarted;
+    const dateFinished = rawDateFinished && !rawDateFinished.includes('#REF!') ? rawDateFinished : previous.dateFinished;
     const datePurchased = record['Date Purchased'] || undefined;
 
     // Resolve fun facts: manual spreadsheet entry > cached Gemini generation > previous sets.json
@@ -413,6 +420,8 @@ async function main() {
       subtitles: previous.subtitles,
       narrationText: previous.narrationText,
       videoPath: previous.videoPath,
+      dateStarted,
+      dateFinished,
       buildDate: dateFinished || datePurchased || record['build_date'] || previous.buildDate,
       buildTimeHours,
       timeToBuildFormatted,
@@ -435,6 +444,8 @@ async function main() {
         ...set,
         timeToBuildFormatted: existing.timeToBuildFormatted || set.timeToBuildFormatted,
         buildTimeHours: existing.buildTimeHours || set.buildTimeHours,
+        dateStarted: set.dateStarted || existing.dateStarted,
+        dateFinished: set.dateFinished || existing.dateFinished,
         buildDate: existing.buildDate || set.buildDate,
         funFacts: existing.funFacts || set.funFacts || '',
         notes: existing.notes || set.notes,
