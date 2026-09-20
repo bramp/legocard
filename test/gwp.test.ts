@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { formatGwpNarration } from '../shared/gwp.js';
+import { formatGwpNarration, resolveGwpTargetName } from '../shared/gwp.js';
 import type { EnrichedLegoSet } from '../shared/types.js';
 
 describe('GWP helpers', () => {
@@ -73,6 +73,31 @@ describe('GWP helpers', () => {
     it('returns generic phrasing when no qualifying set is specified', () => {
       const phrase = formatGwpNarration(sampleSets[4], sampleSets);
       assert.strictEqual(phrase, 'Released as a gift with purchase');
+    });
+  });
+
+  describe('resolveGwpTargetName', () => {
+    it('returns null for regular non-GWP sets', () => {
+      assert.strictEqual(resolveGwpTargetName(sampleSets[0]), null);
+      assert.strictEqual(resolveGwpTargetName(sampleSets[5]), null);
+      assert.strictEqual(resolveGwpTargetName({}), null);
+    });
+
+    it('resolves companion set name from allSets lookup', () => {
+      assert.strictEqual(resolveGwpTargetName(sampleSets[2], sampleSets), 'Barad-dûr');
+      assert.strictEqual(resolveGwpTargetName(sampleSets[3], sampleSets), 'Death Star');
+    });
+
+    it('parses target name from gwpDescription string when target is not in list', () => {
+      const gwpSet: Partial<EnrichedLegoSet> = {
+        isGwp: true,
+        gwpDescription: 'Free with qualifying purchases of 10354 The Lord of the Rings: The Shire at LEGO.com, April 2025.',
+      };
+      assert.strictEqual(resolveGwpTargetName(gwpSet), 'The Shire');
+    });
+
+    it('returns null when description mentions no specific set', () => {
+      assert.strictEqual(resolveGwpTargetName(sampleSets[4], sampleSets), null);
     });
   });
 });

@@ -76,4 +76,4 @@ export {
   formatThemeLine,
 } from './themes.js';
 export { isSetRetired, getRetiredYear, type RetirementInfo } from './retirement.js';
-export { formatGwpNarration } from './gwp.js';
+export { formatGwpNarration, resolveGwpTargetName } from './gwp.js';

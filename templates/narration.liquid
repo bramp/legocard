@@ -4,7 +4,11 @@ Set {{ id }}: {{ name }}.
   {%- else %} A {{ year }} release from the {{ themeLine }}.
   {%- endif -%}
 {%- endif -%}
-{%- if gwpPhrase %} {{ gwpPhrase }}.{% endif -%}
+{%- if isGwp %}
+  {%- if gwpTargetName %} Released as a gift with purchase alongside {{ gwpTargetName }}.
+  {%- else %} Released as a gift with purchase.
+  {%- endif -%}
+{%- endif -%}
 {%- if pieces %} Features {{ pieces | format_number }} pieces.{% endif -%}
 {%- if buildDuration %} Took {{ buildDuration }} to build.{% endif -%}
 {%- if collectionFact %} {{ collectionFact }}{% endif -%}

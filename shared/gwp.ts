@@ -2,12 +2,10 @@ import type { EnrichedLegoSet } from './types.js';
 import { cleanSetName } from './format.js';
 
 /**
- * Generates a spoken narration phrase for Gift with Purchase (GWP) sets.
- *
- * e.g. "Released as a gift with purchase alongside Barad-dûr"
- * e.g. "Released as a gift with purchase"
+ * Resolves the name of the qualifying companion set for a Gift with Purchase (GWP) set,
+ * if known (e.g. "Barad-dûr" for 40693 Fell Beast).
  */
-export function formatGwpNarration(
+export function resolveGwpTargetName(
   set: Pick<EnrichedLegoSet, 'isGwp' | 'gwpWithSetNumber' | 'gwpDescription'>,
   allSets?: EnrichedLegoSet[]
 ): string | null {
@@ -44,8 +42,26 @@ export function formatGwpNarration(
 
   if (targetName) {
     targetName = targetName.replace(/^The Lord of the Rings:\s*/i, '').trim();
-    return `Released as a gift with purchase alongside ${targetName}`;
+    return targetName;
   }
 
+  return null;
+}
+
+/**
+ * Generates a spoken narration phrase for Gift with Purchase (GWP) sets.
+ *
+ * e.g. "Released as a gift with purchase alongside Barad-dûr"
+ * e.g. "Released as a gift with purchase"
+ */
+export function formatGwpNarration(
+  set: Pick<EnrichedLegoSet, 'isGwp' | 'gwpWithSetNumber' | 'gwpDescription'>,
+  allSets?: EnrichedLegoSet[]
+): string | null {
+  if (!set.isGwp) return null;
+  const targetName = resolveGwpTargetName(set, allSets);
+  if (targetName) {
+    return `Released as a gift with purchase alongside ${targetName}`;
+  }
   return 'Released as a gift with purchase';
 }
