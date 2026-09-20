@@ -9,5 +9,5 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": ["scripts/**/*", "shared/**/*"]
+  "include": ["scripts/**/*", "shared/**/*", "test/**/*"]
 }

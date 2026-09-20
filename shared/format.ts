@@ -52,3 +52,12 @@ export function formatBuildTime(
   if (parts.length === 0) return null;
   return parts.join(options?.useAnd ? ' and ' : ' ');
 }
+
+export {
+  cleanThemeName,
+  simplifyTheme,
+  THEME_OVERRIDES,
+  themeEndsWithCollectiveNoun,
+  formatThemeLine,
+} from './themes.js';
+export { isSetRetired, getRetiredYear, type RetirementInfo } from './retirement.js';
