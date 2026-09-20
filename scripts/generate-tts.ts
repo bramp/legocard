@@ -4,7 +4,13 @@ import { fileURLToPath } from 'node:url';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 import { Liquid } from 'liquidjs';
 import type { EnrichedLegoSet, WordTimestamp } from '../shared/types.js';
-import { formatBuildTime, cleanSetName } from '../shared/format.js';
+import {
+  formatBuildTime,
+  cleanSetName,
+  getCalendarBuildSpan,
+  formatBuildStatement,
+  computeRatingFacts,
+} from '../shared/format.js';
 import {
   cleanThemeName,
   simplifyTheme,
@@ -26,6 +32,9 @@ export {
   cleanSetName,
   formatGwpNarration,
   resolveGwpTargetName,
+  getCalendarBuildSpan,
+  formatBuildStatement,
+  computeRatingFacts,
 };
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
@@ -237,18 +246,30 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
 
 export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]): string {
   const factsInfo = computeCollectionFacts(set, allSets);
+  const ratingFactsInfo = computeRatingFacts(set, allSets);
   const shortTheme = simplifyTheme(set.theme);
   const themeLine = formatThemeLine(shortTheme);
+  const buildSpan = getCalendarBuildSpan(set);
+  const buildDuration = formatBuildDuration(set);
+  const buildStatement = formatBuildStatement({
+    ...set,
+    buildDuration,
+  });
+
   const context = {
     ...set,
     name: cleanSetName(set.name),
     year: set.year,
     shortTheme,
     themeLine,
-    buildDuration: formatBuildDuration(set),
+    buildDuration,
+    buildSpanText: buildSpan?.spanText ?? null,
+    buildStatement,
     collectionFacts: factsInfo.facts,
     collectionFact: factsInfo.collectionFact,
     primaryCollectionFact: factsInfo.primaryCollectionFact,
+    ratingFacts: ratingFactsInfo.ratingFacts,
+    primaryRatingFact: ratingFactsInfo.primaryRatingFact,
     piecesRank: factsInfo.piecesRank,
     piecesRankOrdinal: factsInfo.piecesRankOrdinal,
     piecesTotal: factsInfo.piecesTotal,

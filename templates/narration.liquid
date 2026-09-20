@@ -10,7 +10,10 @@ Set {{ id }}: {{ name }}.
   {%- endif -%}
 {%- endif -%}
 {%- if pieces %} Features {{ pieces | format_number }} pieces.{% endif -%}
-{%- if buildDuration %} Took {{ buildDuration }} to build.{% endif -%}
+{%- if buildSpanText and buildDuration %} Built over {{ buildSpanText }} for a total of {{ buildDuration }}.
+{%- elsif buildDuration %} Took {{ buildDuration }} to build.
+{%- endif -%}
 {%- if collectionFact %} {{ collectionFact }}{% endif -%}
+{%- if primaryRatingFact %} {{ primaryRatingFact }}{% endif -%}
 {%- if funFacts %} {{ funFacts }}{% endif -%}
 

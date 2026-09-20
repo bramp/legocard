@@ -92,3 +92,5 @@ export {
 } from './themes.js';
 export { isSetRetired, getRetiredYear, type RetirementInfo } from './retirement.js';
 export { formatGwpNarration, resolveGwpTargetName } from './gwp.js';
+export { getCalendarBuildSpan, formatBuildStatement, type CalendarSpanInfo } from './build-span.js';
+export { computeRatingFacts, type RatingFactsInfo } from './rating-facts.js';
