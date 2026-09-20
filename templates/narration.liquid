@@ -1,10 +1,6 @@
 Set {{ id }}: {{ name }}.
 
-{%- if themeLine and year %}
-  {%- if retiredYear %} A {{ year }} release from the {{ themeLine }}, retired in {{ retiredYear }}.
-  {%- else %} A {{ year }} release from the {{ themeLine }}.
-  {%- endif -%}
-{%- endif -%}
+{%- if themeLine and year %} A {{ year }} release from the {{ themeLine }}{% if retiredYear %}, retired in {{ retiredYear }}{% endif %}.{% endif -%}
 
 {%- if isGwp %}
   {%- if gwpTargetName %} Released as a gift with purchase alongside {{ gwpTargetName }}.
@@ -18,7 +14,32 @@ Set {{ id }}: {{ name }}.
 {%- elsif buildDuration %} Took {{ buildDuration }} to build.
 {%- endif -%}
 
-{%- if collectionFact %} {{ collectionFact }}{% endif -%}
+{%- assign factsCount = 0 -%}
+{%- if isLargest %}
+  {%- assign factsCount = factsCount | plus: 1 %} It has the most pieces in the collection.
+{%- elsif piecesRank >= 2 and piecesRank <= 5 %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the {{ piecesRankOrdinal }} largest set in the collection.
+{%- elsif isSmallest %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the smallest set in the collection.
+{%- elsif isThemeLargest %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the largest {{ themeName }} set in the collection.
+{%- elsif isTheme2ndLargest %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the 2nd largest {{ themeName }} set in the collection.
+{%- endif -%}
+
+{%- if isLongestBuild %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the longest build in the collection.
+{%- elsif buildTimeRank >= 2 and buildTimeRank <= 5 and factsCount < 2 %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the {{ buildTimeRankOrdinal }} longest build in the collection.
+{%- elsif isFastestBuild %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the fastest build in the collection.
+{%- endif -%}
+
+{%- if factsCount == 0 -%}
+  {%- if isOldest %} It is tied for the oldest set in the collection.
+  {%- elsif isNewest %} It is one of the newest additions to the collection.
+  {%- endif -%}
+{%- endif -%}
 
 {%- if ratingBuild == 5 and ratingLooks == 5 %} It is rated a perfect five out of five for both build experience and display looks.
 {%- elsif ratingBuild == 5 %} It is rated a top five out of five for building fun.

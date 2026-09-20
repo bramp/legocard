@@ -8,7 +8,6 @@ import {
   formatBuildTime,
   cleanSetName,
   getCalendarBuildSpan,
-  formatBuildStatement,
 } from '../shared/format.js';
 import {
   cleanThemeName,
@@ -18,7 +17,7 @@ import {
   themeEndsWithCollectiveNoun,
 } from '../shared/themes.js';
 import { isSetRetired, getRetiredYear } from '../shared/retirement.js';
-import { formatGwpNarration, resolveGwpTargetName } from '../shared/gwp.js';
+import { resolveGwpTargetName } from '../shared/gwp.js';
 
 export {
   cleanThemeName,
@@ -29,10 +28,8 @@ export {
   formatThemeLine,
   themeEndsWithCollectiveNoun,
   cleanSetName,
-  formatGwpNarration,
   resolveGwpTargetName,
   getCalendarBuildSpan,
-  formatBuildStatement,
 };
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
@@ -101,9 +98,6 @@ function formatBuildDuration(set: EnrichedLegoSet): string | null {
 }
 
 export interface CollectionFactsInfo {
-  facts: string[];
-  collectionFact: string;
-  primaryCollectionFact: string;
   piecesRank: number;
   piecesRankOrdinal: string;
   piecesTotal: number;
@@ -118,6 +112,8 @@ export interface CollectionFactsInfo {
   themePiecesRankOrdinal: string | null;
   themeTotal: number;
   themeName: string;
+  isThemeLargest: boolean;
+  isTheme2ndLargest: boolean;
   isOldest: boolean;
   isNewest: boolean;
   ratingBuildRank: number | null;
@@ -166,14 +162,6 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
   const isLargest = pRank === 1;
   const isSmallest = pRank === byPieces.length && byPieces.length > 1;
 
-  if (isLargest) {
-    facts.push('It has the most pieces in the collection.');
-  } else if (pRank >= 2 && pRank <= 3) {
-    facts.push(`It is the ${ordinal(pRank)} largest set in the collection.`);
-  } else if (isSmallest) {
-    facts.push('It is the smallest set in the collection.');
-  }
-
   const bIdx = byBuildTime.findIndex((s) => s.id === set.id);
   let bRank: number | null = null;
   let isLongest = false;
@@ -182,46 +170,25 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
     bRank = bIdx + 1;
     isLongest = bRank === 1;
     isFastest = bRank === byBuildTime.length && byBuildTime.length > 1;
-    if (isLongest) {
-      facts.push('It is the longest build in the collection.');
-    } else if (bRank >= 2 && bRank <= 3) {
-      facts.push(`It is the ${ordinal(bRank)} longest build in the collection.`);
-    } else if (isFastest) {
-      facts.push('It is the fastest build in the collection.');
-    }
   }
 
   const cleanTheme = cleanThemeName(set.theme);
   const group = themeGroups[cleanTheme];
   let tRank: number | null = null;
+  let isThemeLargest = false;
+  let isTheme2ndLargest = false;
   if (group && group.length >= 3) {
     const tIdx = group.findIndex((s) => s.id === set.id);
     if (tIdx !== -1) {
       tRank = tIdx + 1;
-      if (tRank === 1 && pRank > 3) {
-        facts.push(`It is the largest ${cleanTheme} set in the collection.`);
-      } else if (tRank === 2 && pRank > 5 && group.length >= 5) {
-        facts.push(`It is the 2nd largest ${cleanTheme} set in the collection.`);
-      }
+      isThemeLargest = tRank === 1 && pRank > 3;
+      isTheme2ndLargest = tRank === 2 && pRank > 5 && group.length >= 5;
     }
-  }
-
-  if (facts.length < 2 && bRank !== null && bRank > 3 && bRank <= 5) {
-    facts.push(`It is the ${ordinal(bRank)} longest build in the collection.`);
-  }
-  if (facts.length < 2 && pRank > 3 && pRank <= 5) {
-    facts.push(`It is the ${ordinal(pRank)} largest set in the collection.`);
   }
 
   const setYear = set.year;
   const isOldest = !!(setYear && setYear === minYear);
   const isNewest = !!(setYear && setYear === maxYear);
-
-  if (facts.length === 0 && isOldest) {
-    facts.push('It is tied for the oldest set in the collection.');
-  } else if (facts.length === 0 && isNewest) {
-    facts.push('It is one of the newest additions to the collection.');
-  }
 
   // Personal rating rankings across collection
   const withBuild = collection
@@ -240,9 +207,6 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
   const isTopLooks = ratingLooksRank === 1 && typeof set.ratingLooks === 'number' && set.ratingLooks >= 4.5 && withLooks.length >= 3;
 
   return {
-    facts,
-    collectionFact: facts.join(' '),
-    primaryCollectionFact: facts[0] || '',
     piecesRank: pRank,
     piecesRankOrdinal: pRank ? ordinal(pRank) : '',
     piecesTotal: byPieces.length,
@@ -257,6 +221,8 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
     themePiecesRankOrdinal: tRank ? ordinal(tRank) : null,
     themeTotal: group ? group.length : 1,
     themeName: cleanTheme,
+    isThemeLargest,
+    isTheme2ndLargest,
     isOldest,
     isNewest,
     ratingBuildRank,
@@ -272,10 +238,6 @@ export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]
   const themeLine = formatThemeLine(shortTheme);
   const buildSpan = getCalendarBuildSpan(set);
   const buildDuration = formatBuildDuration(set);
-  const buildStatement = formatBuildStatement({
-    ...set,
-    buildDuration,
-  });
 
   const context = {
     ...set,
@@ -285,10 +247,6 @@ export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]
     themeLine,
     buildDuration,
     buildSpanText: buildSpan?.spanText ?? null,
-    buildStatement,
-    collectionFacts: factsInfo.facts,
-    collectionFact: factsInfo.collectionFact,
-    primaryCollectionFact: factsInfo.primaryCollectionFact,
     ratingBuild: set.ratingBuild,
     ratingLooks: set.ratingLooks,
     ratingBuildRank: factsInfo.ratingBuildRank,
@@ -309,13 +267,14 @@ export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]
     themePiecesRankOrdinal: factsInfo.themePiecesRankOrdinal,
     themeTotal: factsInfo.themeTotal,
     themeName: factsInfo.themeName,
+    isThemeLargest: factsInfo.isThemeLargest,
+    isTheme2ndLargest: factsInfo.isTheme2ndLargest,
     isOldest: factsInfo.isOldest,
     isNewest: factsInfo.isNewest,
     isRetired: isSetRetired(set),
     retiredYear: getRetiredYear(set),
     isGwp: Boolean(set.isGwp),
     gwpTargetName: resolveGwpTargetName(set, allSets),
-    gwpPhrase: formatGwpNarration(set, allSets),
   };
 
   if (!fs.existsSync(NARRATION_TEMPLATE_FILE)) {
