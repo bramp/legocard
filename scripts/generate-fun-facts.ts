@@ -65,24 +65,43 @@ function initGenAIClient(): GenAIClientContext {
   };
 }
 
-// Clean text by stripping markdown bold/stars/quotes
+// Clean text by stripping markdown bold/stars/quotes and search citations
 function cleanFactText(text: string): string {
-  return text
-    .replace(/^["'\s]+|["'\s]+$/g, '')
+  let cleaned = text
+    .replace(/\[cite[^\]]*\]/gi, '')
     .replace(/\*\*/g, '')
     .replace(/\*/g, '')
     .replace(/^Fact:\s*/i, '')
+    .replace(/\s+/g, ' ')
     .trim();
+
+  // If the entire text was wrapped in outer matching quotes, unwrap them
+  if (
+    (cleaned.startsWith('"') && cleaned.endsWith('"')) ||
+    (cleaned.startsWith("'") && cleaned.endsWith("'"))
+  ) {
+    cleaned = cleaned.slice(1, -1).trim();
+  }
+
+  return cleaned;
 }
 
 export function buildFunFactsPrompt(set: EnrichedLegoSet): string {
   const cleanName = cleanPromptTitle(set.name);
-  return `Give me 2 concise, engaging fun facts or trivia about the official Lego set #${set.id}: "${cleanName}".
-Focus on story and universe lore, iconic movie or history moments the model captures, character details, or fun secret easter eggs hidden inside.
-Keep it accessible and enjoyable for casual fans and collectors rather than Lego building experts—avoid builder acronyms like NPU, technical clutch techniques, or parts jargon.
-Do NOT repeat the set number, set name, release year, piece count, or theme name, as those are already announced in the intro.
-Use standard punctuation, including proper double quotation marks around any spoken dialogue, quotes, or in-universe titles.
-Format strictly as a short, punchy 2-sentence paragraph (under 50 words) suitable for a display card and natural spoken voiceover narration. Do NOT use bullet points or markdown formatting.`;
+  const themeContext = set.theme ? ` (Theme: ${set.theme})` : '';
+  return `You are a friendly, engaging tour guide sharing cool trivia with visitors admiring official Lego set #${set.id}: "${cleanName}"${themeContext}.
+
+Write exactly a 2-sentence fun fact paragraph with this 2-part structure:
+1. Real-World / Lore Connection: Tell one fascinating fact about the REAL subject (the iconic movie/book lore, the actual historical monument, the real space mission, or real botanical plant species).
+2. Hidden Inside Details: Connect it to a surprising, non-obvious Easter egg or secret detail tucked INSIDE the model (do NOT describe obvious exterior figures or features that anyone can already see, and do NOT mention modular assembly or building techniques).
+
+Tone & Style:
+- Use clear, conversational, everyday language that is fun and effortless to read aloud. Avoid dense architectural descriptions or convoluted sentences.
+- The audience is NOT a Lego building expert—they are everyday fans looking for fun and amusement!
+- Avoid builder jargon (no NPU, clutch power, studs, brackets, modular sections).
+- Do NOT repeat the set number, set name, release year, piece count, or theme name.
+- Do NOT include citations or reference tags like [cite: 1].
+- Length: Strictly 2 sentences (under 50 words total). Clean punctuation with double quotes for dialogue or titles.`;
 }
 
 async function fetchGeminiFunFacts(set: EnrichedLegoSet, clientContext: GenAIClientContext): Promise<string | null> {
@@ -93,12 +112,8 @@ async function fetchGeminiFunFacts(set: EnrichedLegoSet, clientContext: GenAICli
     contents: prompt,
     config: {
       temperature: 0,
-      topK: 1,
-      seed: 42,
+      tools: [{ googleSearch: {} }],
       maxOutputTokens: 2500,
-      thinkingConfig: {
-        thinkingBudget: 0,
-      },
     },
   });
 
@@ -120,6 +135,7 @@ Supports both Google AI Studio (API key) and Google Cloud Vertex AI (ADC).
 
 Options:
   --set <id>, --set=<id>  Target a specific set ID (e.g. --set=10237)
+  --limit <n>             Maximum number of sets to process (e.g. --limit 10)
   --preview, --dry-run    Preview prompt and model output without modifying sets.json
   --force                 Re-generate facts even if set already has fun facts
   -h, --help              Show this help message
@@ -127,8 +143,8 @@ Options:
 Environment Variables:
   GEMINI_API_KEY          Google AI Studio API key (optional if ADC is configured)
   GOOGLE_CLOUD_PROJECT    GCP project ID for Vertex AI ADC authentication
-  GOOGLE_CLOUD_LOCATION   GCP location for Vertex AI (default: us-central1)
-  GEMINI_MODEL            Model name (default: gemini-2.5-flash)
+  GOOGLE_CLOUD_LOCATION   GCP location for Vertex AI (default: global)
+  GEMINI_MODEL            Model name (default: gemini-3.8-flash)
 `);
     return;
   }
@@ -157,6 +173,12 @@ Environment Variables:
     targetSetId = setArg.startsWith('--set=') ? setArg.split('=')[1] : args[args.indexOf('--set') + 1];
   }
 
+  const limitArg = args.find((a) => a.startsWith('--limit=') || a === '--limit');
+  let limit: number | undefined;
+  if (limitArg) {
+    limit = parseInt(limitArg.startsWith('--limit=') ? limitArg.split('=')[1] : args[args.indexOf('--limit') + 1], 10);
+  }
+
   const sets = JSON.parse(fs.readFileSync(JSON_FILE, 'utf-8')) as EnrichedLegoSet[];
 
   if (isPreview) {
@@ -168,9 +190,11 @@ Environment Variables:
   }
 
   let updatedCount = 0;
+  let processedCount = 0;
 
   for (const set of sets) {
     if (targetSetId && set.id !== targetSetId) continue;
+    if (limit && processedCount >= limit) break;
 
     // Check disk cache first unless forced
     const cached = getCachedFunFact(set.id);
@@ -184,9 +208,12 @@ Environment Variables:
         console.log(`[#${set.id}] ${set.name} (${set.year}, ${set.pieces?.toLocaleString() ?? '—'} pieces)`);
         console.log(`💾 Using cached Gemini fact (generated ${cached.generatedAt.slice(0, 10)} by ${cached.model}):`);
         console.log(`   "${cached.fact}"\n`);
+        processedCount++;
       }
       continue;
     }
+
+    processedCount++;
 
     // Skip if already has rich fun facts in sets.json (unless forced)
     if (set.funFacts && set.funFacts.length > 50 && !forceAll && !isPreview && !set.funFacts.startsWith('Released in')) {
@@ -204,31 +231,45 @@ Environment Variables:
     console.log(`   ${prompt.split('\n').join('\n   ')}`);
 
     console.log(`\n🤖 Querying Gemini (${GEMINI_MODEL})...`);
-    try {
-      const fact = await fetchGeminiFunFacts(set, clientContext);
-      if (fact) {
-        console.log(`\n✨ Generated Fun Facts:\n   "${fact}"\n`);
-        if (!isPreview) {
-          set.funFacts = fact;
-          setCachedFunFact({
-            setId: set.id,
-            name: set.name,
-            model: GEMINI_MODEL,
-            generatedAt: new Date().toISOString(),
-            fact,
-          });
-          updatedCount++;
+    let fact: string | null = null;
+    let attempts = 0;
+    while (attempts < 4) {
+      try {
+        attempts++;
+        fact = await fetchGeminiFunFacts(set, clientContext);
+        break;
+      } catch (err: any) {
+        if (err.status === 429 && attempts < 4) {
+          const waitSec = attempts * 10;
+          console.warn(`   ⚠️ Rate limit (429) on #${set.id}. Retrying in ${waitSec}s...`);
+          await new Promise((r) => setTimeout(r, waitSec * 1000));
+        } else {
+          console.error(`   ✗ Error fetching fact for #${set.id}:`, err);
+          break;
         }
-      } else {
-        console.warn(`   ⚠️ No text returned by Gemini.`);
       }
+    }
 
-      // Small delay between multiple sets to respect rate limits
-      if (!targetSetId) {
-        await new Promise((r) => setTimeout(r, 600));
+    if (fact) {
+      console.log(`\n✨ Generated Fun Facts:\n   "${fact}"\n`);
+      if (!isPreview) {
+        set.funFacts = fact;
+        setCachedFunFact({
+          setId: set.id,
+          name: set.name,
+          model: GEMINI_MODEL,
+          generatedAt: new Date().toISOString(),
+          fact,
+        });
+        updatedCount++;
       }
-    } catch (err) {
-      console.error(`   ✗ Error fetching fact for #${set.id}:`, err);
+    } else if (attempts > 0) {
+      console.warn(`   ⚠️ No text returned by Gemini.`);
+    }
+
+    // Small delay between multiple sets to respect rate limits
+    if (!targetSetId) {
+      await new Promise((r) => setTimeout(r, 3000));
     }
   }
 
