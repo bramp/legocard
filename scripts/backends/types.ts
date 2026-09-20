@@ -21,6 +21,9 @@ export interface EnrichmentResult {
   year?: number;
   dateReleased?: string;
   dateRetired?: string;
+  isGwp?: boolean;
+  gwpDescription?: string;
+  gwpWithSetNumber?: string;
   theme?: string;
   age?: string;
   pieces?: number;

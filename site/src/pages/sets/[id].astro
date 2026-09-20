@@ -106,8 +106,16 @@ const media = getSetMediaUrls(set);
         </div>
 
         <!-- Release / Retirement Timeline Badges if available -->
-        {(set.dateReleased || set.dateRetired || set.age || set.dimensions || set.instructionBooks) && (
+        {(set.dateReleased || set.dateRetired || set.isGwp || set.age || set.dimensions || set.instructionBooks) && (
           <div class="flex flex-wrap gap-2 text-xs">
+            {set.isGwp && (
+              <span
+                class="bg-amber-500/15 border border-amber-500/40 text-amber-300 px-3 py-1.5 rounded-xl font-medium"
+                title={set.gwpDescription}
+              >
+                <strong class="text-amber-200">🎁 Gift with Purchase</strong>{set.gwpWithSetNumber ? ` (with #${set.gwpWithSetNumber})` : ''}
+              </span>
+            )}
             {set.age && (
               <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
                 <strong class="text-slate-300">Age:</strong> {set.age}

@@ -125,11 +125,35 @@ export class BricksetBackend implements EnrichmentBackend {
     const rating = typeof setData.rating === 'number' && setData.rating > 0 ? setData.rating : undefined;
     const imageUrl = setData.image?.imageURL || setData.image?.thumbnailURL || undefined;
 
+    // GWP (Gift with Purchase) detection & notes
+    const tags = Array.isArray(setData.extendedData?.tags) ? (setData.extendedData.tags as string[]) : [];
+    const isGwp =
+      setData.availability === 'LEGO Gift with Purchase' ||
+      tags.some((t) => typeof t === 'string' && /gift with purchase/i.test(t));
+
+    let gwpDescription: string | undefined;
+    let gwpWithSetNumber: string | undefined;
+
+    if (isGwp && typeof setData.extendedData?.notes === 'string') {
+      const notesStr = setData.extendedData.notes.trim();
+      const firstLine = notesStr.split('\n')[0].trim();
+      if (firstLine) {
+        gwpDescription = firstLine;
+      }
+      const match = notesStr.match(/Free with qualifying purchases of (\d{4,6})(?:\s+([^,]+?))?\s+at LEGO\.com/i);
+      if (match) {
+        gwpWithSetNumber = match[1];
+      }
+    }
+
     return {
       name: setData.name,
       year: releaseYear || setData.year,
       dateReleased,
       dateRetired,
+      isGwp: isGwp || undefined,
+      gwpDescription,
+      gwpWithSetNumber,
       theme,
       pieces: setData.pieces,
       age,

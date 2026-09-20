@@ -299,6 +299,16 @@ async function main() {
     const dateFinished = record['Date Finished'] && !record['Date Finished'].includes('#REF!') ? record['Date Finished'] : undefined;
     const datePurchased = record['Date Purchased'] || undefined;
 
+    // GWP info
+    const isGwp =
+      brickset?.isGwp ||
+      previous.isGwp ||
+      /gift with purchase/i.test(record['Notes'] || '') ||
+      /gift with purchase/i.test(lego?.description || '') ||
+      undefined;
+    const gwpDescription = brickset?.gwpDescription || previous.gwpDescription;
+    const gwpWithSetNumber = brickset?.gwpWithSetNumber || previous.gwpWithSetNumber;
+
     // Ratings: CSV rating from user takes precedence
     const rawRating = record['rating'] ? parseFloat(String(record['rating'])) : undefined;
     const rating = (rawRating && !isNaN(rawRating)) ? rawRating : (previous.rating || brickset?.rating);
@@ -310,6 +320,9 @@ async function main() {
       year: displayYear,
       dateReleased: dateReleased || undefined,
       dateRetired: dateRetired || undefined,
+      isGwp,
+      gwpDescription,
+      gwpWithSetNumber,
       theme,
       age,
       pieces,
@@ -376,6 +389,9 @@ async function main() {
         brand: existing.brand || set.brand,
         categories: existing.categories || set.categories,
         productVideos: existing.productVideos || set.productVideos,
+        isGwp: existing.isGwp || set.isGwp,
+        gwpDescription: existing.gwpDescription || set.gwpDescription,
+        gwpWithSetNumber: existing.gwpWithSetNumber || set.gwpWithSetNumber,
       };
       uniqueMap.set(set.id, merged);
     }

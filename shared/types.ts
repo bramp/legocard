@@ -187,6 +187,21 @@ export interface EnrichedLegoSet {
    */
   dateRetired?: string;
 
+  /**
+   * Whether this set was distributed as a promotional Gift with Purchase (GWP).
+   */
+  isGwp?: boolean;
+
+  /**
+   * Details on qualifying purchase or promotion for GWP sets (e.g. from Brickset notes).
+   */
+  gwpDescription?: string;
+
+  /**
+   * Clean set ID of the parent/qualifying set if this was a companion GWP (e.g. "10333").
+   */
+  gwpWithSetNumber?: string;
+
   theme?: string;
   age?: string; // Recommended age, e.g. "18+", "16+"
   pieces?: number;
