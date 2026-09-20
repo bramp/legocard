@@ -3,17 +3,23 @@ import type { EnrichedLegoSet } from '../../../shared/types.js';
 const CDN_BASE_URL = (
   import.meta.env.PUBLIC_MEDIA_BASE_URL ||
   import.meta.env.MEDIA_BASE_URL ||
-  'https://legocard-media.bramp.net'
+  ''
 ).replace(/\/$/, '');
 
 /**
  * Resolves a relative media path (e.g. "images/10497.jpg") to its full CDN URL.
  * If the path is already a full URL (http:// or https://), returns it unchanged.
+ * If no remote CDN is configured, resolves to a site-relative path (e.g. "/videos/10234.mp4").
  */
 export function getAssetUrl(path: string | undefined): string | undefined {
   if (!path) return undefined;
   if (path.startsWith('http://') || path.startsWith('https://')) return path;
-  return `${CDN_BASE_URL}/${path.replace(/^\//, '')}`;
+  const cleanPath = path.replace(/^\//, '');
+  if (CDN_BASE_URL) {
+    return `${CDN_BASE_URL}/${cleanPath}`;
+  }
+  const baseUrl = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+  return `${baseUrl}/${cleanPath}`;
 }
 
 /**
