@@ -3,13 +3,31 @@ import path from 'node:path';
 import dotenv from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
 import type { EnrichedLegoSet } from '../shared/types.js';
+import { getCachedJson, setCachedJson } from './backends/cache.js';
 
 dotenv.config();
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
+const GEMINI_CACHE_DIR = path.join(DATA_DIR, 'cache', 'gemini');
 
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+
+export interface CachedGeminiFact {
+  setId: string;
+  name: string;
+  model: string;
+  generatedAt: string;
+  fact: string;
+}
+
+export function getCachedFunFact(setId: string): CachedGeminiFact | null {
+  return getCachedJson<CachedGeminiFact>(GEMINI_CACHE_DIR, `set_${setId}.json`);
+}
+
+export function setCachedFunFact(fact: CachedGeminiFact): void {
+  setCachedJson(GEMINI_CACHE_DIR, `set_${fact.setId}.json`, fact);
+}
 
 interface GenAIClientContext {
   client: GoogleGenAI;
@@ -149,7 +167,23 @@ Environment Variables:
   for (const set of sets) {
     if (targetSetId && set.id !== targetSetId) continue;
 
-    // Skip if already has rich fun facts (unless forced or previewing)
+    // Check disk cache first unless forced
+    const cached = getCachedFunFact(set.id);
+    if (cached?.fact && !forceAll) {
+      if (!set.funFacts || set.funFacts !== cached.fact) {
+        set.funFacts = cached.fact;
+        updatedCount++;
+      }
+      if (targetSetId || isPreview) {
+        console.log(`================================================================================`);
+        console.log(`[#${set.id}] ${set.name} (${set.year}, ${set.pieces?.toLocaleString() ?? '—'} pieces)`);
+        console.log(`💾 Using cached Gemini fact (generated ${cached.generatedAt.slice(0, 10)} by ${cached.model}):`);
+        console.log(`   "${cached.fact}"\n`);
+      }
+      continue;
+    }
+
+    // Skip if already has rich fun facts in sets.json (unless forced)
     if (set.funFacts && set.funFacts.length > 50 && !forceAll && !isPreview && !set.funFacts.startsWith('Released in')) {
       continue;
     }
@@ -171,6 +205,13 @@ Environment Variables:
         console.log(`\n✨ Generated Fun Facts:\n   "${fact}"\n`);
         if (!isPreview) {
           set.funFacts = fact;
+          setCachedFunFact({
+            setId: set.id,
+            name: set.name,
+            model: GEMINI_MODEL,
+            generatedAt: new Date().toISOString(),
+            fact,
+          });
           updatedCount++;
         }
       } else {

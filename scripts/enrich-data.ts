@@ -7,6 +7,7 @@ import type {
   LegoDimensions,
 } from '../shared/types.js';
 import { formatBuildTime } from '../shared/format.js';
+import { getCachedJson } from './backends/cache.js';
 import {
   createDefaultBackends,
   type EnrichmentResult,
@@ -17,6 +18,7 @@ dotenv.config();
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const CSV_FILE = path.join(DATA_DIR, 'sets.csv');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
+const GEMINI_CACHE_DIR = path.join(DATA_DIR, 'cache', 'gemini');
 
 function resolveLegoDataDir(): string | undefined {
   const args = process.argv.slice(2);
@@ -298,6 +300,10 @@ async function main() {
     const dateFinished = record['Date Finished'] && !record['Date Finished'].includes('#REF!') ? record['Date Finished'] : undefined;
     const datePurchased = record['Date Purchased'] || undefined;
 
+    // Resolve fun facts: manual spreadsheet entry > cached Gemini generation > previous sets.json
+    const cachedGemini = getCachedJson<{ fact?: string }>(GEMINI_CACHE_DIR, `set_${cleanId}.json`);
+    const funFacts = record['fun_facts'] || cachedGemini?.fact || previous.funFacts || '';
+
     // GWP info
     const isGwp =
       brickset?.isGwp ||
@@ -352,7 +358,7 @@ async function main() {
       buildDate: dateFinished || datePurchased || record['build_date'] || previous.buildDate,
       buildTimeHours,
       timeToBuildFormatted,
-      funFacts: record['fun_facts'] || previous.funFacts || '',
+      funFacts,
       notes: record['Notes'] || record['notes'] || previous.notes,
     };
 
