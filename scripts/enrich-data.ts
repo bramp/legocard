@@ -6,7 +6,7 @@ import type {
   EnrichedLegoSet,
   LegoDimensions,
 } from '../shared/types.js';
-import { formatBuildTime } from '../shared/format.js';
+import { formatBuildTime, cleanSetName } from '../shared/format.js';
 import {
   createDefaultBackends,
   type EnrichmentResult,
@@ -208,7 +208,8 @@ async function main() {
 
     // Resolve name
     const csvName = record['Name'] || record['name'];
-    const name = csvName || lego?.name || rebrickable?.name || brickset?.name || previous.name || `Lego Set #${cleanId}`;
+    const rawName = csvName || lego?.name || rebrickable?.name || brickset?.name || previous.name || `Lego Set #${cleanId}`;
+    const name = cleanSetName(rawName);
 
     // Resolve theme
     const csvTheme = record['Category'] || record['category'];

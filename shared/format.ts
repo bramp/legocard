@@ -53,6 +53,21 @@ export function formatBuildTime(
   return parts.join(options?.useAnd ? ' and ' : ' ');
 }
 
+/**
+ * Cleans a Lego set title/name by removing redundant descriptors or suffixes
+ * such as " - UCS".
+ *
+ * e.g. "Jabba's Sail Barge - UCS" -> "Jabba's Sail Barge"
+ * e.g. "AT-AT - UCS" -> "AT-AT"
+ * e.g. "Millennium Falcon - UCS {2nd edition}" -> "Millennium Falcon {2nd edition}"
+ */
+export function cleanSetName(name?: string): string {
+  if (!name) return '';
+  return name.replace(/\s*-\s*UCS\b/gi, '').replace(/\s+/g, ' ').trim();
+}
+
+export const cleanTitle = cleanSetName;
+
 export {
   cleanThemeName,
   simplifyTheme,

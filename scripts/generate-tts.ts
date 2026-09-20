@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 import { Liquid } from 'liquidjs';
 import type { EnrichedLegoSet, WordTimestamp } from '../shared/types.js';
-import { formatBuildTime } from '../shared/format.js';
+import { formatBuildTime, cleanSetName } from '../shared/format.js';
 import {
   cleanThemeName,
   simplifyTheme,
@@ -22,6 +22,7 @@ export {
   getRetiredYear,
   formatThemeLine,
   themeEndsWithCollectiveNoun,
+  cleanSetName,
 };
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
@@ -62,6 +63,11 @@ engine.registerFilter('short_theme', (v: string) => {
 // Custom filter to format theme line without repeating collective nouns
 engine.registerFilter('theme_line', (v: string) => {
   return formatThemeLine(v);
+});
+
+// Custom filter to clean set title/name
+engine.registerFilter('clean_name', (v: string) => {
+  return cleanSetName(v);
 });
 
 // Select a crisp, natural neural voice
@@ -232,6 +238,7 @@ export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]
   const themeLine = formatThemeLine(shortTheme);
   const context = {
     ...set,
+    name: cleanSetName(set.name),
     year: set.year,
     shortTheme,
     themeLine,
