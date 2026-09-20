@@ -5,6 +5,24 @@ import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 import { Liquid } from 'liquidjs';
 import type { EnrichedLegoSet, WordTimestamp } from '../shared/types.js';
 import { formatBuildTime } from '../shared/format.js';
+import {
+  cleanThemeName,
+  simplifyTheme,
+  THEME_OVERRIDES,
+  formatThemeLine,
+  themeEndsWithCollectiveNoun,
+} from '../shared/themes.js';
+import { isSetRetired, getRetiredYear } from '../shared/retirement.js';
+
+export {
+  cleanThemeName,
+  simplifyTheme,
+  THEME_OVERRIDES,
+  isSetRetired,
+  getRetiredYear,
+  formatThemeLine,
+  themeEndsWithCollectiveNoun,
+};
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
@@ -23,78 +41,6 @@ export function ordinal(n: number): string {
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
-export function cleanThemeName(theme?: string): string {
-  if (!theme) return '';
-  if (theme.includes('Lord of the Rings')) return 'Lord of the Rings';
-  if (theme.includes('Star Wars')) return 'Star Wars';
-  if (theme.includes('Icons')) return 'Icons';
-  if (theme.includes('Harry Potter')) return 'Harry Potter';
-  if (theme.includes('Architecture')) return 'Architecture';
-  return theme.split('/')[0].replace(/\(.*?\)/g, '').trim();
-}
-
-/**
- * Explicit theme overrides for spoken audio narration.
- * NOTE: In the future, we could move these into an external file (e.g. templates/themes.json)
- * for non-code editorial management if the list grows large.
- */
-export const THEME_OVERRIDES: Record<string, string> = {
-  'Creator / Creator 3in1 / Creature': 'Creator 3-in-1',
-  'Holiday & Event / Christmas': 'Holiday Christmas',
-  'Holiday & Event / Halloween': 'Halloween',
-  'Technic / Model / Space Exploration': 'Technic Space',
-};
-
-/**
- * Simplifies verbose catalog themes into natural spoken lines.
- * e.g. "Icons (Creator Expert & Advanced Models) / Landmark" -> "Icons Landmark"
- * e.g. "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (...)" -> "Lord of the Rings"
- */
-export function simplifyTheme(theme?: string): string {
-  if (!theme) return '';
-  if (THEME_OVERRIDES[theme]) return THEME_OVERRIDES[theme];
-
-  // 1. Strip parenthetical notes like (Creator Expert & Advanced Models), (CUUSOO), etc.
-  const cleaned = theme.replace(/\s*\([^)]*\)/g, '');
-
-  // 2. Split segments by '/'
-  let parts = cleaned
-    .split('/')
-    .map((p) => p.trim())
-    .filter(Boolean);
-
-  // 3. Drop filler and internal episode segments
-  parts = parts.filter(
-    (p) => !['Miscellaneous', 'Model'].includes(p) && !p.startsWith('Star Wars Episode')
-  );
-
-  // 4. Normalize common franchise prefixes
-  parts = parts.map((p) => {
-    if (p.includes('The Lord of the Rings') || p.includes('Lord of the Rings')) {
-      return 'Lord of the Rings';
-    }
-    return p;
-  });
-
-  // 5. Deduplicate segments
-  const deduped: string[] = [];
-  for (const p of parts) {
-    if (!deduped.includes(p)) {
-      deduped.push(p);
-    }
-  }
-
-  if (deduped.includes('Lord of the Rings')) {
-    return 'Lord of the Rings';
-  }
-
-  if (deduped[0] === 'Star Wars' && deduped[1] === 'Sculptures') {
-    return 'Star Wars';
-  }
-
-  return deduped.slice(0, 2).join(' ');
-}
-
 // Custom filter to format piece counts with commas
 engine.registerFilter('format_number', (v: number | string) => {
   if (typeof v === 'number') return v.toLocaleString();
@@ -111,6 +57,11 @@ engine.registerFilter('ordinal', (v: number | string) => {
 // Custom filter to shorten verbose themes for spoken audio
 engine.registerFilter('short_theme', (v: string) => {
   return simplifyTheme(v);
+});
+
+// Custom filter to format theme line without repeating collective nouns
+engine.registerFilter('theme_line', (v: string) => {
+  return formatThemeLine(v);
 });
 
 // Select a crisp, natural neural voice
@@ -172,10 +123,10 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
 
   const byPieces = [...collection].filter((s) => typeof s.pieces === 'number').sort((a, b) => (b.pieces || 0) - (a.pieces || 0));
   const byBuildTime = [...collection].filter((s) => typeof s.buildTimeHours === 'number').sort((a, b) => (b.buildTimeHours || 0) - (a.buildTimeHours || 0));
-  const byYearAsc = [...collection].filter((s) => s.yearReleased || s.year).sort((a, b) => ((a.yearReleased || a.year)!) - ((b.yearReleased || b.year)!));
+  const byYearAsc = [...collection].filter((s) => typeof s.year === 'number').sort((a, b) => a.year! - b.year!);
 
-  const minYear = byYearAsc[0] ? (byYearAsc[0].yearReleased || byYearAsc[0].year) : null;
-  const maxYear = byYearAsc[byYearAsc.length - 1] ? (byYearAsc[byYearAsc.length - 1].yearReleased || byYearAsc[byYearAsc.length - 1].year) : null;
+  const minYear = byYearAsc[0]?.year ?? null;
+  const maxYear = byYearAsc[byYearAsc.length - 1]?.year ?? null;
 
   const themeGroups: Record<string, EnrichedLegoSet[]> = {};
   collection.forEach((s) => {
@@ -242,7 +193,7 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
     facts.push(`It is the ${ordinal(pRank)} largest set in the collection.`);
   }
 
-  const setYear = set.yearReleased || set.year;
+  const setYear = set.year;
   const isOldest = !!(setYear && setYear === minYear);
   const isNewest = !!(setYear && setYear === maxYear);
 
@@ -277,10 +228,13 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
 
 export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]): string {
   const factsInfo = computeCollectionFacts(set, allSets);
+  const shortTheme = simplifyTheme(set.theme);
+  const themeLine = formatThemeLine(shortTheme);
   const context = {
     ...set,
-    year: set.yearReleased || set.year,
-    shortTheme: simplifyTheme(set.theme),
+    year: set.year,
+    shortTheme,
+    themeLine,
     buildDuration: formatBuildDuration(set),
     collectionFacts: factsInfo.facts,
     collectionFact: factsInfo.collectionFact,
@@ -301,33 +255,15 @@ export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]
     themeName: factsInfo.themeName,
     isOldest: factsInfo.isOldest,
     isNewest: factsInfo.isNewest,
+    isRetired: isSetRetired(set),
+    retiredYear: getRetiredYear(set),
   };
 
-  let rendered: string;
-  if (fs.existsSync(NARRATION_TEMPLATE_FILE)) {
-    const templateContent = fs.readFileSync(NARRATION_TEMPLATE_FILE, 'utf-8');
-    rendered = engine.parseAndRenderSync(templateContent, context);
-  } else {
-    // Fallback if template is not found
-    const parts: string[] = [`Lego set ${set.id}: ${set.name}.`];
-    if (set.theme && (set.yearReleased || set.year)) {
-      parts.push(`A ${set.yearReleased || set.year} release from the ${set.theme} line.`);
-    }
-    if (set.pieces) {
-      parts.push(`Features ${set.pieces.toLocaleString()} pieces.`);
-    }
-    const duration = formatBuildDuration(set);
-    if (duration) {
-      parts.push(`Took ${duration} to build.`);
-    }
-    if (factsInfo.collectionFact) {
-      parts.push(factsInfo.collectionFact);
-    }
-    if (set.funFacts) {
-      parts.push(set.funFacts);
-    }
-    rendered = parts.join(' ');
+  if (!fs.existsSync(NARRATION_TEMPLATE_FILE)) {
+    throw new Error(`Narration template not found at ${NARRATION_TEMPLATE_FILE}`);
   }
+  const templateContent = fs.readFileSync(NARRATION_TEMPLATE_FILE, 'utf-8');
+  const rendered = engine.parseAndRenderSync(templateContent, context);
 
   // Normalize multi-spaces and whitespace into clean sentence spacing
   return rendered.replace(/\s+/g, ' ').trim();
@@ -402,20 +338,40 @@ async function generateSetAudio(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[
 }
 
 async function main() {
+  const args = process.argv.slice(2);
+  const isHelp = args.includes('--help') || args.includes('-h');
+
+  if (isHelp) {
+    console.log(`Usage: npm run tts -- [options]
+
+Generates speech audio (.mp3) and word-level subtitle timing (.subtitles.json)
+for Lego sets using Edge TTS.
+
+Options:
+  --set <id>, --set=<id>  Generate TTS only for the specified set ID (e.g. --set=10237)
+  --preview, --dry-run    Preview narration text in console without calling TTS
+  -h, --help              Show this help message
+
+Environment Variables:
+  EDGE_TTS_VOICE          Voice model to use (default: en-US-ChristopherNeural)
+`);
+    return;
+  }
+
   if (!fs.existsSync(JSON_FILE)) {
     console.error(`Missing sets.json. Run 'npm run enrich' first.`);
     process.exit(1);
   }
 
-  const isPreview = process.argv.includes('--preview') || process.argv.includes('--dry-run');
-  const filterArg = process.argv.find((arg) => arg.startsWith('--set=') || arg === '--set');
+  const isPreview = args.includes('--preview') || args.includes('--dry-run');
+  const filterArg = args.find((arg) => arg.startsWith('--set=') || arg === '--set');
   let targetId: string | undefined;
   if (filterArg) {
     if (filterArg.startsWith('--set=')) {
       targetId = filterArg.split('=')[1];
     } else {
-      const idx = process.argv.indexOf('--set');
-      targetId = process.argv[idx + 1];
+      const idx = args.indexOf('--set');
+      targetId = args[idx + 1];
     }
   }
 

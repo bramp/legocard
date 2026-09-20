@@ -1,5 +1,9 @@
-Lego set {{ id }}: {{ name }}.
-{%- if shortTheme and year %} A {{ year }} release from the {{ shortTheme }} line.{% endif -%}
+Set {{ id }}: {{ name }}.
+{%- if themeLine and year %}
+  {%- if retiredYear %} A {{ year }} release from the {{ themeLine }}, retired in {{ retiredYear }}.
+  {%- else %} A {{ year }} release from the {{ themeLine }}.
+  {%- endif -%}
+{%- endif -%}
 {%- if pieces %} Features {{ pieces | format_number }} pieces.{% endif -%}
 {%- if buildDuration %} Took {{ buildDuration }} to build.{% endif -%}
 {%- if collectionFact %} {{ collectionFact }}{% endif -%}
