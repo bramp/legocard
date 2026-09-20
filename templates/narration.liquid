@@ -14,6 +14,14 @@ Set {{ id }}: {{ name }}.
 {%- elsif buildDuration %} Took {{ buildDuration }} to build.
 {%- endif -%}
 {%- if collectionFact %} {{ collectionFact }}{% endif -%}
-{%- if primaryRatingFact %} {{ primaryRatingFact }}{% endif -%}
+{%- if ratingBuild == 5 and ratingLooks == 5 %} It is rated a perfect five out of five for both build experience and display looks.
+{%- elsif ratingBuild == 5 %} It is rated a top five out of five for building fun.
+{%- elsif ratingLooks == 5 %} It is rated a top five out of five for display looks.
+{%- elsif isTopBuild %} It is our highest-rated build experience in the collection.
+{%- elsif isTopLooks %} It is our highest-rated display piece for looks.
+{%- elsif ratingBuild >= 4.5 %} It is rated as one of our most fun builds in the collection.
+{%- elsif ratingLooks >= 4.5 %} It is rated as one of our best-looking display models in the collection.
+{%- elsif primaryRatingFact %} {{ primaryRatingFact }}
+{%- endif -%}
 {%- if funFacts %} {{ funFacts }}{% endif -%}
 
