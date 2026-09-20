@@ -136,3 +136,32 @@ interface EnrichedLegoSet {
 All media references are resolved dynamically in Astro via a central helper (`site/src/lib/assets.ts`):
 - Production: `https://legocard-media.bramp.net/<path>`
 - Development fallback: configured via `PUBLIC_MEDIA_BASE_URL` in `.env`.
+
+---
+
+## 6. Data Pipeline Principles & Layer Responsibilities
+
+To ensure predictable data evolution and avoid data loss or coupling, the system maintains a strict separation between **Ingestion/Enrichment** and **Presentation**:
+
+### Principle 1: Ingestion & Enrichment Maintains High Fidelity
+The enrichment script (`scripts/enrich-data.ts`) and backend adapters (`scripts/backends/`) are responsible for merging external catalog data with the personal spreadsheet without editorial modification:
+- **Raw Fidelity**: Keep set titles, themes, and descriptions as published by external sources (LEGO.com, Brickset, Rebrickable) or logged by the user in `sets.csv`.
+- **Lossless Transformations Only**:
+  - Type coercion (e.g. converting piece count strings to integers, dimension strings to numbers in centimeters).
+  - Date parsing and normalization into standard representation (`dateReleased`, `dateRetired`, `year`).
+  - Unit normalization (e.g. converting inches to centimeters for physical dimensions).
+- **No Editorial Censoring or Truncation**: Do **not** strip title suffixes (such as `" - UCS"`), parenthetical notes (`"{2nd edition}"`), or catalog hierarchies at ingestion time. Storing the full original title preserves searchability, accurate catalog matching, and lossless round-tripping when re-running `npm run enrich`.
+
+### Principle 2: Presentation Layers Own Formatting & Contextual Cleaning
+Each consumer transforms and cleans the normalized data to suit its specific medium:
+- **Spoken Audio & Voiceover Narration (`scripts/generate-tts.ts`, `templates/narration.liquid`)**:
+  - Strips redundant acronyms from titles where the narration already introduces the series (e.g. `"AT-AT - UCS"` becomes `"AT-AT"` because the line introduces it as the *"Star Wars UCS line"*).
+  - Simplifies deep catalog themes (e.g. `"The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (...)"` $\rightarrow$ `"Lord of the Rings"`).
+  - Omits duplicate collective nouns (e.g. avoiding *"from the Star Wars Helmet Collection line"*).
+  - Synthesizes Gift with Purchase (GWP) relationships (*"Released as a gift with purchase alongside Barad-dûr"*).
+  - Liquid templates own the sentence structure, grammar, and phrasing; TypeScript acts solely as the data provider.
+- **Web Showcase (`site/`)**:
+  - Displays canonical set titles and official specs.
+  - Renders contextual badges (e.g. `"🎁 Gift with Purchase"`, `"Retired: 2024"`).
+- **Video Motion Graphics (`video/`)**:
+  - Adapts font sizes, line wrapping, and layout to fit 9:16 vertical video constraints.
