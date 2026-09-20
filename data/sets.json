@@ -1797,7 +1797,7 @@
   {
     "id": "75192",
     "setNum": "75192-1",
-    "name": "Millennium Falcon {2nd edition}",
+    "name": "Millennium Falcon - UCS {2nd edition}",
     "year": 2017,
     "dateReleased": "October 1, 2017",
     "dateRetired": "December 2026",
@@ -2083,7 +2083,7 @@
   {
     "id": "75313",
     "setNum": "75313-1",
-    "name": "AT-AT",
+    "name": "AT-AT - UCS",
     "year": 2021,
     "dateReleased": "December 5, 2021",
     "dateRetired": "November 23, 2024",
@@ -2402,7 +2402,7 @@
   {
     "id": "75355",
     "setNum": "75355-1",
-    "name": "X-wing Starfighter",
+    "name": "X-wing Starfighter - UCS",
     "year": 2023,
     "dateReleased": "May 4, 2023",
     "dateRetired": "December 2025",
@@ -2629,7 +2629,7 @@
   {
     "id": "75397",
     "setNum": "75397-1",
-    "name": "Jabba's Sail Barge",
+    "name": "Jabba's Sail Barge - UCS",
     "year": 2024,
     "dateReleased": "October 6, 2024",
     "dateRetired": "December 2026",
@@ -2950,7 +2950,7 @@
   {
     "id": "75417",
     "setNum": "75417-1",
-    "name": "AT-ST Walker",
+    "name": "AT-ST Walker - UCS",
     "year": 2025,
     "dateReleased": "July 4, 2025",
     "dateRetired": "December 31, 2027.",
@@ -3006,7 +3006,7 @@
   {
     "id": "75419",
     "setNum": "75419-1",
-    "name": "Death Star",
+    "name": "Death Star - UCS",
     "year": 2025,
     "dateReleased": "September 5, 2025",
     "theme": "Star Wars / Ultimate Collector Series",
