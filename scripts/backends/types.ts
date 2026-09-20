@@ -19,8 +19,6 @@ export interface SetContext {
 export interface EnrichmentResult {
   name?: string;
   year?: number;
-  yearReleased?: number;
-  yearRetired?: number;
   dateReleased?: string;
   dateRetired?: string;
   theme?: string;

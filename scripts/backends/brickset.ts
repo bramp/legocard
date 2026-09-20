@@ -74,15 +74,13 @@ export class BricksetBackend implements EnrichmentBackend {
       legoCom?.DE ||
       (legoCom ? Object.values(legoCom).find((r) => r && (r.dateLastAvailable || r.dateFirstAvailable)) : undefined);
 
-    let yearRetired: number | undefined;
     let dateRetired: string | undefined;
-    let yearReleased: number | undefined = setData.year || undefined;
+    let releaseYear: number | undefined = setData.year || undefined;
     let dateReleased: string | undefined;
 
     if (preferredRegion?.dateLastAvailable) {
       const parsedRetired = parseBricksetDate(preferredRegion.dateLastAvailable);
       if (parsedRetired) {
-        yearRetired = parsedRetired.year;
         dateRetired = parsedRetired.dateStr;
       }
     }
@@ -90,7 +88,7 @@ export class BricksetBackend implements EnrichmentBackend {
     if (preferredRegion?.dateFirstAvailable) {
       const parsedReleased = parseBricksetDate(preferredRegion.dateFirstAvailable);
       if (parsedReleased) {
-        yearReleased = parsedReleased.year;
+        releaseYear = parsedReleased.year;
         dateReleased = parsedReleased.dateStr;
       }
     }
@@ -129,9 +127,7 @@ export class BricksetBackend implements EnrichmentBackend {
 
     return {
       name: setData.name,
-      year: yearReleased || setData.year,
-      yearReleased,
-      yearRetired,
+      year: releaseYear || setData.year,
       dateReleased,
       dateRetired,
       theme,

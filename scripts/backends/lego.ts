@@ -94,7 +94,6 @@ export class LegoMetadataBackend implements EnrichmentBackend {
     const theme = meta.theme ? meta.theme.replace(/LEGO®\s*/g, '').trim() : undefined;
     const pieces = meta.pieces;
     const year = meta.year;
-    const yearReleased = meta.year;
     const age = meta.age;
 
     const instructions: LegoInstructionPdf[] | undefined = meta.pdfs?.map((p) => ({
@@ -137,7 +136,6 @@ export class LegoMetadataBackend implements EnrichmentBackend {
       theme,
       pieces,
       year,
-      yearReleased,
       age,
       instructionBooks,
       instructions,

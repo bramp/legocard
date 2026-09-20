@@ -60,9 +60,8 @@ describe('Brickset Backend', () => {
       });
 
       assert.notStrictEqual(result, null);
-      assert.strictEqual(result?.yearRetired, 2016);
       assert.strictEqual(result?.dateRetired, 'November 20, 2016');
-      assert.strictEqual(result?.yearReleased, 2013);
+      assert.strictEqual(result?.year, 2013);
       assert.strictEqual(result?.dateReleased, 'August 16, 2013');
       assert.strictEqual(result?.age, '16+');
       assert.strictEqual(result?.pieces, 2989);

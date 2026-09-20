@@ -165,11 +165,28 @@ export interface EnrichedLegoSet {
   id: string; // Clean set number (e.g. "10497")
   setNum: string; // Rebrickable format (e.g. "10497-1")
   name: string;
-  year?: number; // Primary display year (yearReleased or year from metadata)
-  yearReleased?: number;
-  yearRetired?: number;
+
+  /**
+   * Release year of the set (e.g. 2024).
+   * Guaranteed / canonical numeric release year across all sets, sourced from metadata backends or release dates.
+   * Used for sorting, rankings, and narration templates.
+   */
+  year?: number;
+
+  /**
+   * Exact release date when known (e.g. "June 4, 2024" or "August 2023").
+   * Provides higher precision than `year` when available from LEGO.com, Brickset, or user CSV records.
+   * Some promotional or uncatalogued sets may only have `year` if an exact month/day was not published.
+   */
   dateReleased?: string;
+
+  /**
+   * Date or status when the set was retired (e.g. "November 21, 2016", "July 2026", or "Retired").
+   * Can represent either an accomplished retirement or a scheduled/projected retirement date.
+   * Derive the retired status or retirement year via `isSetRetired()` / `getRetiredYear()`.
+   */
   dateRetired?: string;
+
   theme?: string;
   age?: string; // Recommended age, e.g. "18+", "16+"
   pieces?: number;

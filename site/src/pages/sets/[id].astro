@@ -57,9 +57,9 @@ const media = getSetMediaUrls(set);
           <span class="bg-amber-500/20 text-amber-400 border border-amber-500/40 font-mono font-bold text-xs px-2.5 py-1 rounded-full">
             #{set.id}
           </span>
-          {(set.yearReleased || set.year) && (
+          {set.year && (
             <span class="bg-slate-950/80 text-slate-300 border border-slate-800 text-xs font-medium px-2.5 py-1 rounded-full">
-              {set.yearReleased || set.year}
+              {set.year}
             </span>
           )}
         </div>
@@ -106,7 +106,7 @@ const media = getSetMediaUrls(set);
         </div>
 
         <!-- Release / Retirement Timeline Badges if available -->
-        {(set.dateReleased || set.dateRetired || set.yearRetired || set.age || set.dimensions || set.instructionBooks) && (
+        {(set.dateReleased || set.dateRetired || set.age || set.dimensions || set.instructionBooks) && (
           <div class="flex flex-wrap gap-2 text-xs">
             {set.age && (
               <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
@@ -132,9 +132,9 @@ const media = getSetMediaUrls(set);
                 <strong class="text-slate-300">Released:</strong> {set.dateReleased}
               </span>
             )}
-            {(set.dateRetired || set.yearRetired) && (
+            {set.dateRetired && (
               <span class="bg-slate-950/60 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-xl">
-                <strong class="text-slate-300">Retired:</strong> {set.dateRetired || set.yearRetired}
+                <strong class="text-slate-300">Retired:</strong> {set.dateRetired}
               </span>
             )}
           </div>

@@ -223,14 +223,18 @@ async function main() {
     const csvDateRetired = record['Date Set Retired'] || record['date_retired'] || previous.dateRetired;
 
     const dateReleased = csvDateReleased || brickset?.dateReleased || previous.dateReleased;
-    const yearReleased =
-      parseYear(csvDateReleased) || lego?.yearReleased || rebrickable?.yearReleased || brickset?.yearReleased || previous.yearReleased;
+    const releaseYear =
+      parseYear(csvDateReleased) || lego?.year || rebrickable?.year || brickset?.year || previous.year;
 
-    const dateRetired = csvDateRetired || brickset?.dateRetired || previous.dateRetired;
-    const yearRetired = parseYear(csvDateRetired) || brickset?.yearRetired || previous.yearRetired;
+    // Prefer specific date from brickset if CSV just says "Retired"
+    const rawDateRetired = csvDateRetired || brickset?.dateRetired || previous.dateRetired;
+    const dateRetired =
+      (csvDateRetired?.trim().toLowerCase() === 'retired' && brickset?.dateRetired)
+        ? brickset.dateRetired
+        : rawDateRetired;
 
     // Primary display year
-    const displayYear = yearReleased || previous.year;
+    const displayYear = releaseYear || previous.year;
 
     // Age
     const age = lego?.age || brickset?.age || previous.age;
@@ -303,8 +307,6 @@ async function main() {
       setNum,
       name,
       year: displayYear,
-      yearReleased,
-      yearRetired,
       dateReleased: dateReleased || undefined,
       dateRetired: dateRetired || undefined,
       theme,

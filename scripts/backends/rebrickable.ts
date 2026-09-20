@@ -72,7 +72,6 @@ export class RebrickableBackend implements EnrichmentBackend {
       return {
         name: setData.name,
         year: setData.year,
-        yearReleased: setData.year,
         pieces: setData.num_parts,
         imageUrl: setData.set_img_url || undefined,
         theme: themeName,
@@ -85,7 +84,6 @@ export class RebrickableBackend implements EnrichmentBackend {
       return {
         name: fb.name,
         year: fb.year,
-        yearReleased: fb.year,
         theme: fb.theme,
         pieces: fb.pieces,
       };

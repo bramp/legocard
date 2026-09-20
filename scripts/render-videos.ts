@@ -102,7 +102,7 @@ async function main() {
 
       console.log(`================================================================================`);
       console.log(`[#${set.id}] ${set.name}`);
-      console.log(`   Theme: ${set.theme || '—'} | Year: ${set.yearReleased || set.year || '—'} | Pieces: ${set.pieces ? set.pieces.toLocaleString() : '—'}`);
+      console.log(`   Theme: ${set.theme || '—'} | Year: ${set.year ?? '—'} | Pieces: ${set.pieces ? set.pieces.toLocaleString() : '—'}`);
       console.log(`   Audio status: ${hasAudio ? `✓ generated (${audioDuration?.toFixed(1)}s, ${subsList.length} timed words)` : '✗ not generated yet'}`);
       console.log(`\n   Narration Script:\n   "${text}"`);
 
@@ -194,7 +194,7 @@ async function main() {
       id: set.id,
       name: set.name,
       theme: set.theme,
-      year: set.yearReleased || set.year,
+      year: set.year,
       pieces: set.pieces,
       buildTimeHours: set.buildTimeHours,
       timeToBuildFormatted: set.timeToBuildFormatted,
