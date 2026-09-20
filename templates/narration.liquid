@@ -4,6 +4,7 @@ Set {{ id }}: {{ name }}.
   {%- else %} A {{ year }} release from the {{ themeLine }}.
   {%- endif -%}
 {%- endif -%}
+{%- if gwpPhrase %} {{ gwpPhrase }}.{% endif -%}
 {%- if pieces %} Features {{ pieces | format_number }} pieces.{% endif -%}
 {%- if buildDuration %} Took {{ buildDuration }} to build.{% endif -%}
 {%- if collectionFact %} {{ collectionFact }}{% endif -%}

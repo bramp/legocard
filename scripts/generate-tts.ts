@@ -13,6 +13,7 @@ import {
   themeEndsWithCollectiveNoun,
 } from '../shared/themes.js';
 import { isSetRetired, getRetiredYear } from '../shared/retirement.js';
+import { formatGwpNarration } from '../shared/gwp.js';
 
 export {
   cleanThemeName,
@@ -23,6 +24,7 @@ export {
   formatThemeLine,
   themeEndsWithCollectiveNoun,
   cleanSetName,
+  formatGwpNarration,
 };
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
@@ -264,6 +266,7 @@ export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]
     isNewest: factsInfo.isNewest,
     isRetired: isSetRetired(set),
     retiredYear: getRetiredYear(set),
+    gwpPhrase: formatGwpNarration(set, allSets),
   };
 
   if (!fs.existsSync(NARRATION_TEMPLATE_FILE)) {
