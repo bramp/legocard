@@ -9,7 +9,6 @@ import {
   cleanSetName,
   getCalendarBuildSpan,
   formatBuildStatement,
-  computeRatingFacts,
 } from '../shared/format.js';
 import {
   cleanThemeName,
@@ -34,7 +33,6 @@ export {
   resolveGwpTargetName,
   getCalendarBuildSpan,
   formatBuildStatement,
-  computeRatingFacts,
 };
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
@@ -122,6 +120,10 @@ export interface CollectionFactsInfo {
   themeName: string;
   isOldest: boolean;
   isNewest: boolean;
+  ratingBuildRank: number | null;
+  ratingLooksRank: number | null;
+  isTopBuild: boolean;
+  isTopLooks: boolean;
 }
 
 let cachedSetsJson: EnrichedLegoSet[] | null = null;
@@ -221,6 +223,22 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
     facts.push('It is one of the newest additions to the collection.');
   }
 
+  // Personal rating rankings across collection
+  const withBuild = collection
+    .filter((s) => typeof s.ratingBuild === 'number')
+    .sort((a, b) => b.ratingBuild! - a.ratingBuild!);
+  const withLooks = collection
+    .filter((s) => typeof s.ratingLooks === 'number')
+    .sort((a, b) => b.ratingLooks! - a.ratingLooks!);
+
+  const bRankIdx = typeof set.ratingBuild === 'number' ? withBuild.findIndex((s) => s.id === set.id) : -1;
+  const lRankIdx = typeof set.ratingLooks === 'number' ? withLooks.findIndex((s) => s.id === set.id) : -1;
+
+  const ratingBuildRank = bRankIdx !== -1 ? bRankIdx + 1 : null;
+  const ratingLooksRank = lRankIdx !== -1 ? lRankIdx + 1 : null;
+  const isTopBuild = ratingBuildRank === 1 && typeof set.ratingBuild === 'number' && set.ratingBuild >= 4.5 && withBuild.length >= 3;
+  const isTopLooks = ratingLooksRank === 1 && typeof set.ratingLooks === 'number' && set.ratingLooks >= 4.5 && withLooks.length >= 3;
+
   return {
     facts,
     collectionFact: facts.join(' '),
@@ -241,12 +259,15 @@ export function computeCollectionFacts(set: EnrichedLegoSet, allSets?: EnrichedL
     themeName: cleanTheme,
     isOldest,
     isNewest,
+    ratingBuildRank,
+    ratingLooksRank,
+    isTopBuild,
+    isTopLooks,
   };
 }
 
 export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]): string {
   const factsInfo = computeCollectionFacts(set, allSets);
-  const ratingFactsInfo = computeRatingFacts(set, allSets);
   const shortTheme = simplifyTheme(set.theme);
   const themeLine = formatThemeLine(shortTheme);
   const buildSpan = getCalendarBuildSpan(set);
@@ -268,14 +289,12 @@ export function buildNarration(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]
     collectionFacts: factsInfo.facts,
     collectionFact: factsInfo.collectionFact,
     primaryCollectionFact: factsInfo.primaryCollectionFact,
-    ratingBuild: ratingFactsInfo.ratingBuild ?? set.ratingBuild,
-    ratingLooks: ratingFactsInfo.ratingLooks ?? set.ratingLooks,
-    ratingBuildRank: ratingFactsInfo.ratingBuildRank,
-    ratingLooksRank: ratingFactsInfo.ratingLooksRank,
-    isTopBuild: ratingFactsInfo.isTopBuild,
-    isTopLooks: ratingFactsInfo.isTopLooks,
-    ratingFacts: ratingFactsInfo.ratingFacts,
-    primaryRatingFact: ratingFactsInfo.primaryRatingFact,
+    ratingBuild: set.ratingBuild,
+    ratingLooks: set.ratingLooks,
+    ratingBuildRank: factsInfo.ratingBuildRank,
+    ratingLooksRank: factsInfo.ratingLooksRank,
+    isTopBuild: factsInfo.isTopBuild,
+    isTopLooks: factsInfo.isTopLooks,
     piecesRank: factsInfo.piecesRank,
     piecesRankOrdinal: factsInfo.piecesRankOrdinal,
     piecesTotal: factsInfo.piecesTotal,

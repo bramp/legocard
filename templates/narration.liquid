@@ -21,7 +21,6 @@ Set {{ id }}: {{ name }}.
 {%- elsif isTopLooks %} It is our highest-rated display piece for looks.
 {%- elsif ratingBuild >= 4.5 %} It is rated as one of our most fun builds in the collection.
 {%- elsif ratingLooks >= 4.5 %} It is rated as one of our best-looking display models in the collection.
-{%- elsif primaryRatingFact %} {{ primaryRatingFact }}
 {%- endif -%}
 {%- if funFacts %} {{ funFacts }}{% endif -%}
 
