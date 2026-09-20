@@ -1,19 +1,25 @@
 Set {{ id }}: {{ name }}.
+
 {%- if themeLine and year %}
   {%- if retiredYear %} A {{ year }} release from the {{ themeLine }}, retired in {{ retiredYear }}.
   {%- else %} A {{ year }} release from the {{ themeLine }}.
   {%- endif -%}
 {%- endif -%}
+
 {%- if isGwp %}
   {%- if gwpTargetName %} Released as a gift with purchase alongside {{ gwpTargetName }}.
   {%- else %} Released as a gift with purchase.
   {%- endif -%}
 {%- endif -%}
+
 {%- if pieces %} Features {{ pieces | format_number }} pieces.{% endif -%}
+
 {%- if buildSpanText and buildDuration %} Built over {{ buildSpanText }} for a total of {{ buildDuration }}.
 {%- elsif buildDuration %} Took {{ buildDuration }} to build.
 {%- endif -%}
+
 {%- if collectionFact %} {{ collectionFact }}{% endif -%}
+
 {%- if ratingBuild == 5 and ratingLooks == 5 %} It is rated a perfect five out of five for both build experience and display looks.
 {%- elsif ratingBuild == 5 %} It is rated a top five out of five for building fun.
 {%- elsif ratingLooks == 5 %} It is rated a top five out of five for display looks.
@@ -22,5 +28,6 @@ Set {{ id }}: {{ name }}.
 {%- elsif ratingBuild >= 4.5 %} It is rated as one of our most fun builds in the collection.
 {%- elsif ratingLooks >= 4.5 %} It is rated as one of our best-looking display models in the collection.
 {%- endif -%}
+
 {%- if funFacts %} {{ funFacts }}{% endif -%}
 
