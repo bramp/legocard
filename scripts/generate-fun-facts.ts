@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
 import type { EnrichedLegoSet } from '../shared/types.js';
 import { getCachedJson, setCachedJson } from './backends/cache.js';
+import { cleanPromptTitle } from '../shared/format.js';
 
 dotenv.config();
 
@@ -75,10 +76,12 @@ function cleanFactText(text: string): string {
 }
 
 export function buildFunFactsPrompt(set: EnrichedLegoSet): string {
-  return `Give me 2 concise, engaging fun facts or trivia about the official Lego set #${set.id}: "${set.name}".
+  const cleanName = cleanPromptTitle(set.name);
+  return `Give me 2 concise, engaging fun facts or trivia about the official Lego set #${set.id}: "${cleanName}".
 Focus on story and universe lore, iconic movie or history moments the model captures, character details, or fun secret easter eggs hidden inside.
 Keep it accessible and enjoyable for casual fans and collectors rather than Lego building experts—avoid builder acronyms like NPU, technical clutch techniques, or parts jargon.
 Do NOT repeat the set number, set name, release year, piece count, or theme name, as those are already announced in the intro.
+Use standard punctuation, including proper double quotation marks around any spoken dialogue, quotes, or in-universe titles.
 Format strictly as a short, punchy 2-sentence paragraph (under 50 words) suitable for a display card and natural spoken voiceover narration. Do NOT use bullet points or markdown formatting.`;
 }
 
@@ -89,7 +92,9 @@ async function fetchGeminiFunFacts(set: EnrichedLegoSet, clientContext: GenAICli
     model: GEMINI_MODEL,
     contents: prompt,
     config: {
-      temperature: 0.7,
+      temperature: 0,
+      topK: 1,
+      seed: 42,
       maxOutputTokens: 2500,
       thinkingConfig: {
         thinkingBudget: 0,

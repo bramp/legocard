@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { formatBuildTime, cleanSetName, cleanTitle } from '../shared/format.js';
+import { formatBuildTime, cleanSetName, cleanTitle, cleanPromptTitle } from '../shared/format.js';
 
 describe('Format helpers', () => {
   describe('cleanSetName / cleanTitle', () => {
@@ -29,6 +29,19 @@ describe('Format helpers', () => {
     it('handles empty or undefined values', () => {
       assert.strictEqual(cleanSetName(undefined), '');
       assert.strictEqual(cleanSetName(''), '');
+    });
+  });
+
+  describe('cleanPromptTitle', () => {
+    it('strips redundant suffixes and bracketed edition notes', () => {
+      assert.strictEqual(cleanPromptTitle('Taj Mahal {Reissue}'), 'Taj Mahal');
+      assert.strictEqual(cleanPromptTitle('Millennium Falcon - UCS {2nd edition}'), 'Millennium Falcon');
+      assert.strictEqual(cleanPromptTitle("Jabba's Sail Barge - UCS"), "Jabba's Sail Barge");
+    });
+
+    it('handles empty or undefined values', () => {
+      assert.strictEqual(cleanPromptTitle(undefined), '');
+      assert.strictEqual(cleanPromptTitle(''), '');
     });
   });
 

@@ -68,6 +68,21 @@ export function cleanSetName(name?: string): string {
 
 export const cleanTitle = cleanSetName;
 
+/**
+ * Cleans a Lego set title/name for AI prompts by removing redundant suffixes
+ * (" - UCS") and bracketed edition notes (e.g. "{Reissue}", "{2nd edition}").
+ *
+ * e.g. "Taj Mahal {Reissue}" -> "Taj Mahal"
+ * e.g. "Millennium Falcon - UCS {2nd edition}" -> "Millennium Falcon"
+ */
+export function cleanPromptTitle(name?: string): string {
+  if (!name) return '';
+  return cleanSetName(name)
+    .replace(/\s*\{[^}]*\}\s*/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export {
   cleanThemeName,
   simplifyTheme,
