@@ -42,6 +42,74 @@ export interface RebrickableSetResponse {
   last_modified_dt: string;
 }
 
+export interface BricksetDimensions {
+  height?: number;
+  width?: number;
+  depth?: number;
+  weight?: number;
+}
+
+export interface BricksetAgeRange {
+  min?: number;
+  max?: number;
+}
+
+export interface BricksetImage {
+  thumbnailURL?: string;
+  imageURL?: string;
+}
+
+export interface BricksetLegoComRegion {
+  retailPrice?: number;
+  dateFirstAvailable?: string;
+  dateLastAvailable?: string;
+}
+
+export interface BricksetSet {
+  setID: number;
+  number: string;
+  numberVariant: number;
+  name: string;
+  year: number;
+  theme?: string;
+  themeGroup?: string;
+  subtheme?: string;
+  category?: string;
+  released?: boolean;
+  pieces?: number;
+  minifigs?: number;
+  image?: BricksetImage;
+  bricksetURL?: string;
+  rating?: number;
+  reviewCount?: number;
+  packagingType?: string;
+  availability?: string;
+  instructionsCount?: number;
+  additionalImageCount?: number;
+  ageRange?: BricksetAgeRange;
+  dimensions?: BricksetDimensions;
+  barcode?: {
+    EAN?: string;
+    UPC?: string;
+  };
+  extendedData?: Record<string, unknown>;
+  lastUpdated?: string;
+  LEGOCom?: {
+    US?: BricksetLegoComRegion;
+    UK?: BricksetLegoComRegion;
+    CA?: BricksetLegoComRegion;
+    DE?: BricksetLegoComRegion;
+    [key: string]: BricksetLegoComRegion | undefined;
+  };
+}
+
+export interface BricksetApiResponse {
+  status: 'success' | 'error';
+  message?: string;
+  matches?: number;
+  sets?: BricksetSet[];
+}
+
 export interface WordTimestamp {
   word: string;
   start: number; // in milliseconds
