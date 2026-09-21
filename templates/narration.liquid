@@ -8,9 +8,10 @@ Set {{ id }}: {{ name }}.
   {%- endif -%}
 {%- endif -%}
 
-{%- if pieces %} Features {{ pieces | format_number }} pieces.{% endif -%}
-
-{%- if buildSpanText and buildDuration %} Built over {{ buildSpanText }} for a total of {{ buildDuration }}.
+{%- if pieces and buildSpanText and buildDuration %} Built over {{ buildSpanText }}, this {{ pieces | format_number }}-piece model took a total of {{ buildDuration }} to assemble.
+{%- elsif pieces and buildDuration %} This {{ pieces | format_number }}-piece model took {{ buildDuration }} to assemble.
+{%- elsif pieces %} Features {{ pieces | format_number }} pieces.
+{%- elsif buildSpanText and buildDuration %} Built over {{ buildSpanText }} for a total of {{ buildDuration }}.
 {%- elsif buildDuration %} Took {{ buildDuration }} to build.
 {%- endif -%}
 

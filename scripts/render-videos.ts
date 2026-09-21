@@ -148,7 +148,16 @@ async function main() {
   console.log(`🎬 Bundling Remotion video code from ${VIDEO_ENTRY_POINT}...`);
   const bundleLocation = await bundle({
     entryPoint: VIDEO_ENTRY_POINT,
-    webpackOverride: (config) => config,
+    webpackOverride: (config) => ({
+      ...config,
+      resolve: {
+        ...config.resolve,
+        extensionAlias: {
+          '.js': ['.ts', '.js'],
+          '.mjs': ['.mts', '.mjs'],
+        },
+      },
+    }),
   });
 
   console.log(`✓ Remotion bundle ready: ${bundleLocation}`);
