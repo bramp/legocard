@@ -4,6 +4,7 @@ import { bundle } from '@remotion/bundler';
 import { renderMedia, selectComposition } from '@remotion/renderer';
 import type { EnrichedLegoSet, LegoShowcaseProps, WordTimestamp } from '../shared/types.js';
 import { buildNarration } from './generate-tts.js';
+import { getCalendarBuildSpan } from '../shared/build-span.js';
 
 const DATA_DIR = path.resolve(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'sets.json');
@@ -199,16 +200,42 @@ async function main() {
     const narrationText = set.narrationText || (subtitles.length > 0 ? subtitles.map((s) => s.word).join(' ') : buildNarration(set));
     console.log(`   Voiceover: "${narrationText}"`);
 
+    const buildSpan = getCalendarBuildSpan(set);
+    const allImages: string[] = [];
+    if (imageSrc) allImages.push(imageSrc);
+    if (Array.isArray(set.images)) {
+      for (const img of set.images) {
+        if (img && !allImages.includes(img)) {
+          allImages.push(img);
+        }
+      }
+    }
+
     const inputProps: LegoShowcaseProps = {
       id: set.id,
       name: set.name,
       theme: set.theme,
+      collection: set.collection,
       year: set.year,
       pieces: set.pieces,
       buildTimeHours: set.buildTimeHours,
       timeToBuildFormatted: set.timeToBuildFormatted,
+      buildSpanText: buildSpan?.spanText,
+      dateStarted: set.dateStarted,
+      dateFinished: set.dateFinished,
+      rating: set.rating,
+      ratingBuild: set.ratingBuild,
+      ratingLooks: set.ratingLooks,
+      dimensions: set.dimensions,
+      age: set.age,
+      instructionBooks: set.instructionBooks,
+      dateRetired: set.dateRetired,
+      isGwp: set.isGwp,
+      gwpDescription: set.gwpDescription,
+      gwpWithSetNumber: set.gwpWithSetNumber,
       funFacts: set.funFacts,
       imageSrc: imageSrc || '',
+      images: allImages,
       audioSrc,
       subtitles,
       audioDurationInSeconds: audioDurationSeconds,

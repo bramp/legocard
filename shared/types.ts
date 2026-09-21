@@ -139,13 +139,22 @@ export interface LegoShowcaseProps {
   pieces?: number;
   buildTimeHours?: number;
   timeToBuildFormatted?: string;
+  buildSpanText?: string;
   dateStarted?: string;
   dateFinished?: string;
   rating?: number;
   ratingBuild?: number;
   ratingLooks?: number;
+  dimensions?: LegoDimensions;
+  age?: string;
+  instructionBooks?: number;
+  dateRetired?: string;
+  isGwp?: boolean;
+  gwpDescription?: string;
+  gwpWithSetNumber?: string;
   funFacts?: string;
   imageSrc: string; // File URL, data URL, or web URL
+  images?: string[]; // Multiple photos to animate through
   audioSrc?: string; // File URL, data URL, or web URL
   subtitles?: WordTimestamp[];
   audioDurationInSeconds?: number;
