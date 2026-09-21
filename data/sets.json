@@ -44,422 +44,412 @@
     "audioPath": "data/audio/10234.mp3",
     "subtitles": [
       {
-        "word": "Set",
-        "start": 100,
-        "end": 475
-      },
-      {
-        "word": "10234",
-        "start": 488,
-        "end": 2176
-      },
-      {
         "word": "Sydney",
-        "start": 2438,
-        "end": 2888
+        "start": 93,
+        "end": 560
       },
       {
         "word": "Opera",
-        "start": 2900,
-        "end": 3200
+        "start": 572,
+        "end": 844
       },
       {
         "word": "House",
-        "start": 3213,
-        "end": 3763
+        "start": 854,
+        "end": 1332
       },
       {
         "word": "A",
-        "start": 4625,
-        "end": 4750
+        "start": 2076,
+        "end": 2185
       },
       {
         "word": "2013",
-        "start": 4763,
-        "end": 5913
+        "start": 2196,
+        "end": 3196
       },
       {
         "word": "release",
-        "start": 5925,
-        "end": 6288
+        "start": 3207,
+        "end": 3522
       },
       {
         "word": "from",
-        "start": 6300,
-        "end": 6438
+        "start": 3533,
+        "end": 3653
       },
       {
         "word": "the",
-        "start": 6450,
-        "end": 6525
+        "start": 3663,
+        "end": 3728
       },
       {
         "word": "Icons",
-        "start": 6538,
-        "end": 7126
+        "start": 3739,
+        "end": 4250
       },
       {
         "word": "Landmark",
-        "start": 7138,
-        "end": 7638
+        "start": 4261,
+        "end": 4696
       },
       {
         "word": "line",
-        "start": 7650,
-        "end": 7963
+        "start": 4707,
+        "end": 4979
       },
       {
         "word": "retired",
-        "start": 8300,
-        "end": 8788
+        "start": 5272,
+        "end": 5696
       },
       {
         "word": "in 2016",
-        "start": 8800,
-        "end": 10125
+        "start": 5707,
+        "end": 6859
       },
       {
         "word": "Built",
-        "start": 10988,
-        "end": 11301
+        "start": 7609,
+        "end": 7881
       },
       {
         "word": "over",
-        "start": 11313,
-        "end": 11576
+        "start": 7891,
+        "end": 8119
       },
       {
         "word": "3",
-        "start": 11588,
-        "end": 11863
+        "start": 8130,
+        "end": 8369
       },
       {
         "word": "weeks",
-        "start": 11875,
-        "end": 12300
+        "start": 8380,
+        "end": 8750
       },
       {
         "word": "this",
-        "start": 12513,
-        "end": 12738
+        "start": 8935,
+        "end": 9131
       },
       {
         "word": "2,989-piece",
-        "start": 12750,
-        "end": 14688
+        "start": 9141,
+        "end": 10826
       },
       {
         "word": "model",
-        "start": 14700,
-        "end": 15050
+        "start": 10837,
+        "end": 11141
       },
       {
         "word": "took",
-        "start": 15063,
-        "end": 15238
+        "start": 11152,
+        "end": 11304
       },
       {
         "word": "a",
-        "start": 15250,
-        "end": 15313
+        "start": 11315,
+        "end": 11369
       },
       {
         "word": "total",
-        "start": 15325,
-        "end": 15675
+        "start": 11380,
+        "end": 11684
       },
       {
         "word": "of",
-        "start": 15688,
-        "end": 15776
+        "start": 11696,
+        "end": 11772
       },
       {
         "word": "7 hours",
-        "start": 15788,
-        "end": 16588
+        "start": 11783,
+        "end": 12479
       },
       {
         "word": "and",
-        "start": 16600,
-        "end": 16725
+        "start": 12489,
+        "end": 12598
       },
       {
         "word": "22",
-        "start": 16738,
-        "end": 17238
+        "start": 12609,
+        "end": 13044
       },
       {
         "word": "minutes",
-        "start": 17250,
-        "end": 17613
+        "start": 13054,
+        "end": 13369
       },
       {
         "word": "to",
-        "start": 17625,
-        "end": 17750
+        "start": 13380,
+        "end": 13489
       },
       {
         "word": "assemble",
-        "start": 17763,
-        "end": 18338
+        "start": 13500,
+        "end": 14000
       },
       {
         "word": "It",
-        "start": 19200,
-        "end": 19338
+        "start": 14750,
+        "end": 14870
       },
       {
         "word": "is",
-        "start": 19350,
-        "end": 19463
+        "start": 14880,
+        "end": 14978
       },
       {
         "word": "the",
-        "start": 19475,
-        "end": 19588
+        "start": 14989,
+        "end": 15087
       },
       {
         "word": "2nd",
-        "start": 19600,
-        "end": 19963
+        "start": 15098,
+        "end": 15413
       },
       {
         "word": "largest",
-        "start": 19975,
-        "end": 20438
+        "start": 15424,
+        "end": 15826
       },
       {
         "word": "Icons",
-        "start": 20450,
-        "end": 20963
+        "start": 15837,
+        "end": 16283
       },
       {
         "word": "set",
-        "start": 20975,
-        "end": 21200
+        "start": 16293,
+        "end": 16489
       },
       {
         "word": "in",
-        "start": 21213,
-        "end": 21288
+        "start": 16500,
+        "end": 16565
       },
       {
         "word": "the",
-        "start": 21300,
-        "end": 21363
+        "start": 16576,
+        "end": 16630
       },
       {
         "word": "collection",
-        "start": 21375,
-        "end": 21988
+        "start": 16641,
+        "end": 17174
       },
       {
         "word": "Architect",
-        "start": 22850,
-        "end": 23413
+        "start": 17924,
+        "end": 18413
       },
       {
         "word": "Jørn",
-        "start": 23425,
-        "end": 23688
+        "start": 18424,
+        "end": 18652
       },
       {
         "word": "Utzon",
-        "start": 23700,
-        "end": 24038
+        "start": 18663,
+        "end": 18956
       },
       {
         "word": "cracked",
-        "start": 24050,
-        "end": 24388
+        "start": 18967,
+        "end": 19260
       },
       {
         "word": "the",
-        "start": 24400,
-        "end": 24488
+        "start": 19272,
+        "end": 19348
       },
       {
         "word": "tricky",
-        "start": 24500,
-        "end": 24838
+        "start": 19359,
+        "end": 19652
       },
       {
         "word": "geometry",
-        "start": 24850,
-        "end": 25500
+        "start": 19663,
+        "end": 20228
       },
       {
         "word": "of",
-        "start": 25513,
-        "end": 25601
+        "start": 20239,
+        "end": 20315
       },
       {
         "word": "the",
-        "start": 25613,
-        "end": 25688
+        "start": 20326,
+        "end": 20391
       },
       {
         "word": "soaring",
-        "start": 25700,
-        "end": 26075
+        "start": 20402,
+        "end": 20728
       },
       {
         "word": "shells",
-        "start": 26088,
-        "end": 26538
+        "start": 20739,
+        "end": 21130
       },
       {
         "word": "while",
-        "start": 26550,
-        "end": 26725
+        "start": 21141,
+        "end": 21293
       },
       {
         "word": "peeling",
-        "start": 26738,
-        "end": 27101
+        "start": 21304,
+        "end": 21619
       },
       {
         "word": "an",
-        "start": 27113,
-        "end": 27213
+        "start": 21630,
+        "end": 21717
       },
       {
         "word": "orange",
-        "start": 27225,
-        "end": 27638
+        "start": 21728,
+        "end": 22087
       },
       {
         "word": "realizing",
-        "start": 27963,
-        "end": 28563
+        "start": 22370,
+        "end": 22892
       },
       {
         "word": "every",
-        "start": 28575,
-        "end": 28825
+        "start": 22902,
+        "end": 23119
       },
       {
         "word": "curve",
-        "start": 28838,
-        "end": 29188
+        "start": 23130,
+        "end": 23434
       },
       {
         "word": "could",
-        "start": 29200,
-        "end": 29363
+        "start": 23446,
+        "end": 23587
       },
       {
         "word": "come",
-        "start": 29375,
-        "end": 29600
+        "start": 23598,
+        "end": 23794
       },
       {
         "word": "from",
-        "start": 29613,
-        "end": 29751
+        "start": 23804,
+        "end": 23924
       },
       {
         "word": "a",
-        "start": 29763,
-        "end": 29813
+        "start": 23935,
+        "end": 23978
       },
       {
         "word": "sphere",
-        "start": 29825,
-        "end": 30350
+        "start": 23989,
+        "end": 24446
       },
       {
         "word": "Buried",
-        "start": 31213,
-        "end": 31676
+        "start": 25196,
+        "end": 25598
       },
       {
         "word": "deep",
-        "start": 31688,
-        "end": 31976
+        "start": 25609,
+        "end": 25859
       },
       {
         "word": "inside",
-        "start": 31988,
-        "end": 32438
+        "start": 25870,
+        "end": 26261
       },
       {
         "word": "the",
-        "start": 32450,
-        "end": 32513
+        "start": 26272,
+        "end": 26326
       },
       {
         "word": "foundation",
-        "start": 32525,
-        "end": 33175
+        "start": 26337,
+        "end": 26902
       },
       {
         "word": "rests",
-        "start": 33188,
-        "end": 33476
+        "start": 26913,
+        "end": 27163
       },
       {
         "word": "a",
-        "start": 33488,
-        "end": 33563
+        "start": 27174,
+        "end": 27239
       },
       {
         "word": "single",
-        "start": 33575,
-        "end": 33963
+        "start": 27250,
+        "end": 27587
       },
       {
         "word": "bright",
-        "start": 33975,
-        "end": 34275
+        "start": 27598,
+        "end": 27859
       },
       {
         "word": "orange",
-        "start": 34288,
-        "end": 34576
+        "start": 27870,
+        "end": 28120
       },
       {
         "word": "piece",
-        "start": 34588,
-        "end": 34988
+        "start": 28130,
+        "end": 28478
       },
       {
         "word": "honoring",
-        "start": 35250,
-        "end": 35600
+        "start": 28707,
+        "end": 29011
       },
       {
         "word": "that",
-        "start": 35613,
-        "end": 35776
+        "start": 29022,
+        "end": 29163
       },
       {
         "word": "famous",
-        "start": 35788,
-        "end": 36201
+        "start": 29174,
+        "end": 29533
       },
       {
         "word": "fruity",
-        "start": 36213,
-        "end": 36538
+        "start": 29543,
+        "end": 29826
       },
       {
         "word": "spark",
-        "start": 36550,
-        "end": 36938
+        "start": 29837,
+        "end": 30174
       },
       {
         "word": "of",
-        "start": 36950,
-        "end": 37025
+        "start": 30185,
+        "end": 30250
       },
       {
         "word": "inspiration",
-        "start": 37038,
-        "end": 37826
+        "start": 30261,
+        "end": 30946
       }
     ],
-    "narrationText": "Set 10234: Sydney Opera House. A 2013 release from the Icons Landmark line, retired in 2016. Built over 3 weeks, this 2,989-piece model took a total of 7 hours and 22 minutes to assemble. It is the 2nd largest Icons set in the collection. Architect Jørn Utzon cracked the tricky geometry of the soaring shells while peeling an orange, realizing every curve could come from a sphere. Buried deep inside the foundation rests a single bright orange piece, honoring that famous fruity spark of inspiration!",
+    "narrationText": "Sydney Opera House. A 2013 release from the Icons Landmark line, retired in 2016. Built over 3 weeks, this 2,989-piece model took a total of 7 hours and 22 minutes to assemble. It is the 2nd largest Icons set in the collection. Architect Jørn Utzon cracked the tricky geometry of the soaring shells while peeling an orange, realizing every curve could come from a sphere. Buried deep inside the foundation rests a single bright orange piece, honoring that famous fruity spark of inspiration!",
     "videoPath": "data/videos/10234.mp4",
     "dateStarted": "2026-08-23 21:36",
     "dateFinished": "2026-09-10 22:50",
@@ -3780,13 +3770,425 @@
       "width": 79,
       "depth": 27
     },
-    "media": {},
+    "media": {
+      "video": "videos/75419.mp4"
+    },
     "dateStarted": "1899-12-30 22:12",
     "dateFinished": "2026-02-07 15:03",
     "buildDate": "2026-02-07 15:03",
     "buildTimeHours": 20.15,
     "timeToBuildFormatted": "20 hours 9 minutes",
-    "funFacts": "In the original movie, the dreaded battle station housed a slimy, one-eyed scavenger named the Dianoga inside its murky garbage chutes. If you peek deep into the bottom compactor, you'll find that very same little creature secretly lurking beneath the piles of crushed junk!"
+    "funFacts": "In the original movie, the dreaded battle station housed a slimy, one-eyed scavenger named the Dianoga inside its murky garbage chutes. If you peek deep into the bottom compactor, you'll find that very same little creature secretly lurking beneath the piles of crushed junk!",
+    "audioPath": "data/audio/75419.mp3",
+    "subtitles": [
+      {
+        "word": "Death",
+        "start": 93,
+        "end": 343
+      },
+      {
+        "word": "Star",
+        "start": 354,
+        "end": 843
+      },
+      {
+        "word": "A",
+        "start": 1587,
+        "end": 1707
+      },
+      {
+        "word": "2025",
+        "start": 1717,
+        "end": 2554
+      },
+      {
+        "word": "release",
+        "start": 2565,
+        "end": 2891
+      },
+      {
+        "word": "from",
+        "start": 2902,
+        "end": 3022
+      },
+      {
+        "word": "the",
+        "start": 3033,
+        "end": 3098
+      },
+      {
+        "word": "Star",
+        "start": 3109,
+        "end": 3435
+      },
+      {
+        "word": "Wars",
+        "start": 3446,
+        "end": 3729
+      },
+      {
+        "word": "UCS",
+        "start": 3739,
+        "end": 4185
+      },
+      {
+        "word": "line",
+        "start": 4196,
+        "end": 4566
+      },
+      {
+        "word": "This",
+        "start": 5315,
+        "end": 5543
+      },
+      {
+        "word": "9,031-piece",
+        "start": 5554,
+        "end": 7011
+      },
+      {
+        "word": "model",
+        "start": 7022,
+        "end": 7326
+      },
+      {
+        "word": "took",
+        "start": 7337,
+        "end": 7522
+      },
+      {
+        "word": "20 hours",
+        "start": 7533,
+        "end": 8207
+      },
+      {
+        "word": "and",
+        "start": 8217,
+        "end": 8347
+      },
+      {
+        "word": "9",
+        "start": 8359,
+        "end": 8566
+      },
+      {
+        "word": "minutes",
+        "start": 8576,
+        "end": 8869
+      },
+      {
+        "word": "to",
+        "start": 8880,
+        "end": 8989
+      },
+      {
+        "word": "assemble",
+        "start": 9000,
+        "end": 9511
+      },
+      {
+        "word": "It",
+        "start": 10261,
+        "end": 10370
+      },
+      {
+        "word": "has",
+        "start": 10380,
+        "end": 10587
+      },
+      {
+        "word": "the",
+        "start": 10598,
+        "end": 10663
+      },
+      {
+        "word": "most",
+        "start": 10674,
+        "end": 10913
+      },
+      {
+        "word": "pieces",
+        "start": 10924,
+        "end": 11283
+      },
+      {
+        "word": "in",
+        "start": 11293,
+        "end": 11369
+      },
+      {
+        "word": "the",
+        "start": 11380,
+        "end": 11434
+      },
+      {
+        "word": "collection",
+        "start": 11446,
+        "end": 11989
+      },
+      {
+        "word": "It",
+        "start": 12739,
+        "end": 12859
+      },
+      {
+        "word": "is",
+        "start": 12870,
+        "end": 12968
+      },
+      {
+        "word": "the",
+        "start": 12978,
+        "end": 13065
+      },
+      {
+        "word": "longest",
+        "start": 13076,
+        "end": 13511
+      },
+      {
+        "word": "build",
+        "start": 13522,
+        "end": 13794
+      },
+      {
+        "word": "in",
+        "start": 13804,
+        "end": 13858
+      },
+      {
+        "word": "the",
+        "start": 13870,
+        "end": 13924
+      },
+      {
+        "word": "collection",
+        "start": 13935,
+        "end": 14478
+      },
+      {
+        "word": "In",
+        "start": 15228,
+        "end": 15369
+      },
+      {
+        "word": "the",
+        "start": 15380,
+        "end": 15434
+      },
+      {
+        "word": "original",
+        "start": 15446,
+        "end": 15848
+      },
+      {
+        "word": "movie",
+        "start": 15859,
+        "end": 16174
+      },
+      {
+        "word": "the",
+        "start": 16337,
+        "end": 16424
+      },
+      {
+        "word": "dreaded",
+        "start": 16435,
+        "end": 16739
+      },
+      {
+        "word": "battle",
+        "start": 16750,
+        "end": 17022
+      },
+      {
+        "word": "station",
+        "start": 17033,
+        "end": 17446
+      },
+      {
+        "word": "housed",
+        "start": 17457,
+        "end": 17740
+      },
+      {
+        "word": "a",
+        "start": 17750,
+        "end": 17793
+      },
+      {
+        "word": "slimy",
+        "start": 17804,
+        "end": 18261
+      },
+      {
+        "word": "one-eyed",
+        "start": 18511,
+        "end": 18859
+      },
+      {
+        "word": "scavenger",
+        "start": 18870,
+        "end": 19370
+      },
+      {
+        "word": "named",
+        "start": 19380,
+        "end": 19619
+      },
+      {
+        "word": "the",
+        "start": 19630,
+        "end": 19706
+      },
+      {
+        "word": "Dianoga",
+        "start": 19717,
+        "end": 20260
+      },
+      {
+        "word": "inside",
+        "start": 20272,
+        "end": 20685
+      },
+      {
+        "word": "its",
+        "start": 20696,
+        "end": 20805
+      },
+      {
+        "word": "murky",
+        "start": 20815,
+        "end": 21141
+      },
+      {
+        "word": "garbage",
+        "start": 21152,
+        "end": 21467
+      },
+      {
+        "word": "chutes",
+        "start": 21478,
+        "end": 21978
+      },
+      {
+        "word": "If",
+        "start": 22728,
+        "end": 22869
+      },
+      {
+        "word": "you",
+        "start": 22880,
+        "end": 22989
+      },
+      {
+        "word": "peek",
+        "start": 23000,
+        "end": 23272
+      },
+      {
+        "word": "deep",
+        "start": 23283,
+        "end": 23500
+      },
+      {
+        "word": "into",
+        "start": 23511,
+        "end": 23663
+      },
+      {
+        "word": "the",
+        "start": 23674,
+        "end": 23761
+      },
+      {
+        "word": "bottom",
+        "start": 23772,
+        "end": 24055
+      },
+      {
+        "word": "compactor",
+        "start": 24065,
+        "end": 24587
+      },
+      {
+        "word": "you'll",
+        "start": 24837,
+        "end": 24946
+      },
+      {
+        "word": "find",
+        "start": 24957,
+        "end": 25207
+      },
+      {
+        "word": "that",
+        "start": 25217,
+        "end": 25315
+      },
+      {
+        "word": "very",
+        "start": 25326,
+        "end": 25598
+      },
+      {
+        "word": "same",
+        "start": 25609,
+        "end": 25870
+      },
+      {
+        "word": "little",
+        "start": 25880,
+        "end": 26054
+      },
+      {
+        "word": "creature",
+        "start": 26065,
+        "end": 26413
+      },
+      {
+        "word": "secretly",
+        "start": 26424,
+        "end": 26826
+      },
+      {
+        "word": "lurking",
+        "start": 26837,
+        "end": 27163
+      },
+      {
+        "word": "beneath",
+        "start": 27174,
+        "end": 27435
+      },
+      {
+        "word": "the",
+        "start": 27446,
+        "end": 27522
+      },
+      {
+        "word": "piles",
+        "start": 27533,
+        "end": 27892
+      },
+      {
+        "word": "of",
+        "start": 27902,
+        "end": 27978
+      },
+      {
+        "word": "crushed",
+        "start": 27989,
+        "end": 28326
+      },
+      {
+        "word": "junk",
+        "start": 28337,
+        "end": 28728
+      }
+    ],
+    "narrationText": "Death Star. A 2025 release from the Star Wars UCS line. This 9,031-piece model took 20 hours and 9 minutes to assemble. It has the most pieces in the collection. It is the longest build in the collection. In the original movie, the dreaded battle station housed a slimy, one-eyed scavenger named the Dianoga inside its murky garbage chutes. If you peek deep into the bottom compactor, you'll find that very same little creature secretly lurking beneath the piles of crushed junk!",
+    "videoPath": "data/videos/75419.mp4"
   },
   {
     "id": "75428",

@@ -78,7 +78,12 @@ engine.registerFilter('clean_name', (v: string) => {
 });
 
 // Select a crisp, natural neural voice
-const VOICE_NAME = process.env.EDGE_TTS_VOICE || 'en-US-ChristopherNeural';
+// Options:
+// 'en-US-ChristopherNeural'
+// 'en-US-AriaNeural'
+// 'en-US-AndrewMultilingualNeural'
+const DEFAULT_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-ChristopherNeural';
+const DEFAULT_RATE = process.env.EDGE_TTS_RATE || '+15%';
 
 interface EdgeMetadataItem {
   Type: string;
@@ -297,7 +302,11 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;');
 }
 
-async function generateSetAudio(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[]): Promise<{ audioPath: string; subtitles: WordTimestamp[]; narrationText: string }> {
+async function generateSetAudio(
+  set: EnrichedLegoSet,
+  allSets?: EnrichedLegoSet[],
+  options: { voice?: string; rate?: string } = {}
+): Promise<{ audioPath: string; subtitles: WordTimestamp[]; narrationText: string }> {
   const narration = buildNarration(set, allSets);
   const audioFilePath = path.join(AUDIO_DIR, `${set.id}.mp3`);
   const subtitlesFilePath = path.join(AUDIO_DIR, `${set.id}.subtitles.json`);
@@ -306,12 +315,15 @@ async function generateSetAudio(set: EnrichedLegoSet, allSets?: EnrichedLegoSet[
     fs.mkdirSync(AUDIO_DIR, { recursive: true });
   }
 
+  const voiceName = options.voice || DEFAULT_VOICE;
+  const voiceRate = options.rate || DEFAULT_RATE;
+
   const tts = new MsEdgeTTS();
-  await tts.setMetadata(VOICE_NAME, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3, {
+  await tts.setMetadata(voiceName, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3, {
     wordBoundaryEnabled: true,
   });
 
-  const { audioStream, metadataStream } = tts.toStream(escapeXml(narration));
+  const { audioStream, metadataStream } = tts.toStream(escapeXml(narration), { rate: voiceRate });
 
   const wordTimestamps: WordTimestamp[] = [];
   if (metadataStream) {
@@ -366,12 +378,15 @@ Generates speech audio (.mp3) and word-level subtitle timing (.subtitles.json)
 for Lego sets using Edge TTS.
 
 Options:
-  --set <id>, --set=<id>  Generate TTS only for the specified set ID (e.g. --set=10237)
-  --preview, --dry-run    Preview narration text in console without calling TTS
-  -h, --help              Show this help message
+  --set <id>, --set=<id>      Generate TTS only for the specified set ID (e.g. --set=10237)
+  --voice <name>, --voice=... Voice model to use (default: en-US-ChristopherNeural)
+  --rate <val>, --rate=...    Speaking speed rate (e.g. +10%, +15%, +20%) (default: +15%)
+  --preview, --dry-run        Preview narration text in console without calling TTS
+  -h, --help                  Show this help message
 
 Environment Variables:
-  EDGE_TTS_VOICE          Voice model to use (default: en-US-ChristopherNeural)
+  EDGE_TTS_VOICE              Voice model to use (default: en-US-ChristopherNeural)
+  EDGE_TTS_RATE               Speaking speed rate (default: +15%)
 `);
     return;
   }
@@ -390,6 +405,28 @@ Environment Variables:
     } else {
       const idx = args.indexOf('--set');
       targetId = args[idx + 1];
+    }
+  }
+
+  const voiceArg = args.find((arg) => arg.startsWith('--voice=') || arg === '--voice');
+  let activeVoice = DEFAULT_VOICE;
+  if (voiceArg) {
+    if (voiceArg.startsWith('--voice=')) {
+      activeVoice = voiceArg.split('=')[1];
+    } else {
+      const idx = args.indexOf('--voice');
+      activeVoice = args[idx + 1];
+    }
+  }
+
+  const rateArg = args.find((arg) => arg.startsWith('--rate=') || arg === '--rate');
+  let activeRate = DEFAULT_RATE;
+  if (rateArg) {
+    if (rateArg.startsWith('--rate=')) {
+      activeRate = rateArg.split('=')[1];
+    } else {
+      const idx = args.indexOf('--rate');
+      activeRate = args[idx + 1];
     }
   }
 
@@ -419,10 +456,10 @@ Environment Variables:
       continue;
     }
     const previewText = buildNarration(set, sets);
-    console.log(`🎙️  Narrating #${set.id}: ${set.name}...`);
+    console.log(`🎙️  Narrating #${set.id}: ${set.name}... (voice: ${activeVoice}, rate: ${activeRate})`);
     console.log(`   "${previewText}"`);
     try {
-      const result = await generateSetAudio(set, sets);
+      const result = await generateSetAudio(set, sets, { voice: activeVoice, rate: activeRate });
       set.audioPath = result.audioPath;
       set.subtitles = result.subtitles;
       set.narrationText = result.narrationText;

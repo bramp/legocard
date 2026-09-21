@@ -17,8 +17,10 @@ function parseArgs() {
   const args = process.argv.slice(2);
   let targetId: string | undefined;
   let force = false;
-  let concurrency = 4;
+  let concurrency = 8;
   let isPreview = false;
+  let fast = false;
+  let scale = 1;
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
@@ -30,14 +32,25 @@ function parseArgs() {
       force = true;
     } else if (arg === '--preview' || arg === '--dry-run') {
       isPreview = true;
+    } else if (arg === '--fast' || arg === '--draft') {
+      fast = true;
+    } else if (arg.startsWith('--scale=')) {
+      scale = parseFloat(arg.split('=')[1]) || 1;
+    } else if (arg === '--scale' && i + 1 < args.length) {
+      scale = parseFloat(args[++i]) || 1;
     } else if (arg.startsWith('--concurrency=')) {
-      concurrency = parseInt(arg.split('=')[1], 10) || 4;
+      concurrency = parseInt(arg.split('=')[1], 10) || 8;
     } else if (arg === '--concurrency' && i + 1 < args.length) {
-      concurrency = parseInt(args[++i], 10) || 4;
+      concurrency = parseInt(args[++i], 10) || 8;
     }
   }
 
-  return { targetId, force, concurrency, isPreview };
+  // If fast mode is requested, use half-resolution 540x960 (4x fewer pixels)
+  if (fast && scale === 1) {
+    scale = 0.5;
+  }
+
+  return { targetId, force, concurrency, isPreview, fast, scale };
 }
 
 function getAudioDuration(audioPath: string): number {
@@ -64,7 +77,7 @@ function getAudioDuration(audioPath: string): number {
 }
 
 async function main() {
-  const { targetId, force, concurrency, isPreview } = parseArgs();
+  const { targetId, force, concurrency, isPreview, fast, scale } = parseArgs();
 
   if (!fs.existsSync(JSON_FILE)) {
     console.error(`Missing sets.json at ${JSON_FILE}. Run 'npm run enrich' first.`);
@@ -162,7 +175,11 @@ async function main() {
   });
 
   console.log(`✓ Remotion bundle ready: ${bundleLocation}`);
-  console.log(`Rendering ${setsToRender.length} video(s) (concurrency: ${concurrency})...\n`);
+  console.log(
+    `Rendering ${setsToRender.length} video(s) (concurrency: ${concurrency}, scale: ${scale}x${
+      fast ? ', fast mode' : ''
+    })...\n`
+  );
 
   let renderedCount = 0;
   for (const set of setsToRender) {
@@ -257,7 +274,10 @@ async function main() {
         codec: 'h264',
         outputLocation: videoOutPath,
         inputProps: inputProps as unknown as Record<string, unknown>,
+        scale,
         concurrency,
+        pixelFormat: 'yuv420p',
+        x264Preset: fast ? 'veryfast' : 'medium',
         onProgress: ({ progress }) => {
           process.stdout.write(`   Rendering: ${(progress * 100).toFixed(0)}%\r`);
         },
