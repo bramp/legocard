@@ -85,12 +85,13 @@ export const LegoShowcase: React.FC<LegoShowcaseProps> = ({
   images = [],
   audioSrc,
   subtitles = [],
+  backgroundStyle,
 }) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
 
   // Dynamic theme colors
-  const themePalette = React.useMemo(() => getThemePalette(theme), [theme]);
+  const themePalette = React.useMemo(() => getThemePalette(theme, name), [theme, name]);
 
   // Intro header animation
   const headerEntrance = spring({
@@ -423,6 +424,15 @@ export const LegoShowcase: React.FC<LegoShowcaseProps> = ({
 
   const cards = [card1, card2, card3, card4];
 
+  // Resolve background style: explicit prop > plasma for Star Wars / Space sets > blur default
+  const resolvedBgStyle = React.useMemo(() => {
+    if (backgroundStyle) return backgroundStyle;
+    if (themePalette.isSpaceTheme || (theme || '').toLowerCase().includes('star wars')) {
+      return 'plasma';
+    }
+    return 'blur';
+  }, [backgroundStyle, themePalette.isSpaceTheme, theme]);
+
   return (
     <AbsoluteFill
       style={{
@@ -440,7 +450,7 @@ export const LegoShowcase: React.FC<LegoShowcaseProps> = ({
         themePalette={themePalette}
       />
 
-      {/* 4. Vivid Theme Background: Poster Crossfades + 3D Studs + Particles */}
+      {/* 4. Vivid Theme Background: Blur default, Plasma for Star Wars, or Baseplate */}
       <Background
         frame={frame}
         durationInFrames={durationInFrames}
@@ -449,6 +459,7 @@ export const LegoShowcase: React.FC<LegoShowcaseProps> = ({
         photoList={photoList}
         framesPerPhoto={framesPerPhoto}
         crossfadeFrames={crossfadeFrames}
+        backgroundStyle={resolvedBgStyle}
       />
 
       {/* Top Header Card / Identity */}

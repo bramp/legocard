@@ -5,11 +5,24 @@ export interface ThemePalette {
   badgeBorder: string;
   badgeBg: string;
   accentText: string;
+  baseplateBg: string;
+  baseplateStud: string;
   isSpaceTheme: boolean;
 }
 
-export function getThemePalette(themeName?: string): ThemePalette {
+export function getThemePalette(themeName?: string, setName?: string): ThemePalette {
   const t = (themeName || '').toLowerCase();
+  const n = (setName || '').toLowerCase();
+
+  // Special case: Ocean / Waterfront models (Sydney Opera House, Titanic, Harbor, etc.)
+  const isWaterfront =
+    n.includes('opera') ||
+    n.includes('titanic') ||
+    n.includes('ship') ||
+    n.includes('boat') ||
+    n.includes('lighthouse') ||
+    n.includes('harbor') ||
+    n.includes('coast');
 
   if (t.includes('star wars') || t.includes('space') || t.includes('galaxy')) {
     return {
@@ -19,6 +32,8 @@ export function getThemePalette(themeName?: string): ThemePalette {
       badgeBorder: 'rgba(56, 189, 248, 0.75)',
       badgeBg: 'rgba(56, 189, 248, 0.22)',
       accentText: '#7dd3fc',
+      baseplateBg: '#0c0f16', // Imperial Dark Slate
+      baseplateStud: '#161c28',
       isSpaceTheme: true,
     };
   }
@@ -36,6 +51,8 @@ export function getThemePalette(themeName?: string): ThemePalette {
       badgeBorder: 'rgba(249, 115, 22, 0.75)',
       badgeBg: 'rgba(249, 115, 22, 0.22)',
       accentText: '#fdba74',
+      baseplateBg: '#16120e', // Mordor Dark Earth
+      baseplateStud: '#241d17',
       isSpaceTheme: false,
     };
   }
@@ -53,6 +70,8 @@ export function getThemePalette(themeName?: string): ThemePalette {
       badgeBorder: 'rgba(16, 185, 129, 0.75)',
       badgeBg: 'rgba(16, 185, 129, 0.22)',
       accentText: '#6ee7b7',
+      baseplateBg: '#0e1d13', // Classic LEGO Green Baseplate
+      baseplateStud: '#162d1e',
       isSpaceTheme: false,
     };
   }
@@ -70,6 +89,8 @@ export function getThemePalette(themeName?: string): ThemePalette {
       badgeBorder: 'rgba(255, 84, 0, 0.75)',
       badgeBg: 'rgba(255, 84, 0, 0.22)',
       accentText: '#ff8533',
+      baseplateBg: '#121214', // Asphalt Black Baseplate
+      baseplateStud: '#1e1f24',
       isSpaceTheme: false,
     };
   }
@@ -88,6 +109,8 @@ export function getThemePalette(themeName?: string): ThemePalette {
       badgeBorder: 'rgba(239, 68, 68, 0.75)',
       badgeBg: 'rgba(239, 68, 68, 0.22)',
       accentText: '#fca5a5',
+      baseplateBg: '#151014', // Comic Noir Baseplate
+      baseplateStud: '#221921',
       isSpaceTheme: false,
     };
   }
@@ -100,6 +123,23 @@ export function getThemePalette(themeName?: string): ThemePalette {
       badgeBorder: 'rgba(168, 85, 247, 0.75)',
       badgeBg: 'rgba(168, 85, 247, 0.22)',
       accentText: '#d8b4fe',
+      baseplateBg: '#12101b', // Hogwarts Stone Baseplate
+      baseplateStud: '#1e1a2c',
+      isSpaceTheme: false,
+    };
+  }
+
+  // Ocean / Waterfront sets in Icons / Creator get the iconic Blue Baseplate!
+  if (isWaterfront) {
+    return {
+      primary: '#38bdf8',
+      secondary: '#0284c7',
+      glow: 'rgba(56, 189, 248, 0.65)',
+      badgeBorder: 'rgba(56, 189, 248, 0.75)',
+      badgeBg: 'rgba(56, 189, 248, 0.22)',
+      accentText: '#7dd3fc',
+      baseplateBg: '#0c1a29', // Classic Blue Baseplate (as featured with Sydney Opera House)
+      baseplateStud: '#14273c',
       isSpaceTheme: false,
     };
   }
@@ -112,6 +152,8 @@ export function getThemePalette(themeName?: string): ThemePalette {
     badgeBorder: 'rgba(245, 158, 11, 0.75)',
     badgeBg: 'rgba(245, 158, 11, 0.22)',
     accentText: '#fbbf24',
+    baseplateBg: '#141720', // Classic Dark Bluish Gray Baseplate
+    baseplateStud: '#1f2432',
     isSpaceTheme: false,
   };
 }

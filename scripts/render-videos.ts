@@ -21,6 +21,7 @@ function parseArgs() {
   let isPreview = false;
   let fast = false;
   let scale = 1;
+  let backgroundStyleCli: 'baseplate' | 'ambient' | 'blur' | 'plasma' | undefined;
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
@@ -38,6 +39,14 @@ function parseArgs() {
       scale = parseFloat(arg.split('=')[1]) || 1;
     } else if (arg === '--scale' && i + 1 < args.length) {
       scale = parseFloat(args[++i]) || 1;
+    } else if (arg.startsWith('--background=')) {
+      let bgVal = arg.split('=')[1];
+      if (bgVal === 'blurred' || bgVal === 'image' || bgVal === 'photo' || bgVal === 'blue') bgVal = 'blur';
+      backgroundStyleCli = bgVal as 'baseplate' | 'ambient' | 'blur' | 'plasma';
+    } else if ((arg === '--background' || arg === '--bg') && i + 1 < args.length) {
+      let bgVal = args[++i];
+      if (bgVal === 'blurred' || bgVal === 'image' || bgVal === 'photo' || bgVal === 'blue') bgVal = 'blur';
+      backgroundStyleCli = bgVal as 'baseplate' | 'ambient' | 'blur' | 'plasma';
     } else if (arg.startsWith('--concurrency=')) {
       concurrency = parseInt(arg.split('=')[1], 10) || 8;
     } else if (arg === '--concurrency' && i + 1 < args.length) {
@@ -50,7 +59,7 @@ function parseArgs() {
     scale = 0.5;
   }
 
-  return { targetId, force, concurrency, isPreview, fast, scale };
+  return { targetId, force, concurrency, isPreview, fast, scale, backgroundStyleCli };
 }
 
 function getAudioDuration(audioPath: string): number {
@@ -77,7 +86,7 @@ function getAudioDuration(audioPath: string): number {
 }
 
 async function main() {
-  const { targetId, force, concurrency, isPreview, fast, scale } = parseArgs();
+  const { targetId, force, concurrency, isPreview, fast, scale, backgroundStyleCli } = parseArgs();
 
   if (!fs.existsSync(JSON_FILE)) {
     console.error(`Missing sets.json at ${JSON_FILE}. Run 'npm run enrich' first.`);
@@ -228,6 +237,9 @@ async function main() {
       }
     }
 
+    const isStarWarsSet = (set.theme || '').toLowerCase().includes('star wars');
+    const resolvedBackgroundStyle = backgroundStyleCli || (isStarWarsSet ? 'plasma' : 'blur');
+
     const inputProps: LegoShowcaseProps = {
       id: set.id,
       name: set.name,
@@ -256,6 +268,7 @@ async function main() {
       audioSrc,
       subtitles,
       audioDurationInSeconds: audioDurationSeconds,
+      backgroundStyle: resolvedBackgroundStyle,
     };
 
     try {

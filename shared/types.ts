@@ -158,6 +158,7 @@ export interface LegoShowcaseProps {
   audioSrc?: string; // File URL, data URL, or web URL
   subtitles?: WordTimestamp[];
   audioDurationInSeconds?: number;
+  backgroundStyle?: 'baseplate' | 'ambient' | 'blur' | 'plasma';
 }
 
 export interface LegoDimensions {
