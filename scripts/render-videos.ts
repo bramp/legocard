@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { bundle } from '@remotion/bundler';
 import { renderMedia, selectComposition } from '@remotion/renderer';
@@ -17,7 +18,7 @@ function parseArgs() {
   const args = process.argv.slice(2);
   let targetId: string | undefined;
   let force = false;
-  let concurrency = 8;
+  let concurrency = Math.max(4, (os.cpus()?.length || 4) - 1);
   let isPreview = false;
   let fast = false;
   let scale = 1;
@@ -227,11 +228,34 @@ async function main() {
     console.log(`   Voiceover: "${narrationText}"`);
 
     const buildSpan = getCalendarBuildSpan(set);
+
+    // Extract core filename for comparison (e.g. '10234.jpg' -> '10234', '75419_Prod.png' -> '75419_Prod')
+    const getCoreFilename = (url?: string) => {
+      if (!url) return '';
+      const fn = url.split('?')[0].split('/').pop()?.replace(/\.[^.]+$/, '') || '';
+      return fn.replace(/^[a-f0-9]{16,}-/, '').replace(/_en-[a-z]+$/i, '');
+    };
+
+    const primaryCore = getCoreFilename(set.hiresImageUrl || set.imageUrl || set.id);
+    const hasLocalPrimary = fs.existsSync(localImagePath);
+
     const allImages: string[] = [];
     if (imageSrc) allImages.push(imageSrc);
+
     if (Array.isArray(set.images)) {
       for (const img of set.images) {
-        if (img && !allImages.includes(img)) {
+        if (!img) continue;
+        const core = getCoreFilename(img);
+
+        // If we already added the local primary image, skip remote images that represent the identical primary product shot
+        if (
+          hasLocalPrimary &&
+          (core === set.id || core === `${set.id}_Prod` || (primaryCore && core === primaryCore))
+        ) {
+          continue;
+        }
+
+        if (!allImages.includes(img)) {
           allImages.push(img);
         }
       }
@@ -290,7 +314,7 @@ async function main() {
         scale,
         concurrency,
         pixelFormat: 'yuv420p',
-        x264Preset: fast ? 'veryfast' : 'medium',
+        x264Preset: fast ? 'veryfast' : 'fast',
         onProgress: ({ progress }) => {
           process.stdout.write(`   Rendering: ${(progress * 100).toFixed(0)}%\r`);
         },

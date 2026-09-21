@@ -505,24 +505,24 @@ export const LegoShowcase: React.FC<LegoShowcaseProps> = ({
 
       {/* 6. Procedural Sound Effects (SFX) */}
       <Sequence from={2} durationInFrames={18}>
-        <Audio src={WHOOSH_SFX} volume={0.45} />
+        <Audio src={WHOOSH_SFX} volume={0.4} />
       </Sequence>
 
       {card1EntranceFrame > 0 && card1EntranceFrame < durationInFrames && (
         <Sequence from={card1EntranceFrame} durationInFrames={15}>
-          <Audio src={CARD_SNAP_SFX} volume={0.5} />
+          <Audio src={CARD_SNAP_SFX} volume={0.35} />
         </Sequence>
       )}
 
       {card2EntranceFrame > 0 && card2EntranceFrame < durationInFrames && (
         <Sequence from={card2EntranceFrame} durationInFrames={15}>
-          <Audio src={CARD_SNAP_SFX} volume={0.5} />
+          <Audio src={CARD_SNAP_SFX} volume={0.35} />
         </Sequence>
       )}
 
       {card3EntranceFrame > 0 && card3EntranceFrame < durationInFrames && (
         <Sequence from={card3EntranceFrame} durationInFrames={15}>
-          <Audio src={CARD_SNAP_SFX} volume={0.5} />
+          <Audio src={CARD_SNAP_SFX} volume={0.35} />
         </Sequence>
       )}
 

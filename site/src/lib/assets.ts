@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import type { EnrichedLegoSet } from '../../../shared/types.js';
 
 const CDN_BASE_URL = (
@@ -38,22 +40,33 @@ export function getSetImageUrl(set: EnrichedLegoSet): string {
   return '';
 }
 
+function hasLocalMedia(relPath: string): boolean {
+  try {
+    return (
+      fs.existsSync(path.resolve(process.cwd(), `../data/${relPath}`)) ||
+      fs.existsSync(path.resolve(process.cwd(), `data/${relPath}`))
+    );
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Returns the resolved media URLs for a Lego set (image, video, audio, subtitles).
  */
 export function getSetMediaUrls(set: EnrichedLegoSet) {
+  const videoRel =
+    set.media?.video ||
+    (set.videoPath || hasLocalMedia(`videos/${set.id}.mp4`) ? `videos/${set.id}.mp4` : undefined);
+
+  const audioRel =
+    set.media?.audio ||
+    (set.audioPath || hasLocalMedia(`audio/${set.id}.mp3`) ? `audio/${set.id}.mp3` : undefined);
+
   return {
     image: getSetImageUrl(set),
-    video: set.media?.video
-      ? getAssetUrl(set.media.video)
-      : set.videoPath
-        ? getAssetUrl(`videos/${set.id}.mp4`)
-        : undefined,
-    audio: set.media?.audio
-      ? getAssetUrl(set.media.audio)
-      : set.audioPath
-        ? getAssetUrl(`audio/${set.id}.mp3`)
-        : undefined,
-    subtitles: set.media?.subtitles ? getAssetUrl(set.media.subtitles) : undefined,
+    video: getAssetUrl(videoRel),
+    audio: getAssetUrl(audioRel),
+    subtitles: getAssetUrl(set.media?.subtitles),
   };
 }

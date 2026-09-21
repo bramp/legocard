@@ -64,22 +64,27 @@ function generateWhoosh(): string {
   return createWavDataUri(s, sampleRate);
 }
 
-// 2. Tactile Card Snap / Brick Pop (100ms)
-function generateCardPop(): string {
+// 2. Soft Smooth Card Slide & Subtle Dampened Landing (Zero harsh click)
+function generateCardSlide(): string {
   const sampleRate = 22050;
-  const dur = 0.11;
+  const dur = 0.22;
   const n = Math.floor(sampleRate * dur);
   const s = new Float32Array(n);
   for (let i = 0; i < n; i++) {
-    const t = i / sampleRate;
-    const pitch = 110 + 650 * Math.exp(-t * 65);
-    const env = Math.exp(-t * 38);
-    const click = i < 40 ? (Math.random() * 2 - 1) * 0.45 : 0;
-    s[i] = (Math.sin(2 * Math.PI * pitch * t) * 0.75 + click) * env * 0.55;
+    const t = i / n;
+    // Smooth bell-shaped envelope for gentle air displacement
+    const env = Math.sin(t * Math.PI) ** 2.2;
+    // Low-frequency subtle swoop (120Hz -> 280Hz -> 90Hz)
+    const freq = 120 + Math.sin(t * Math.PI) * 160;
+    const tone = Math.sin(2 * Math.PI * freq * (i / sampleRate));
+    // Soft, rounded low-end cushion right at arrival (75Hz, dampened)
+    const thudEnv = t > 0.68 ? Math.exp(-(t - 0.68) * 36) : 0;
+    const thud = Math.sin(2 * Math.PI * 75 * (i / sampleRate)) * thudEnv * 0.25;
+    s[i] = (tone * env * 0.35 + thud) * 0.7;
   }
   return createWavDataUri(s, sampleRate);
 }
 
 // Cached singleton URIs
 export const WHOOSH_SFX = generateWhoosh();
-export const CARD_SNAP_SFX = generateCardPop();
+export const CARD_SNAP_SFX = generateCardSlide();
