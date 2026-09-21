@@ -16,24 +16,26 @@
 {%- endif -%}
 
 {%- assign factsCount = 0 -%}
-{%- if isLargest %}
+{%- if isLargest and isLongestBuild %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is both the largest set and the longest build in the collection.
+{%- elsif isSmallest and isFastestBuild %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is both the smallest set and the fastest build in the collection.
+{%- elsif isLargest %}
   {%- assign factsCount = factsCount | plus: 1 %} It has the most pieces in the collection.
+{%- elsif isLongestBuild %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the longest build in the collection.
 {%- elsif piecesRank >= 2 and piecesRank <= 5 %}
   {%- assign factsCount = factsCount | plus: 1 %} It is the {{ piecesRankOrdinal }} largest set in the collection.
+{%- elsif buildTimeRank >= 2 and buildTimeRank <= 5 %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the {{ buildTimeRankOrdinal }} longest build in the collection.
 {%- elsif isSmallest %}
   {%- assign factsCount = factsCount | plus: 1 %} It is the smallest set in the collection.
+{%- elsif isFastestBuild %}
+  {%- assign factsCount = factsCount | plus: 1 %} It is the fastest build in the collection.
 {%- elsif isThemeLargest %}
   {%- assign factsCount = factsCount | plus: 1 %} It is the largest {{ themeName }} set in the collection.
 {%- elsif isTheme2ndLargest %}
   {%- assign factsCount = factsCount | plus: 1 %} It is the 2nd largest {{ themeName }} set in the collection.
-{%- endif -%}
-
-{%- if isLongestBuild %}
-  {%- assign factsCount = factsCount | plus: 1 %} It is the longest build in the collection.
-{%- elsif buildTimeRank >= 2 and buildTimeRank <= 5 and factsCount < 2 %}
-  {%- assign factsCount = factsCount | plus: 1 %} It is the {{ buildTimeRankOrdinal }} longest build in the collection.
-{%- elsif isFastestBuild %}
-  {%- assign factsCount = factsCount | plus: 1 %} It is the fastest build in the collection.
 {%- endif -%}
 
 {%- if factsCount == 0 -%}

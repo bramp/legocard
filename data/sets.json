@@ -11,6 +11,8 @@
     "pieces": 2989,
     "instructionBooks": 4,
     "rating": 4.2,
+    "ratingBuild": 3.5,
+    "ratingLooks": 3.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/10234-1/15850.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltfa5439e6d37aa74e/10234.jpg?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltfa5439e6d37aa74e/10234.jpg?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -470,6 +472,8 @@
     "pieces": 2361,
     "instructionBooks": 3,
     "rating": 4.6,
+    "ratingBuild": 4,
+    "ratingLooks": 5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/10237-1/6587.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blte02664bf636ba71e/10237.jpg?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blte02664bf636ba71e/10237.jpg?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -519,6 +523,8 @@
     "pieces": 5923,
     "instructionBooks": 1,
     "rating": 3.9,
+    "ratingBuild": 5,
+    "ratingLooks": 5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/10256-1/10681.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltc64b5019bab270a1/10256.jpg?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltc64b5019bab270a1/10256.jpg?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -570,6 +576,8 @@
     "pieces": 6181,
     "instructionBooks": 3,
     "rating": 4.7,
+    "ratingBuild": 5,
+    "ratingLooks": 5,
     "imageUrl": "https://www.lego.com/cdn/product-assets/product.img.pri/10316_Prod.png",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltec012c948c003fba/10316_alt16.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltec012c948c003fba/10316_alt16.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -640,6 +648,84 @@
     "funFacts": "In Tolkien lore, Elrond’s sanctuary remained magically shielded from the Dark Lord's watchful gaze while the Fellowship formed. Ironically, if you look underneath the council floor, you will discover a secret Eye of Sauron lurking right below the One Ring!"
   },
   {
+    "id": "10333",
+    "setNum": "10333-1",
+    "name": "Barad-dûr",
+    "year": 2024,
+    "dateReleased": "June 4, 2024",
+    "theme": "The Hobbit & The Lord of the Rings / The Lord of the Rings / Icons (Creator Expert & Advanced Models)",
+    "age": "18+",
+    "pieces": 5478,
+    "instructionBooks": 3,
+    "rating": 4.6,
+    "ratingBuild": 5,
+    "ratingLooks": 5,
+    "imageUrl": "https://www.lego.com/cdn/product-assets/product.img.pri/10333_Prod.png",
+    "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt370b7e8cc1fcceb2/10333.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
+    "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt370b7e8cc1fcceb2/10333.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
+    "images": [
+      "https://www.lego.com/cdn/cs/set/assets/blt370b7e8cc1fcceb2/10333.png",
+      "https://www.lego.com/cdn/cs/set/assets/blt862a9ecc5d52d2e5/10333_boxprod_v39_sha.jpg",
+      "https://www.lego.com/cdn/cs/set/assets/blt14d2306147e2a6f3/10333_alt1.png",
+      "https://www.lego.com/cdn/cs/set/assets/blt03549430238c05bf/10333_alt2.png",
+      "https://www.lego.com/cdn/cs/set/assets/blta983dce02ccf4330/10333_alt3.png",
+      "https://www.lego.com/cdn/cs/set/assets/blt6b5e35e0ad41acb5/10333_alt4.png",
+      "https://www.lego.com/cdn/cs/set/assets/blte70d9991035a6ff0/10333_alt5.png",
+      "https://www.lego.com/cdn/cs/set/assets/bltebd8e27dfc6c95e8/10333_alt6.png",
+      "https://www.lego.com/cdn/cs/set/assets/bltd481c5b377c414b9/10333_alt7.png",
+      "https://www.lego.com/cdn/cs/set/assets/bltbae4336497e50109/10333_WEB_SEC07_NOBG.png",
+      "https://www.lego.com/cdn/cs/set/assets/blt566f2b399e907599/10333_Back_06.png",
+      "https://www.lego.com/cdn/cs/set/assets/blte95daf8192cc9cdd/10333_lineup.png",
+      "https://www.lego.com/cdn/cs/set/assets/blt029df12d12c26630/10333_WEB_SEC01_NOBG.png",
+      "https://www.lego.com/cdn/cs/set/assets/blt41ac292ecdccf61e/10333_Lifestyle1.jpg",
+      "https://www.lego.com/cdn/cs/set/assets/blt9be9795f3de6f33f/10333_Lifestyle2.jpg",
+      "https://www.lego.com/cdn/cs/set/assets/blt6d6190117e558b8c/10333_Lifestyle3.jpg",
+      "https://www.lego.com/cdn/cs/set/assets/blt8ff40b70bb640744/10333_Lifestyle4.jpg",
+      "https://www.lego.com/cdn/cs/set/assets/bltd65544b3cd0a70a4/10333_Lifestyle5.jpg",
+      "https://www.lego.com/cdn/cs/set/assets/bltbac7cdcdda556bb9/10333_Lifestyle6.jpg",
+      "https://www.lego.com/cdn/cs/set/assets/blt03607818898a47fb/10333_Lifestyle7.jpg",
+      "https://www.lego.com/cdn/cs/set/assets/blt3ef543ed75d86cf2/10333_Box5_v39.png"
+    ],
+    "description": "<p>Journey to Middle-earth™ with the LEGO® Icons The Lord of the Rings: Barad-dûr™ model. This impressive movie memorabilia set is bursting with features that fans will adore and depicts the ominous fortress with its soaring tower elevating the Eye of Sauron™ high above Middle-earth™. The set also comes with 10 minifigures, including Sauron™, Mouth of Sauron™, Gothmog, Orc™, Frodo, Sam and Gollum™.</p>\n\n<p>The 1st-floor interior includes Gollum’s hideout, a weapons forge and a prison with a raisable Orc cage. Above the 2nd-floor dining area you’ll find a room with a throne that opens to reveal a hidden map of Middle-earth. The 4th floor is home to Mouth of Sauron’s study, while the 5th floor houses a tower library with a rotating ladder. The black gate is automated and the Eye of Sauron illuminates for a captivating display.</p>\n\n<p>Discover the inspiring range of LEGO creative building sets for adults. The LEGO Builder app features a digital version of the building instructions included with this set.</p>",
+    "featuresText": "<ul><li> LEGO® Icons The Lord of the Rings: Barad-dûr™ model ⁠– Craft a meticulously detailed replica of the ominous fortress, its soaring tower elevating the menacing Eye of Sauron™ high above Middle-earth™\n</li><li> What’s in the box⁠ – This creative building set features a replica of The Lord of the Rings: Barad-dûr™ and 10 minifigures, including Sauron™, Mouth of Sauron™, Orc™, Frodo, Sam and Gollum™ and Gothmog\n</li><li> Features and functions ⁠– The black gate is automated, the Eye of Sauron™ illuminates and the 4-section modular structure features detailed rooms, including a weapons forge, throne room and prison\n</li><li> Packed with movie-themed accessories ⁠– Features diverse armor accessories, including helmets for Mouth of Sauron™ and Sauron™, plus the one ring, light of Eärendil and Sauron’s mace\n</li><li> Gifts for movie-lovers ⁠– Treat yourself or give this LEGO® Icons movie memorabilia building set as a gift for adult fans of The Lord of the Rings™ movie trilogy\n</li><li> Includes printed and digital building instructions – The LEGO® Builder app features a digital version of the printed building instructions included with this LEGO Icons construction set\n</li><li> LEGO® building kits for adults – This LEGO Icons project is part of the inspiring range of LEGO creative building sets designed specifically for adults\n</li><li> Dimensions – The fortress in this 5,471-piece building set measures over 32.5 in. (83 cm) high, 17.5 in. (45 cm) wide and 12 in. (30 cm) deep</li></ul>",
+    "metaDescription": "Movie-themed home and office decor building set for adults",
+    "metaTitle": "The Lord of the Rings: Barad-dûr™ 10333 | LEGO® Icons | Buy online at the Official LEGO® Shop US",
+    "slug": "the-lord-of-the-rings-barad-dur-10333",
+    "brand": "LEGO® Icons",
+    "categories": [
+      "LEGO® Icons",
+      "Movies",
+      "Fathers Day",
+      "Bestsellers JP",
+      "Bestsellers EMEA",
+      "Fantasy",
+      "Adults Welcome",
+      "Lord of the Rings™",
+      "Big Sets",
+      "Sets",
+      "World book day",
+      "Medieval Sets"
+    ],
+    "productVideos": [
+      {
+        "id": "bltaff3c1d36ba47043",
+        "url": "https://www.lego.com/cdn/cs/set/assets/bltaff3c1d36ba47043/10333_360SPIN_DynamicV2.mp4"
+      },
+      {
+        "id": "bltf73ae1e1efcbe579",
+        "url": "https://www.lego.com/cdn/cs/set/assets/bltf73ae1e1efcbe579/10333_AID2403874P1GL_ShopperVideo_30s_16x9_WoText.mp4"
+      }
+    ],
+    "dimensions": {
+      "height": 83,
+      "width": 45,
+      "depth": 30
+    },
+    "media": {},
+    "buildDate": "2025-06-19",
+    "funFacts": "A light brick hidden inside the menacing tower actually makes the Eye of Sauron glow menacingly over Middle-earth. Sneak behind the fiery gaze to discover an orc dining hall featuring a hilarious menu, proving that meat really is back on the menu."
+  },
+  {
     "id": "10349",
     "setNum": "10349-1",
     "name": "Happy Plants",
@@ -650,6 +736,8 @@
     "pieces": 217,
     "instructionBooks": 2,
     "rating": 4.4,
+    "ratingBuild": 4,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/10349-1/154678.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt6921020c0cfcc903/10349_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt6921020c0cfcc903/10349_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -708,6 +796,8 @@
     "pieces": 2017,
     "instructionBooks": 3,
     "rating": 4.1,
+    "ratingBuild": 5,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/10354-1/153628.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltd183027c82558d22/10354_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltd183027c82558d22/10354_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -774,6 +864,8 @@
     "pieces": 1202,
     "instructionBooks": 1,
     "rating": 4.1,
+    "ratingBuild": 5,
+    "ratingLooks": 4.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/10367-1/156999.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltc10e431d4772fa2d/10367_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltc10e431d4772fa2d/10367_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -838,6 +930,8 @@
     "pieces": 538,
     "instructionBooks": 1,
     "rating": 4.1,
+    "ratingBuild": 5,
+    "ratingLooks": 5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/11373-1/167509.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt2b9cea17b647aa44/blt3741cf2d0a12aa6a-11373_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt2b9cea17b647aa44/blt3741cf2d0a12aa6a-11373_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -905,6 +999,8 @@
     "pieces": 8278,
     "instructionBooks": 3,
     "rating": 4.6,
+    "ratingBuild": 5,
+    "ratingLooks": 5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/11377-1/173837.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt5e6d5f93a1811e3b/bltfbf117028d65c7c2-11377_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt5e6d5f93a1811e3b/bltfbf117028d65c7c2-11377_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -996,6 +1092,8 @@
     "pieces": 1685,
     "instructionBooks": 1,
     "rating": 4.2,
+    "ratingBuild": 3.5,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/21042-1/13289.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt0bc1f2fb183e37ed/21042_alt3.jpg?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt0bc1f2fb183e37ed/21042_alt3.jpg?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1048,6 +1146,8 @@
     "pieces": 1476,
     "instructionBooks": 1,
     "rating": 4.2,
+    "ratingBuild": 4.5,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/21058-1/102703.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt29a9be6d41806916/21058.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt29a9be6d41806916/21058.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1106,6 +1206,8 @@
     "pieces": 1165,
     "instructionBooks": 1,
     "rating": 4.4,
+    "ratingBuild": 3,
+    "ratingLooks": 4.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/21336-1/105200.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt07d89d3bb6115752/21336.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt07d89d3bb6115752/21336.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1210,6 +1312,8 @@
     "pieces": 355,
     "instructionBooks": 3,
     "rating": 4,
+    "ratingBuild": 4,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/31157-1/133399.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltfa6c9196a514bb03/31157.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltfa6c9196a514bb03/31157.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1265,6 +1369,8 @@
     "pieces": 1810,
     "instructionBooks": 1,
     "rating": 4.5,
+    "ratingBuild": 3.5,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/31208-1/131769.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt93a67dfe298bfe01/31208.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt93a67dfe298bfe01/31208.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1333,6 +1439,8 @@
     "pieces": 1773,
     "instructionBooks": 5,
     "rating": 4.8,
+    "ratingBuild": 3.5,
+    "ratingLooks": 5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/31216-1/154763.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt709d460037ccde76/31216_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt709d460037ccde76/31216_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1389,6 +1497,8 @@
     "pieces": 346,
     "instructionBooks": 1,
     "rating": 4.2,
+    "ratingBuild": 3.5,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40516-1/88460.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltced1e10e43211f84/40516_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltced1e10e43211f84/40516_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1451,6 +1561,8 @@
     "pieces": 784,
     "instructionBooks": 2,
     "rating": 3.9,
+    "ratingBuild": 3.5,
+    "ratingLooks": 3.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40573-1/106765.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt25470f9d8e38a8a7/40573_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt25470f9d8e38a8a7/40573_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1506,6 +1618,8 @@
     "pieces": 654,
     "instructionBooks": 1,
     "rating": 4.3,
+    "ratingBuild": 3.5,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40649-1/121814.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt742e8599eb5e8931/40649.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt742e8599eb5e8931/40649.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1557,6 +1671,8 @@
     "pieces": 270,
     "instructionBooks": 1,
     "rating": 4.2,
+    "ratingBuild": 5,
+    "ratingLooks": 4.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40693-1/140961.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltea9669606853a90f/40693_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltea9669606853a90f/40693_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1604,6 +1720,8 @@
     "pieces": 181,
     "instructionBooks": 1,
     "rating": 4.1,
+    "ratingBuild": 4,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40761-1/153616.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt06f219c28e17615f/40761_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt06f219c28e17615f/40761_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1699,6 +1817,8 @@
     "pieces": 264,
     "instructionBooks": 2,
     "rating": 4.1,
+    "ratingBuild": 4,
+    "ratingLooks": 3.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40788-1/158121.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt38431b9c6fb7ec96/40788_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt38431b9c6fb7ec96/40788_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1744,6 +1864,8 @@
     "pieces": 694,
     "instructionBooks": 1,
     "rating": 3.9,
+    "ratingBuild": 3.5,
+    "ratingLooks": 3.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40819-1/151938.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt85061affc36d7306/40819_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt85061affc36d7306/40819_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1794,6 +1916,8 @@
     "pieces": 761,
     "instructionBooks": 1,
     "rating": 4.1,
+    "ratingBuild": 3.5,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40820-1/160760.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltc307fd1f5230e03d/40820_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltc307fd1f5230e03d/40820_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1845,6 +1969,8 @@
     "pieces": 617,
     "instructionBooks": 1,
     "rating": 3.8,
+    "ratingBuild": 3.5,
+    "ratingLooks": 3.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40825-1/158588.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt43e116a81cdae61f/40825_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt43e116a81cdae61f/40825_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1895,6 +2021,8 @@
     "pieces": 307,
     "instructionBooks": 1,
     "rating": 4.4,
+    "ratingBuild": 4,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/40893-1/173830.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt1ebbde5789b2fa7f/blt694082743c4206ee-40893_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt1ebbde5789b2fa7f/blt694082743c4206ee-40893_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -1943,6 +2071,8 @@
     "pieces": 632,
     "instructionBooks": 1,
     "rating": 4.2,
+    "ratingBuild": 4,
+    "ratingLooks": 5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/42221-1/164578.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt5c67fdd9e4bd98de/42221_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt5c67fdd9e4bd98de/42221_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -2004,6 +2134,8 @@
     "pieces": 7541,
     "instructionBooks": 1,
     "rating": 4.4,
+    "ratingBuild": 4,
+    "ratingLooks": 5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75192-1/30881.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt3349f56c6f192e18/75192_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt3349f56c6f192e18/75192_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -2356,6 +2488,8 @@
     "pieces": 2314,
     "instructionBooks": 1,
     "rating": 4.2,
+    "ratingBuild": 5,
+    "ratingLooks": 5,
     "imageUrl": "https://www.lego.com/cdn/product-assets/product.img.pri/75308_Prod.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt71499209e5a01491/75308_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt71499209e5a01491/75308_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -2473,6 +2607,8 @@
     "pieces": 6785,
     "instructionBooks": 4,
     "rating": 4.4,
+    "ratingBuild": 4,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75313-1/94568.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blta7b7b825b6d4fc0a/75313_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blta7b7b825b6d4fc0a/75313_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -2859,6 +2995,8 @@
     "pieces": 1949,
     "instructionBooks": 1,
     "rating": 3.9,
+    "ratingBuild": 4,
+    "ratingLooks": 4.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75355-1/119795.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt3e07af4c83a87efd/75355.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt3e07af4c83a87efd/75355.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -2988,6 +3126,8 @@
     "pieces": 583,
     "instructionBooks": 1,
     "rating": 4.2,
+    "ratingBuild": 3.5,
+    "ratingLooks": 4.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75381-1/139292.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt598ff441b0c5caa5/75381.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt598ff441b0c5caa5/75381.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -3040,6 +3180,8 @@
     "pieces": 1931,
     "instructionBooks": 1,
     "rating": 4.1,
+    "ratingBuild": 4,
+    "ratingLooks": 4.5,
     "imageUrl": "https://www.lego.com/cdn/product-assets/product.img.pri/75382_Prod.png",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt42c7adf188ed2eb8/75382.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt42c7adf188ed2eb8/75382.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -3206,6 +3348,8 @@
     "pieces": 1555,
     "instructionBooks": 1,
     "rating": 4.4,
+    "ratingBuild": 3.5,
+    "ratingLooks": 3.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75394-1/140420.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltb6f5dfaf01195072/75394_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltb6f5dfaf01195072/75394_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -3314,6 +3458,8 @@
     "pieces": 3943,
     "instructionBooks": 2,
     "rating": 4.3,
+    "ratingBuild": 4,
+    "ratingLooks": 3.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75397-1/145805.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltad48b7c771f86707/75397_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltad48b7c771f86707/75397_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -3378,6 +3524,8 @@
     "pieces": 1140,
     "instructionBooks": 1,
     "rating": 4.1,
+    "ratingBuild": 4,
+    "ratingLooks": 5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75398-1/142250.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt1d21181b67dcb8a5/75398_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt1d21181b67dcb8a5/75398_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -3431,6 +3579,8 @@
     "pieces": 1048,
     "instructionBooks": 2,
     "rating": 3.9,
+    "ratingBuild": 4,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75403-1/148930.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt15f914b936f5b57a/75403_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt15f914b936f5b57a/75403_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -3485,6 +3635,8 @@
     "pieces": 700,
     "instructionBooks": 2,
     "rating": 4.2,
+    "ratingBuild": 4,
+    "ratingLooks": 5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75407-1/154222.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt9ae67d7d9f7f24cc/75407_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt9ae67d7d9f7f24cc/75407_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -3649,6 +3801,8 @@
     "pieces": 1513,
     "instructionBooks": 1,
     "rating": 4.1,
+    "ratingBuild": 4,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75417-1/158623.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt98568413538e8f35/75417_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt98568413538e8f35/75417_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -3706,6 +3860,8 @@
     "pieces": 9031,
     "instructionBooks": 6,
     "rating": 4.2,
+    "ratingBuild": 4,
+    "ratingLooks": 4.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75419-1/160973.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt725a94446f56dbe2/75419_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt725a94446f56dbe2/75419_Prod.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -3771,14 +3927,10 @@
       "depth": 27
     },
     "media": {
+      "audio": "audio/75419.mp3",
+      "subtitles": "audio/75419.json",
       "video": "videos/75419.mp4"
     },
-    "dateStarted": "1899-12-30 22:12",
-    "dateFinished": "2026-02-07 15:03",
-    "buildDate": "2026-02-07 15:03",
-    "buildTimeHours": 20.15,
-    "timeToBuildFormatted": "20 hours 9 minutes",
-    "funFacts": "In the original movie, the dreaded battle station housed a slimy, one-eyed scavenger named the Dianoga inside its murky garbage chutes. If you peek deep into the bottom compactor, you'll find that very same little creature secretly lurking beneath the piles of crushed junk!",
     "audioPath": "data/audio/75419.mp3",
     "subtitles": [
       {
@@ -3837,358 +3989,449 @@
         "end": 4566
       },
       {
-        "word": "This",
+        "word": "Built",
         "start": 5315,
-        "end": 5543
+        "end": 5587
+      },
+      {
+        "word": "over",
+        "start": 5598,
+        "end": 5815
+      },
+      {
+        "word": "4",
+        "start": 5826,
+        "end": 6098
+      },
+      {
+        "word": "weeks",
+        "start": 6109,
+        "end": 6457
+      },
+      {
+        "word": "this",
+        "start": 6652,
+        "end": 6837
       },
       {
         "word": "9,031-piece",
-        "start": 5554,
-        "end": 7011
+        "start": 6848,
+        "end": 8272
       },
       {
         "word": "model",
-        "start": 7022,
-        "end": 7326
+        "start": 8283,
+        "end": 8587
       },
       {
         "word": "took",
-        "start": 7337,
-        "end": 7522
-      },
-      {
-        "word": "20 hours",
-        "start": 7533,
-        "end": 8207
-      },
-      {
-        "word": "and",
-        "start": 8217,
-        "end": 8347
-      },
-      {
-        "word": "9",
-        "start": 8359,
-        "end": 8566
-      },
-      {
-        "word": "minutes",
-        "start": 8576,
-        "end": 8869
-      },
-      {
-        "word": "to",
-        "start": 8880,
-        "end": 8989
-      },
-      {
-        "word": "assemble",
-        "start": 9000,
-        "end": 9511
-      },
-      {
-        "word": "It",
-        "start": 10261,
-        "end": 10370
-      },
-      {
-        "word": "has",
-        "start": 10380,
-        "end": 10587
-      },
-      {
-        "word": "the",
-        "start": 10598,
-        "end": 10663
-      },
-      {
-        "word": "most",
-        "start": 10674,
-        "end": 10913
-      },
-      {
-        "word": "pieces",
-        "start": 10924,
-        "end": 11283
-      },
-      {
-        "word": "in",
-        "start": 11293,
-        "end": 11369
-      },
-      {
-        "word": "the",
-        "start": 11380,
-        "end": 11434
-      },
-      {
-        "word": "collection",
-        "start": 11446,
-        "end": 11989
-      },
-      {
-        "word": "It",
-        "start": 12739,
-        "end": 12859
-      },
-      {
-        "word": "is",
-        "start": 12870,
-        "end": 12968
-      },
-      {
-        "word": "the",
-        "start": 12978,
-        "end": 13065
-      },
-      {
-        "word": "longest",
-        "start": 13076,
-        "end": 13511
-      },
-      {
-        "word": "build",
-        "start": 13522,
-        "end": 13794
-      },
-      {
-        "word": "in",
-        "start": 13804,
-        "end": 13858
-      },
-      {
-        "word": "the",
-        "start": 13870,
-        "end": 13924
-      },
-      {
-        "word": "collection",
-        "start": 13935,
-        "end": 14478
-      },
-      {
-        "word": "In",
-        "start": 15228,
-        "end": 15369
-      },
-      {
-        "word": "the",
-        "start": 15380,
-        "end": 15434
-      },
-      {
-        "word": "original",
-        "start": 15446,
-        "end": 15848
-      },
-      {
-        "word": "movie",
-        "start": 15859,
-        "end": 16174
-      },
-      {
-        "word": "the",
-        "start": 16337,
-        "end": 16424
-      },
-      {
-        "word": "dreaded",
-        "start": 16435,
-        "end": 16739
-      },
-      {
-        "word": "battle",
-        "start": 16750,
-        "end": 17022
-      },
-      {
-        "word": "station",
-        "start": 17033,
-        "end": 17446
-      },
-      {
-        "word": "housed",
-        "start": 17457,
-        "end": 17740
+        "start": 8598,
+        "end": 8750
       },
       {
         "word": "a",
-        "start": 17750,
-        "end": 17793
+        "start": 8761,
+        "end": 8815
       },
       {
-        "word": "slimy",
-        "start": 17804,
-        "end": 18261
-      },
-      {
-        "word": "one-eyed",
-        "start": 18511,
-        "end": 18859
-      },
-      {
-        "word": "scavenger",
-        "start": 18870,
-        "end": 19370
-      },
-      {
-        "word": "named",
-        "start": 19380,
-        "end": 19619
-      },
-      {
-        "word": "the",
-        "start": 19630,
-        "end": 19706
-      },
-      {
-        "word": "Dianoga",
-        "start": 19717,
-        "end": 20260
-      },
-      {
-        "word": "inside",
-        "start": 20272,
-        "end": 20685
-      },
-      {
-        "word": "its",
-        "start": 20696,
-        "end": 20805
-      },
-      {
-        "word": "murky",
-        "start": 20815,
-        "end": 21141
-      },
-      {
-        "word": "garbage",
-        "start": 21152,
-        "end": 21467
-      },
-      {
-        "word": "chutes",
-        "start": 21478,
-        "end": 21978
-      },
-      {
-        "word": "If",
-        "start": 22728,
-        "end": 22869
-      },
-      {
-        "word": "you",
-        "start": 22880,
-        "end": 22989
-      },
-      {
-        "word": "peek",
-        "start": 23000,
-        "end": 23272
-      },
-      {
-        "word": "deep",
-        "start": 23283,
-        "end": 23500
-      },
-      {
-        "word": "into",
-        "start": 23511,
-        "end": 23663
-      },
-      {
-        "word": "the",
-        "start": 23674,
-        "end": 23761
-      },
-      {
-        "word": "bottom",
-        "start": 23772,
-        "end": 24055
-      },
-      {
-        "word": "compactor",
-        "start": 24065,
-        "end": 24587
-      },
-      {
-        "word": "you'll",
-        "start": 24837,
-        "end": 24946
-      },
-      {
-        "word": "find",
-        "start": 24957,
-        "end": 25207
-      },
-      {
-        "word": "that",
-        "start": 25217,
-        "end": 25315
-      },
-      {
-        "word": "very",
-        "start": 25326,
-        "end": 25598
-      },
-      {
-        "word": "same",
-        "start": 25609,
-        "end": 25870
-      },
-      {
-        "word": "little",
-        "start": 25880,
-        "end": 26054
-      },
-      {
-        "word": "creature",
-        "start": 26065,
-        "end": 26413
-      },
-      {
-        "word": "secretly",
-        "start": 26424,
-        "end": 26826
-      },
-      {
-        "word": "lurking",
-        "start": 26837,
-        "end": 27163
-      },
-      {
-        "word": "beneath",
-        "start": 27174,
-        "end": 27435
-      },
-      {
-        "word": "the",
-        "start": 27446,
-        "end": 27522
-      },
-      {
-        "word": "piles",
-        "start": 27533,
-        "end": 27892
+        "word": "total",
+        "start": 8826,
+        "end": 9130
       },
       {
         "word": "of",
-        "start": 27902,
-        "end": 27978
+        "start": 9141,
+        "end": 9239
+      },
+      {
+        "word": "20 hours",
+        "start": 9250,
+        "end": 9924
+      },
+      {
+        "word": "and",
+        "start": 9935,
+        "end": 10076
+      },
+      {
+        "word": "9",
+        "start": 10087,
+        "end": 10315
+      },
+      {
+        "word": "minutes",
+        "start": 10326,
+        "end": 10619
+      },
+      {
+        "word": "to",
+        "start": 10630,
+        "end": 10739
+      },
+      {
+        "word": "assemble",
+        "start": 10750,
+        "end": 11239
+      },
+      {
+        "word": "It",
+        "start": 11989,
+        "end": 12109
+      },
+      {
+        "word": "is",
+        "start": 12120,
+        "end": 12229
+      },
+      {
+        "word": "both",
+        "start": 12239,
+        "end": 12467
+      },
+      {
+        "word": "the",
+        "start": 12478,
+        "end": 12576
+      },
+      {
+        "word": "largest",
+        "start": 12587,
+        "end": 12978
+      },
+      {
+        "word": "set",
+        "start": 12989,
+        "end": 13261
+      },
+      {
+        "word": "and",
+        "start": 13272,
+        "end": 13348
+      },
+      {
+        "word": "the",
+        "start": 13359,
+        "end": 13435
+      },
+      {
+        "word": "longest",
+        "start": 13446,
+        "end": 13870
+      },
+      {
+        "word": "build",
+        "start": 13880,
+        "end": 14141
+      },
+      {
+        "word": "in",
+        "start": 14152,
+        "end": 14206
+      },
+      {
+        "word": "the",
+        "start": 14217,
+        "end": 14271
+      },
+      {
+        "word": "collection",
+        "start": 14283,
+        "end": 14826
+      },
+      {
+        "word": "It",
+        "start": 15576,
+        "end": 15696
+      },
+      {
+        "word": "is",
+        "start": 15707,
+        "end": 15827
+      },
+      {
+        "word": "rated",
+        "start": 15837,
+        "end": 16130
+      },
+      {
+        "word": "as",
+        "start": 16141,
+        "end": 16261
+      },
+      {
+        "word": "one",
+        "start": 16272,
+        "end": 16413
+      },
+      {
+        "word": "of",
+        "start": 16424,
+        "end": 16478
+      },
+      {
+        "word": "our",
+        "start": 16489,
+        "end": 16598
+      },
+      {
+        "word": "best-looking",
+        "start": 16609,
+        "end": 17120
+      },
+      {
+        "word": "display",
+        "start": 17130,
+        "end": 17478
+      },
+      {
+        "word": "models",
+        "start": 17489,
+        "end": 17880
+      },
+      {
+        "word": "in",
+        "start": 17891,
+        "end": 17967
+      },
+      {
+        "word": "the",
+        "start": 17978,
+        "end": 18032
+      },
+      {
+        "word": "collection",
+        "start": 18043,
+        "end": 18576
+      },
+      {
+        "word": "In",
+        "start": 19326,
+        "end": 19467
+      },
+      {
+        "word": "the",
+        "start": 19478,
+        "end": 19532
+      },
+      {
+        "word": "original",
+        "start": 19543,
+        "end": 19945
+      },
+      {
+        "word": "movie",
+        "start": 19957,
+        "end": 20272
+      },
+      {
+        "word": "the",
+        "start": 20435,
+        "end": 20522
+      },
+      {
+        "word": "dreaded",
+        "start": 20533,
+        "end": 20837
+      },
+      {
+        "word": "battle",
+        "start": 20848,
+        "end": 21120
+      },
+      {
+        "word": "station",
+        "start": 21130,
+        "end": 21543
+      },
+      {
+        "word": "housed",
+        "start": 21554,
+        "end": 21837
+      },
+      {
+        "word": "a",
+        "start": 21848,
+        "end": 21891
+      },
+      {
+        "word": "slimy",
+        "start": 21902,
+        "end": 22359
+      },
+      {
+        "word": "one-eyed",
+        "start": 22609,
+        "end": 22957
+      },
+      {
+        "word": "scavenger",
+        "start": 22967,
+        "end": 23467
+      },
+      {
+        "word": "named",
+        "start": 23478,
+        "end": 23717
+      },
+      {
+        "word": "the",
+        "start": 23728,
+        "end": 23804
+      },
+      {
+        "word": "Dianoga",
+        "start": 23815,
+        "end": 24358
+      },
+      {
+        "word": "inside",
+        "start": 24370,
+        "end": 24783
+      },
+      {
+        "word": "its",
+        "start": 24793,
+        "end": 24902
+      },
+      {
+        "word": "murky",
+        "start": 24913,
+        "end": 25239
+      },
+      {
+        "word": "garbage",
+        "start": 25250,
+        "end": 25565
+      },
+      {
+        "word": "chutes",
+        "start": 25576,
+        "end": 26076
+      },
+      {
+        "word": "If",
+        "start": 26826,
+        "end": 26967
+      },
+      {
+        "word": "you",
+        "start": 26978,
+        "end": 27087
+      },
+      {
+        "word": "peek",
+        "start": 27098,
+        "end": 27370
+      },
+      {
+        "word": "deep",
+        "start": 27380,
+        "end": 27597
+      },
+      {
+        "word": "into",
+        "start": 27609,
+        "end": 27761
+      },
+      {
+        "word": "the",
+        "start": 27772,
+        "end": 27859
+      },
+      {
+        "word": "bottom",
+        "start": 27870,
+        "end": 28153
+      },
+      {
+        "word": "compactor",
+        "start": 28163,
+        "end": 28685
+      },
+      {
+        "word": "you'll",
+        "start": 28935,
+        "end": 29044
+      },
+      {
+        "word": "find",
+        "start": 29054,
+        "end": 29304
+      },
+      {
+        "word": "that",
+        "start": 29315,
+        "end": 29413
+      },
+      {
+        "word": "very",
+        "start": 29424,
+        "end": 29696
+      },
+      {
+        "word": "same",
+        "start": 29707,
+        "end": 29968
+      },
+      {
+        "word": "little",
+        "start": 29978,
+        "end": 30152
+      },
+      {
+        "word": "creature",
+        "start": 30163,
+        "end": 30511
+      },
+      {
+        "word": "secretly",
+        "start": 30522,
+        "end": 30924
+      },
+      {
+        "word": "lurking",
+        "start": 30935,
+        "end": 31261
+      },
+      {
+        "word": "beneath",
+        "start": 31272,
+        "end": 31533
+      },
+      {
+        "word": "the",
+        "start": 31543,
+        "end": 31619
+      },
+      {
+        "word": "piles",
+        "start": 31630,
+        "end": 31989
+      },
+      {
+        "word": "of",
+        "start": 32000,
+        "end": 32076
       },
       {
         "word": "crushed",
-        "start": 27989,
-        "end": 28326
+        "start": 32087,
+        "end": 32424
       },
       {
         "word": "junk",
-        "start": 28337,
-        "end": 28728
+        "start": 32435,
+        "end": 32826
       }
     ],
-    "narrationText": "Death Star. A 2025 release from the Star Wars UCS line. This 9,031-piece model took 20 hours and 9 minutes to assemble. It has the most pieces in the collection. It is the longest build in the collection. In the original movie, the dreaded battle station housed a slimy, one-eyed scavenger named the Dianoga inside its murky garbage chutes. If you peek deep into the bottom compactor, you'll find that very same little creature secretly lurking beneath the piles of crushed junk!",
-    "videoPath": "data/videos/75419.mp4"
+    "narrationText": "Death Star. A 2025 release from the Star Wars UCS line. Built over 4 weeks, this 9,031-piece model took a total of 20 hours and 9 minutes to assemble. It is both the largest set and the longest build in the collection. It is rated as one of our best-looking display models in the collection. In the original movie, the dreaded battle station housed a slimy, one-eyed scavenger named the Dianoga inside its murky garbage chutes. If you peek deep into the bottom compactor, you'll find that very same little creature secretly lurking beneath the piles of crushed junk!",
+    "videoPath": "data/videos/75419.mp4",
+    "dateStarted": "2026-01-10 14:24",
+    "dateFinished": "2026-02-07 15:03",
+    "buildDate": "2026-02-07 15:03",
+    "buildTimeHours": 20.15,
+    "timeToBuildFormatted": "20 hours 9 minutes",
+    "funFacts": "In the original movie, the dreaded battle station housed a slimy, one-eyed scavenger named the Dianoga inside its murky garbage chutes. If you peek deep into the bottom compactor, you'll find that very same little creature secretly lurking beneath the piles of crushed junk!"
   },
   {
     "id": "75428",
@@ -4258,6 +4501,8 @@
     "pieces": 1010,
     "instructionBooks": 1,
     "rating": 4.3,
+    "ratingBuild": 4,
+    "ratingLooks": 4.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75430-1/158649.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt9d08d73b642816b6/75430_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/blt9d08d73b642816b6/75430_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -4369,6 +4614,8 @@
     "pieces": 569,
     "instructionBooks": 1,
     "rating": 4,
+    "ratingBuild": 3,
+    "ratingLooks": 4,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/75452-1/165256.jpg",
     "hiresImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltaeaf94035320fce0/75452_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1",
     "thumbnailImageUrl": "https://www.lego.com/cdn/cs/set/assets/bltaeaf94035320fce0/75452_Prod_en-gb.png?fit=bounds&format=jpg&quality=80&width=320&height=320&dpr=1",
@@ -4423,6 +4670,8 @@
     "pieces": 1673,
     "instructionBooks": 2,
     "rating": 4.1,
+    "ratingBuild": 3.5,
+    "ratingLooks": 4.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/76393-1/86370.jpg",
     "images": [],
     "categories": [],
@@ -4452,6 +4701,8 @@
     "pieces": 656,
     "instructionBooks": 2,
     "rating": 4.1,
+    "ratingBuild": 3,
+    "ratingLooks": 3.5,
     "imageUrl": "https://cdn.rebrickable.com/media/sets/79007-1/12394.jpg",
     "images": [],
     "categories": [],
