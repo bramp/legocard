@@ -12,10 +12,7 @@ import type {
 } from './types.js';
 import { getCachedJson, setCachedJson, ensureCacheDir } from './cache.js';
 import { SITE_CONFIG } from '../../shared/config.js';
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { createHttpClient, type KyInstance, HTTPError } from './http-client.js';
 
 export function parseBricksetDate(isoString: string | undefined): { year: number; dateStr: string } | null {
   if (!isoString) return null;
@@ -33,17 +30,26 @@ export function parseBricksetDate(isoString: string | undefined): { year: number
 export interface BricksetBackendOptions {
   apiKey?: string;
   cacheDir?: string;
+  httpClient?: KyInstance;
 }
 
 export class BricksetBackend implements EnrichmentBackend {
   readonly name = 'brickset';
   private readonly apiKey?: string;
   private readonly cacheDir: string;
+  private readonly httpClient: KyInstance;
 
   constructor(options: BricksetBackendOptions = {}) {
     this.apiKey = options.apiKey;
     this.cacheDir = options.cacheDir || path.resolve(process.cwd(), 'data/cache/brickset');
     ensureCacheDir(this.cacheDir);
+    this.httpClient =
+      options.httpClient ||
+      createHttpClient({
+        headers: {
+          'User-Agent': `${SITE_CONFIG.userAgent} (${SITE_CONFIG.siteUrl})`,
+        },
+      });
   }
 
   init(): void {
@@ -165,6 +171,38 @@ export class BricksetBackend implements EnrichmentBackend {
     };
   }
 
+  private async queryBrickset(params: Record<string, string>): Promise<BricksetApiResponse | null> {
+    if (!this.apiKey) return null;
+
+    const bodyParams = new URLSearchParams({
+      apiKey: this.apiKey,
+      userHash: '',
+      params: JSON.stringify(params),
+    });
+
+    try {
+      const data = await this.httpClient
+        .post('https://brickset.com/api/v3.asmx/getSets', {
+          body: bodyParams,
+        })
+        .json<BricksetApiResponse>();
+
+      if (data.status === 'error') {
+        console.warn(`[Warning] [Brickset] API error: ${data.message || 'Unknown error'}`);
+        return null;
+      }
+
+      return data;
+    } catch (err) {
+      if (err instanceof HTTPError) {
+        console.warn(`[Warning] [Brickset] API returned HTTP ${err.response.status}`);
+      } else {
+        console.warn(`[Error] [Brickset] Request failed:`, err);
+      }
+      return null;
+    }
+  }
+
   private async getSet(setNum: string, cleanId: string): Promise<BricksetSet | null> {
     const cacheKey = `set_${setNum}.json`;
     const cached = getCachedJson<BricksetSet>(this.cacheDir, cacheKey);
@@ -176,76 +214,21 @@ export class BricksetBackend implements EnrichmentBackend {
       return null;
     }
 
-    // Fetch from Brickset API v3 with retry
-    for (let attempt = 1; attempt <= 3; attempt++) {
-      try {
-        const bodyParams = new URLSearchParams({
-          apiKey: this.apiKey,
-          userHash: '',
-          params: JSON.stringify({ setNumber: setNum }),
-        });
+    // 1. Fetch by set number (e.g. "10234-1")
+    const data = await this.queryBrickset({ setNumber: setNum });
+    if (data?.sets && data.sets.length > 0) {
+      const matchedSet = data.sets[0];
+      setCachedJson(this.cacheDir, cacheKey, matchedSet);
+      return matchedSet;
+    }
 
-        const res = await fetch('https://brickset.com/api/v3.asmx/getSets', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'User-Agent': `${SITE_CONFIG.userAgent} (${SITE_CONFIG.siteUrl})`,
-          },
-          body: bodyParams.toString(),
-        });
-
-        if (res.status === 429) {
-          console.warn(`[Rate Limit] [Brickset] 429 for set ${setNum}, backing off ${attempt * 1500}ms...`);
-          await sleep(attempt * 1500);
-          continue;
-        }
-
-        if (!res.ok) {
-          console.warn(`[Warning] [Brickset] API returned HTTP ${res.status} for set ${setNum}`);
-          return null;
-        }
-
-        const data = (await res.json()) as BricksetApiResponse;
-        if (data.status === 'error') {
-          console.warn(`[Warning] [Brickset] API error for set ${setNum}: ${data.message || 'Unknown error'}`);
-          return null;
-        }
-
-        if (data.sets && data.sets.length > 0) {
-          const matchedSet = data.sets[0];
-          setCachedJson(this.cacheDir, cacheKey, matchedSet);
-          return matchedSet;
-        }
-
-        // If no match with setNumber (e.g. "10234-1"), attempt fallback search by query
-        if (data.matches === 0 && cleanId !== setNum) {
-          const fallbackParams = new URLSearchParams({
-            apiKey: this.apiKey,
-            userHash: '',
-            params: JSON.stringify({ query: cleanId }),
-          });
-          const fallbackRes = await fetch('https://brickset.com/api/v3.asmx/getSets', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'User-Agent': `${SITE_CONFIG.userAgent} (${SITE_CONFIG.siteUrl})`,
-            },
-            body: fallbackParams.toString(),
-          });
-          if (fallbackRes.ok) {
-            const fallbackData = (await fallbackRes.json()) as BricksetApiResponse;
-            if (fallbackData.status === 'success' && fallbackData.sets && fallbackData.sets.length > 0) {
-              const matched = fallbackData.sets.find((s) => s.number === cleanId) || fallbackData.sets[0];
-              setCachedJson(this.cacheDir, cacheKey, matched);
-              return matched;
-            }
-          }
-        }
-
-        return null;
-      } catch (err) {
-        console.warn(`[Error] [Brickset] API error for set ${setNum} (attempt ${attempt}):`, err);
-        if (attempt < 3) await sleep(1000);
+    // 2. If no match and cleanId !== setNum, fallback query by cleanId
+    if (data && data.matches === 0 && cleanId !== setNum) {
+      const fallbackData = await this.queryBrickset({ query: cleanId });
+      if (fallbackData?.status === 'success' && fallbackData.sets && fallbackData.sets.length > 0) {
+        const matched = fallbackData.sets.find((s) => s.number === cleanId) || fallbackData.sets[0];
+        setCachedJson(this.cacheDir, cacheKey, matched);
+        return matched;
       }
     }
 

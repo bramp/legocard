@@ -4,6 +4,7 @@ import { execSync } from 'node:child_process';
 import dotenv from 'dotenv';
 import { parse } from 'csv-parse/sync';
 import { stringify } from 'csv-stringify/sync';
+import { fetchWithRetry } from './backends/http-client.js';
 
 dotenv.config();
 
@@ -70,7 +71,7 @@ async function main() {
   }
 
   // 1. Try standard Sheets export endpoint
-  let res = await fetch(exportUrl, {
+  let res = await fetchWithRetry(exportUrl, {
     headers,
     redirect: 'follow',
   });
@@ -81,7 +82,7 @@ async function main() {
   // 2. If token present and direct export returned HTML or 403, try Google Drive API export endpoint
   if (token && (!res.ok || text.trim().startsWith('<!DOCTYPE html>') || contentType.includes('text/html'))) {
     const driveExportUrl = `https://www.googleapis.com/drive/v3/files/${sheetId}/export?mimeType=text/csv`;
-    res = await fetch(driveExportUrl, {
+    res = await fetchWithRetry(driveExportUrl, {
       headers: { Authorization: `Bearer ${token}` },
       redirect: 'follow',
     });

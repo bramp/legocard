@@ -3,9 +3,11 @@ import type { EnrichmentBackend } from './types.js';
 import { LegoMetadataBackend } from './lego.js';
 import { RebrickableBackend } from './rebrickable.js';
 import { BricksetBackend } from './brickset.js';
+import type { KyInstance } from './http-client.js';
 
 export * from './types.js';
 export * from './cache.js';
+export * from './http-client.js';
 export { LegoMetadataBackend } from './lego.js';
 export { RebrickableBackend } from './rebrickable.js';
 export { BricksetBackend } from './brickset.js';
@@ -15,6 +17,7 @@ export interface BackendFactoryOptions {
   rebrickableApiKey?: string;
   bricksetApiKey?: string;
   cacheBaseDir?: string;
+  httpClient?: KyInstance;
 }
 
 /**
@@ -34,10 +37,12 @@ export function createDefaultBackends(options: BackendFactoryOptions = {}): Enri
     new RebrickableBackend({
       apiKey: options.rebrickableApiKey,
       cacheDir: path.join(cacheBaseDir, 'rebrickable'),
+      httpClient: options.httpClient,
     }),
     new BricksetBackend({
       apiKey: options.bricksetApiKey,
       cacheDir: path.join(cacheBaseDir, 'brickset'),
+      httpClient: options.httpClient,
     }),
   ];
 }

@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { parseBricksetDate, BricksetBackend } from '../scripts/backends/brickset.js';
+import { createHttpClient } from '../scripts/backends/http-client.js';
 import type { BricksetSet } from '../shared/types.js';
 
 describe('Brickset Backend', () => {
@@ -70,6 +71,68 @@ describe('Brickset Backend', () => {
 
       // Clean up tmp dir
       fs.rmSync(tmpDir, { recursive: true, force: true });
+    });
+
+    it('queries Brickset API via HttpClient when set is not in cache', async () => {
+      const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'brickset-test-'));
+      try {
+        const mockFetch: typeof fetch = async (input, init) => {
+          const body = input instanceof Request ? await input.clone().text() : String(init?.body);
+          assert(body.includes('apiKey=test-brickset-key'));
+
+          return new Response(
+            JSON.stringify({
+              status: 'success',
+              matches: 1,
+              sets: [
+                {
+                  setID: 75304,
+                  number: '75304',
+                  numberVariant: 1,
+                  name: 'Darth Vader Helmet',
+                  year: 2021,
+                  theme: 'Star Wars',
+                  subtheme: 'Helmet Collection',
+                  pieces: 834,
+                  rating: 4.7,
+                  ageRange: { min: 18 },
+                },
+              ],
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
+          );
+        };
+
+        const mockClient = createHttpClient({
+          fetch: mockFetch,
+          retryDelay: () => 0,
+          logger: null,
+        });
+
+        const backend = new BricksetBackend({
+          apiKey: 'test-brickset-key',
+          cacheDir: tmpDir,
+          httpClient: mockClient,
+        });
+
+        const result = await backend.enrich({
+          cleanId: '75304',
+          setNum: '75304-1',
+          csvRecord: {},
+        });
+
+        assert.notStrictEqual(result, null);
+        assert.strictEqual(result?.name, 'Darth Vader Helmet');
+        assert.strictEqual(result?.year, 2021);
+        assert.strictEqual(result?.theme, 'Star Wars / Helmet Collection');
+        assert.strictEqual(result?.pieces, 834);
+        assert.strictEqual(result?.age, '18+');
+
+        // Verify it was saved to cache
+        assert(fs.existsSync(path.join(tmpDir, 'set_75304-1.json')));
+      } finally {
+        fs.rmSync(tmpDir, { recursive: true, force: true });
+      }
     });
   });
 });
