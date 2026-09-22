@@ -1,7 +1,7 @@
-# Architecture & Design: LegoCard
+# Architecture & Design: Brick Nook
 
 ## 1. Executive Summary
-**LegoCard** is a static web app and media showcase for a personal collection of ~100+ Lego sets. 
+**Brick Nook** is a static web app and media showcase for a personal collection of ~100+ Lego sets. 
 
 The primary physical interaction model is scanning:
 - Every displayed Lego set has a physical NFC / RFID tag or a small printed QR code card.
@@ -37,7 +37,7 @@ flowchart TB
     subgraph CDNStorage["Cloudflare R2 Object Storage & CDN"]
         direction TB
         R2Bucket[("Cloudflare R2 Bucket<br/>(Zero egress bandwidth fees)")]
-        EdgeCDN["Cloudflare Edge CDN<br/>https://legocard-media.bramp.net"]
+        EdgeCDN["Cloudflare Edge CDN<br/>https://media.bricknook.me"]
         R2Bucket --- EdgeCDN
     end
 
@@ -45,7 +45,7 @@ flowchart TB
         direction TB
         GitHubRepo["GitHub Repo (main)<br/>- Clean code & metadata only<br/>- Zero binary media blobs"]
         GHActions["GitHub Actions CI/CD<br/>(withastro/action@v6)"]
-        AstroSite["Astro Static Web App<br/>https://legocard.bramp.net"]
+        AstroSite["Astro Static Web App<br/>https://bricknook.me"]
         NFC["Physical NFC Tag / QR Code<br/>(Mounted on Lego stand)"]
         Mobile["Mobile Safari / Chrome<br/>(Collector & Visitor View)"]
 
@@ -67,7 +67,7 @@ flowchart TB
 | :--- | :--- | :--- |
 | **Data Source** | CSV (`data/sets.csv`) | Simple to export from Google Sheets / Excel, easy to edit locally or track in git. |
 | **Metadata & Imagery** | Rebrickable API + Gemini API | Reliable Lego catalog API for specs & stock photos, plus Gemini 2.0 Flash for set trivia. |
-| **Media Hosting & CDN** | **Cloudflare R2** (`legocard-media.bramp.net`) | S3-compatible object storage with **zero egress fees**. Keeps large images, MP3s, and MP4 videos out of Git and GitHub Pages while streaming globally at edge speeds. |
+| **Media Hosting & CDN** | **Cloudflare R2** (`media.bricknook.me`) | S3-compatible object storage with **zero egress fees**. Keeps large images, MP3s, and MP4 videos out of Git and GitHub Pages while streaming globally at edge speeds. |
 | **Web Framework** | **Astro 5** + Tailwind CSS | Zero client-side JavaScript by default, instant page load speeds on mobile, rich image optimization, content collections with type safety. |
 | **Dynamic QR Codes** | Astro Static Endpoints + `sharp` | Generates lightweight SVG, WebP, and PNG Lego stud QR codes on the fly at build time without offline generation scripts or external CLI tools. |
 | **Physical Scannability** | QR Codes + Clean URLs | Clean set URLs (`/sets/10497`) easily programmed onto NFC NTAG213/215 stickers or printed onto collectible physical cards. |
@@ -80,20 +80,20 @@ flowchart TB
 ## 4. Mobile-First Card UX & Scannability
 
 ### Physical Tagging Model
-- **URL Route Pattern**: `https://legocard.bramp.net/sets/<set_number>`
+- **URL Route Pattern**: `https://bricknook.me/sets/<set_number>`
 - **NFC / RFID**: NTAG213 / NTAG215 stickers (144 - 504 bytes) programmed with the direct URL. When a phone taps the tag on the Lego display stand, it opens directly in Safari/Chrome.
 - **Printed Cards**: Each set card page provides a printable mini-card view (or downloadable QR code SVG) to place on physical display stands.
 
 ### Mobile Screen Architecture
 1. **Header / Identity**: Set number badge, official theme pill, year, and set title.
-2. **Hero Visual**: Crisp stock photo loaded directly from CDN (`legocard-media.bramp.net/images/{id}.jpg`) with clean modal preview.
+2. **Hero Visual**: Crisp stock photo loaded directly from CDN (`media.bricknook.me/images/{id}.jpg`) with clean modal preview.
 3. **Key Stats Grid (2x2 or 3x1 on mobile)**:
    - Pieces ($1,254$)
    - Build Time ($4.5\text{ hrs}$)
    - Built By (e.g., *Bram & Family*)
    - Rating ($5/5\star$)
 4. **Story & Fun Facts**: Personal notes, build history, official Lego trivia.
-5. **Video Showcase**: Compact HTML5 9:16 video player streaming from `legocard-media.bramp.net/videos/{id}.mp4` with custom play button and animated captions.
+5. **Video Showcase**: Compact HTML5 9:16 video player streaming from `media.bricknook.me/videos/{id}.mp4` with custom play button and animated captions.
 6. **QR Share & Navigation**: "Back to Collection" and "Show QR Code" modal for quick scanning by friends.
 
 ---
@@ -118,7 +118,7 @@ interface EnrichedLegoSet {
   pieces: number;                // 1254
   imageUrl: string;              // Remote fallback CDN URL (Rebrickable)
   media?: {
-    image?: string;              // "images/10497.jpg" (served via legocard-media.bramp.net)
+    image?: string;              // "images/10497.jpg" (served via media.bricknook.me)
     audio?: string;              // "audio/10497.mp3"
     subtitles?: string;          // "audio/10497.json"
     video?: string;              // "videos/10497.mp4"
@@ -139,7 +139,7 @@ interface EnrichedLegoSet {
 
 ### Media URL Resolution
 All media references are resolved dynamically in Astro via a central helper (`site/src/lib/assets.ts`):
-- Production: `https://legocard-media.bramp.net/<path>`
+- Production: `https://media.bricknook.me/<path>`
 - Development fallback: configured via `PUBLIC_MEDIA_BASE_URL` in `.env`.
 
 ---

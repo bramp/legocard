@@ -5,6 +5,7 @@ import {
   generateLegoQrSvg,
   tileBricks,
 } from '../shared/lego-qr.js';
+import { SITE_CONFIG } from '../shared/config.js';
 
 describe('Lego QR Code Generator', () => {
   describe('tileBricks', () => {
@@ -56,7 +57,7 @@ describe('Lego QR Code Generator', () => {
 
   describe('generateLegoQrResult', () => {
     it('generates valid SVG structure and calculates dimensions', () => {
-      const result = generateLegoQrResult('https://legocard.bramp.net', {
+      const result = generateLegoQrResult(SITE_CONFIG.siteUrl, {
         margin: 4,
         brickStyle: 'merged',
         errorCorrectionLevel: 'H',

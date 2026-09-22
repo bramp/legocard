@@ -1,4 +1,5 @@
 import React from 'react';
+import { SITE_CONFIG } from '../types';
 
 export const Footer: React.FC = () => {
   return (
@@ -36,7 +37,7 @@ export const Footer: React.FC = () => {
             color: '#e2e8f0',
           }}
         >
-          legocard.bramp.net
+          {SITE_CONFIG.domain}
         </span>
       </div>
     </div>

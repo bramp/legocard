@@ -1,4 +1,4 @@
-# 🧱 LegoCard
+# 🧱 Brick Nook
 
 A lightweight, mobile-first static website and automated video showcase for a personal Lego collection. 
 
@@ -38,7 +38,7 @@ cp .env.example .env
 | `npm run sync` | One-shot command: fetches Google Sheet and runs Rebrickable enrichment. |
 | `npm run enrich` | Reads `data/sets.csv`, queries Rebrickable API, downloads stock images, and updates `data/sets.json`. |
 | `npm run facts` | Queries Gemini API to discover fun facts and trivia for each set. |
-| `npm run sync:cdn` | Synchronizes local media (images, audio, videos) to Cloudflare R2 (`legocard-media.bramp.net`). |
+| `npm run sync:cdn` | Synchronizes local media (images, audio, videos) to Cloudflare R2 (`media.bricknook.me`). |
 | `npm run dev:site` | Starts the Astro development server (open `http://localhost:4321` on desktop or phone via local WiFi). |
 | `npm run build:site` | Builds the static website into `site/dist/` for GitHub Pages. |
 | `npm run preview:site`| Serves the production static build locally to test performance and routes. |
@@ -52,10 +52,10 @@ cp .env.example .env
 
 To prevent multi-gigabyte video and image blobs from bloating the Git repository and exceeding GitHub Pages limits, media files are stored externally in **Cloudflare R2** with zero egress fees:
 
-* **CDN Edge Domain**: `https://legocard-media.bramp.net`
+* **CDN Edge Domain**: `https://media.bricknook.me`
 * **Local Staging**: Images (`data/images/`), audio voiceovers (`data/audio/`), and MP4 videos (`data/videos/`) are generated or downloaded locally and gitignored.
 * **Syncing to CDN**: Running `npm run sync:cdn` uploads new or updated assets to the R2 bucket with immutable caching headers.
-* **Astro Serving**: The site fetches metadata from `data/sets.json` (tracked in Git) and streams all rich media from `legocard-media.bramp.net`.
+* **Astro Serving**: The site fetches metadata from `data/sets.json` (tracked in Git) and streams all rich media from `media.bricknook.me`.
 
 ---
 
@@ -92,7 +92,7 @@ To prevent multi-gigabyte video and image blobs from bloating the Git repository
 1. Buy standard **NTAG213** or **NTAG215** adhesive tags (very cheap in packs of 25–50).
 2. Using an app like **NFC Tools** (iOS/Android), write a URL record to the tag:
    ```
-   https://legocard.bramp.net/sets/<set_number>
+   https://bricknook.me/sets/<set_number>
    ```
 3. Stick the tag under or beside the Lego display stand. Tapping any iPhone or Android phone will open the set card instantly without opening an app first.
 
@@ -104,7 +104,7 @@ Visit `/print-tags` on the running site to see a formatted, print-ready page of 
 ## 📁 Repository Structure
 
 ```
-legocard/
+bricknook/
 ├── data/
 │   ├── sets.csv         # Source of truth: your build history (in Git)
 │   ├── sets.json        # Normalized enriched metadata (in Git)
@@ -120,7 +120,7 @@ legocard/
 │   └── sync-cdn.ts      # Cloudflare R2 asset synchronizer
 ├── site/                # Astro 5 static mobile-first web app
 │   ├── public/
-│   │   └── CNAME        # Custom domain (legocard.bramp.net)
+│   │   └── CNAME        # Custom domain (bricknook.me)
 │   └── src/
 │       ├── components/  # LegoQr.astro stud QR component
 │       ├── lib/         # sets.ts and assets.ts CDN resolver
@@ -140,17 +140,20 @@ legocard/
 
 ## 🚢 Deployment & Custom Domain
 
-The site is configured for automatic deployment to **GitHub Pages** at **`legocard.bramp.net`**:
+The site is configured for automatic deployment to **GitHub Pages** at **`bricknook.me`**:
 
-### DNS Setup (in your DNS provider for bramp.net)
-Add a CNAME DNS record:
-- **Type**: `CNAME`
-- **Name/Host**: `legocard`
-- **Target/Value**: `bramp.github.io.`
+### DNS Setup (in your DNS provider for bricknook.me)
+For an apex custom domain (`bricknook.me`):
+- **Type**: `ALIAS` / `ANAME` (or `CNAME` if supported at apex): `bramp.github.io.`
+- Or standard GitHub Pages `A` records pointing to:
+  - `185.199.108.153`
+  - `185.199.109.153`
+  - `185.199.110.153`
+  - `185.199.111.153`
 
 ### GitHub Pages Settings
 1. Go to your repo settings on GitHub: **Settings** $\to$ **Pages**.
 2. Under **Build and deployment**, ensure **Source** is set to **GitHub Actions**.
-3. Under **Custom domain**, ensure `legocard.bramp.net` is entered and check **Enforce HTTPS** (GitHub will provision a free Let's Encrypt TLS certificate once the DNS record propagates).
+3. Under **Custom domain**, ensure `bricknook.me` is entered and check **Enforce HTTPS** (GitHub will provision a free Let's Encrypt TLS certificate once the DNS record propagates).
 
-Every push to `main` builds the site and publishes to `https://legocard.bramp.net/`.
+Every push to `main` builds the site and publishes to `https://bricknook.me/`.

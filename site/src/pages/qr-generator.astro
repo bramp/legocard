@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { SITE_CONFIG } from '../../../shared/config.ts';
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
@@ -66,7 +67,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
               type="url"
               class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-white font-mono"
               placeholder="https://example.com"
-              value="https://legocard.bramp.net"
+              value={SITE_CONFIG.siteUrl}
             />
             <div class="flex justify-end">
               <button
@@ -89,7 +90,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
               rows="4"
               class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 focus:border-amber-500 text-sm text-white font-mono resize-y"
               placeholder="Type any arbitrary message or notes..."
-            >Hello from LegoCard!</textarea>
+            >Hello from {SITE_CONFIG.name}!</textarea>
           </div>
 
           <!-- 3. Wi-Fi Network -->
@@ -407,6 +408,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
   <script>
     import { generateLegoQrResult } from '../../../shared/lego-qr.js';
     import { buildQrPayload } from '../../../shared/qr-payload.js';
+    import { SITE_CONFIG } from '../../../shared/config.js';
 
     // UI Elements - Selectors
     const qrTypeSelect = document.getElementById('qrTypeSelect') as HTMLSelectElement;
@@ -525,7 +527,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
           });
 
         default:
-          return 'https://legocard.bramp.net';
+          return SITE_CONFIG.siteUrl;
       }
     }
 

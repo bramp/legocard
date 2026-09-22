@@ -11,6 +11,7 @@ import type {
   SetContext,
 } from './types.js';
 import { getCachedJson, setCachedJson, ensureCacheDir } from './cache.js';
+import { SITE_CONFIG } from '../../shared/config.js';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -188,7 +189,7 @@ export class BricksetBackend implements EnrichmentBackend {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'User-Agent': 'legocard/1.0 (https://github.com/bramp/legocard)',
+            'User-Agent': `${SITE_CONFIG.userAgent} (${SITE_CONFIG.siteUrl})`,
           },
           body: bodyParams.toString(),
         });
@@ -227,7 +228,7 @@ export class BricksetBackend implements EnrichmentBackend {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
-              'User-Agent': 'legocard/1.0 (https://github.com/bramp/legocard)',
+              'User-Agent': `${SITE_CONFIG.userAgent} (${SITE_CONFIG.siteUrl})`,
             },
             body: fallbackParams.toString(),
           });

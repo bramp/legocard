@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SITE_CONFIG } from '../shared/config.ts';
 
 /**
  * Astro integration to copy local media assets (videos, audio) to dist/ on build
@@ -143,11 +144,29 @@ function serveLocalMedia() {
   };
 }
 
+/**
+ * Astro integration to ensure public/CNAME matches SITE_CONFIG.domain
+ * @returns {import('astro').AstroIntegration}
+ */
+function syncCnameIntegration() {
+  return {
+    name: 'sync-cname',
+    hooks: {
+      'astro:config:setup': () => {
+        const publicDir = path.resolve(process.cwd(), 'public');
+        if (fs.existsSync(publicDir) && SITE_CONFIG.domain) {
+          fs.writeFileSync(path.join(publicDir, 'CNAME'), `${SITE_CONFIG.domain}\n`, 'utf-8');
+        }
+      },
+    },
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://legocard.bramp.net',
+  site: SITE_CONFIG.siteUrl,
   base: '/',
-  integrations: [copyLocalMediaIntegration()],
+  integrations: [copyLocalMediaIntegration(), syncCnameIntegration()],
   vite: {
     plugins: [tailwindcss(), serveLocalMedia()],
   },

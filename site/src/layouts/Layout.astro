@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { SITE_CONFIG } from '../../../shared/config.ts';
 
 interface Props {
   title: string;
@@ -18,12 +19,12 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | LegoCard</title>
+    <title>{title} | {SITE_CONFIG.name}</title>
     <meta name="description" content={description} />
 
     <!-- Open Graph / Mobile Previews -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={`${title} | LegoCard`} />
+    <meta property="og:title" content={`${title} | ${SITE_CONFIG.name}`} />
     <meta property="og:description" content={description} />
     {image && <meta property="og:image" content={image} />}
     <meta name="theme-color" content="#0f172a" />
@@ -37,7 +38,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
             🧱
           </span>
           <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-            LegoCard
+            {SITE_CONFIG.name}
           </span>
         </a>
 
@@ -63,7 +64,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
     </main>
 
     <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500">
-      <p>LegoCard • Personal Collection Showcase • Designed for NFC & QR Scans</p>
+      <p>{SITE_CONFIG.name} • {SITE_CONFIG.tagline}</p>
     </footer>
   </body>
 </html>

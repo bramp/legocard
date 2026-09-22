@@ -4,6 +4,7 @@ import path from 'node:path';
 import sharp from 'sharp';
 import { getLegoSets } from '../../lib/sets.js';
 import { generateLegoQrSvg } from '../../../../shared/lego-qr.js';
+import { SITE_CONFIG } from '../../../../shared/config.js';
 
 // Resolve persistent disk cache in data/cache/qr
 const CACHE_DIR = (() => {
@@ -30,7 +31,7 @@ export const getStaticPaths: GetStaticPaths = () => {
 
 export const GET: APIRoute = async ({ params, props }) => {
   const { id, format } = params;
-  const baseUrl = (import.meta.env.SITE_URL || 'https://legocard.bramp.net').replace(/\/$/, '');
+  const baseUrl = SITE_CONFIG.siteUrl;
   const targetUrl = `${baseUrl}/sets/${id}`;
 
   const svg = generateLegoQrSvg(targetUrl, { brickStyle: 'merged' });

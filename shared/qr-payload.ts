@@ -1,3 +1,5 @@
+import { SITE_CONFIG } from './config.js';
+
 export type QrPayloadOptions =
   | { type: 'url'; url: string }
   | { type: 'text'; text: string }
@@ -51,7 +53,7 @@ export function escapeWifiString(str: string): string {
 export function buildQrPayload(options: QrPayloadOptions): string {
   switch (options.type) {
     case 'url':
-      return options.url.trim() || 'https://legocard.bramp.net';
+      return options.url.trim() || SITE_CONFIG.siteUrl;
 
     case 'text':
       return options.text.trim() || 'Hello';

@@ -9,14 +9,15 @@ import {
   type _Object,
 } from '@aws-sdk/client-s3';
 import mime from 'mime-types';
+import { SITE_CONFIG } from '../shared/config.js';
 
 dotenv.config();
 
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
 const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
 const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
-const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME || 'legocard-media';
-const MEDIA_BASE_URL = (process.env.MEDIA_BASE_URL || 'https://legocard-media.bramp.net').replace(/\/$/, '');
+const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME || SITE_CONFIG.r2Bucket;
+const MEDIA_BASE_URL = (process.env.MEDIA_BASE_URL || SITE_CONFIG.mediaUrl).replace(/\/$/, '');
 
 const MEDIA_DIRECTORIES = [
   { dir: path.resolve(process.cwd(), 'data/images'), prefix: 'images' },
@@ -32,8 +33,8 @@ function checkCredentials(): boolean {
     console.error('  R2_ACCOUNT_ID=your_cloudflare_account_id');
     console.error('  R2_ACCESS_KEY_ID=your_r2_access_key_id');
     console.error('  R2_SECRET_ACCESS_KEY=your_r2_secret_access_key');
-    console.error('  R2_BUCKET_NAME=legocard-media');
-    console.error('  MEDIA_BASE_URL=https://legocard-media.bramp.net');
+    console.error(`  R2_BUCKET_NAME=${SITE_CONFIG.r2Bucket}`);
+    console.error(`  MEDIA_BASE_URL=${SITE_CONFIG.mediaUrl}`);
     console.error('');
     console.error('💡 To get these credentials:');
     console.error('  1. Open Cloudflare Dashboard -> R2 -> "Manage R2 API Tokens"');
@@ -125,7 +126,7 @@ async function main() {
   const dryRun = args.includes('--dry-run');
   const force = args.includes('--force');
 
-  console.log('☁️  LegoCard Cloudflare R2 Asset Sync');
+  console.log(`☁️  ${SITE_CONFIG.name} Cloudflare R2 Asset Sync`);
   console.log(`   Bucket: ${R2_BUCKET_NAME}`);
   console.log(`   Public Domain: ${MEDIA_BASE_URL}`);
   if (dryRun) console.log('   Mode: DRY RUN (no files will be uploaded)');

@@ -1,7 +1,7 @@
-# Implementation Plan: LegoCard
+# Implementation Plan: Brick Nook
 
 ## Overview
-LegoCard is built in two primary phases:
+Brick Nook is built in two primary phases:
 - **Phase 1 (Active Focus)**: Build a mobile-first collectible card static website using Astro and Tailwind CSS, enriched from your spreadsheet via Rebrickable, with direct QR/RFID scannable URLs, full search/filtering, and printable QR codes.
 - **Phase 2 (Subsequent)**: Video highlight pipeline with Remotion and neural TTS audio.
 
@@ -18,7 +18,7 @@ LegoCard is built in two primary phases:
 ### Step 1.2: Astro Web Application Scaffolding
 - [x] Scaffold Astro 5 project inside [site/](site/) configured with Tailwind CSS.
 - [x] Load enriched dataset via [site/src/lib/sets.ts](site/src/lib/sets.ts) for fast, zero-JS builds.
-- [x] Configure custom domain `legocard.bramp.net` and build output in [site/astro.config.mjs](site/astro.config.mjs).
+- [x] Configure custom domain `bricknook.me` and build output in [site/astro.config.mjs](site/astro.config.mjs).
 
 ### Step 1.3: Mobile-First Card Design & Templates
 - [x] **Individual Set Route (`/sets/[id]`)**:
@@ -36,7 +36,7 @@ LegoCard is built in two primary phases:
   - High-resolution SVG LEGO QR code on each tag ready for cardstock printing.
 
 ### Step 1.4: Cloudflare R2 Media CDN Pipeline
-- [ ] Create Cloudflare R2 bucket (`legocard-media`) with custom domain `https://legocard-media.bramp.net`.
+- [ ] Create Cloudflare R2 bucket (`bricknook-media`) with custom domain `https://media.bricknook.me`.
 - [ ] Add central asset resolver in [site/src/lib/assets.ts](site/src/lib/assets.ts) pointing to CDN URLs.
 - [ ] Implement [scripts/sync-cdn.ts](scripts/sync-cdn.ts) to sync local images, audio, and videos to R2 via S3 API with caching headers.
 - [ ] Update [scripts/enrich-data.ts](scripts/enrich-data.ts) to populate relative `media` keys in [data/sets.json](data/sets.json).

@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildQrPayload, escapeWifiString } from '../shared/qr-payload.js';
+import { SITE_CONFIG } from '../shared/config.js';
 
 describe('QR Payload Formatter', () => {
   describe('escapeWifiString', () => {
@@ -17,8 +18,8 @@ describe('QR Payload Formatter', () => {
   describe('buildQrPayload', () => {
     it('builds standard URL payload', () => {
       assert.equal(
-        buildQrPayload({ type: 'url', url: 'https://legocard.bramp.net' }),
-        'https://legocard.bramp.net'
+        buildQrPayload({ type: 'url', url: 'https://example.com' }),
+        'https://example.com'
       );
       assert.equal(
         buildQrPayload({ type: 'url', url: '   https://example.com/test   ' }),
@@ -29,7 +30,7 @@ describe('QR Payload Formatter', () => {
     it('falls back to default URL when empty', () => {
       assert.equal(
         buildQrPayload({ type: 'url', url: '   ' }),
-        'https://legocard.bramp.net'
+        SITE_CONFIG.siteUrl
       );
     });
 
