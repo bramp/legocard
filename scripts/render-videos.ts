@@ -18,7 +18,10 @@ function parseArgs() {
   const args = process.argv.slice(2);
   let targetId: string | undefined;
   let force = false;
-  let concurrency = Math.max(4, (os.cpus()?.length || 4) - 1);
+  const cpuCount = os.cpus()?.length || 4;
+  // Half the number of Cores (since encoding requires a Chrome + FFMPEG process)
+  const defaultConcurrency = Math.max(1, Math.floor(cpuCount / 2));
+  let concurrency = defaultConcurrency;
   let isPreview = false;
   let fast = false;
   let scale = 1;
@@ -49,9 +52,9 @@ function parseArgs() {
       if (bgVal === 'blurred' || bgVal === 'image' || bgVal === 'photo' || bgVal === 'blue') bgVal = 'blur';
       backgroundStyleCli = bgVal as 'baseplate' | 'ambient' | 'blur' | 'plasma';
     } else if (arg.startsWith('--concurrency=')) {
-      concurrency = parseInt(arg.split('=')[1], 10) || 8;
+      concurrency = parseInt(arg.split('=')[1], 10) || defaultConcurrency;
     } else if (arg === '--concurrency' && i + 1 < args.length) {
-      concurrency = parseInt(args[++i], 10) || 8;
+      concurrency = parseInt(args[++i], 10) || defaultConcurrency;
     }
   }
 
